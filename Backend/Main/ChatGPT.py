@@ -9,23 +9,23 @@ from Message import MessageToClient
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-
 def listenToMessages(chatHistory):
-    # Extracts the last message from the chat history to analyze its content.
     message = chatHistory[len(chatHistory) - 1]
     message_str = message.message
-    print("Message: " + message_str)
-    # Checks the similarity between the last message and the word "alexa" using fuzzy matching (Levenshtein distance).
-    similarity = fuzz.partial_ratio(message_str, "alexa")
-    if similarity > 70:
-        # If similarity is above 70, it's likely the user is addressing the bot.
+    if is_message_addressing_bot(message_str):
         print("Bot should answer")
         return create_chatbot(chatHistory)
     else:
-        # If similarity is below 70, it's likely the message is not directed at the bot.
         print("Bot should not answer")
         return None
 
+# Checks the similarity between the last message and the word "alexa" using fuzzy matching (Levenshtein distance).
+def is_message_addressing_bot(message_str):
+    keyword = "alexa"
+    threshold = 70
+    similarity = fuzz.partial_ratio(message_str.lower(), keyword.lower())
+    # If similarity is above 70, it's likely the user is addressing the bot.
+    return similarity > threshold
 
 def create_chatbot(chatHistory):
     messages = []
@@ -59,7 +59,7 @@ def create_chatbot(chatHistory):
         model="gpt-4-0125-preview",
         messages=messages,
         temperature=temperature,
-        max_tokens=1000,
+        max_tokens=100,
         frequency_penalty=0,
         presence_penalty=0,
     )
