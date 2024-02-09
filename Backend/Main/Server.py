@@ -28,7 +28,6 @@ class ChatServerProtocol(WebSocketServerProtocol):
                     message = json.loads(message)
                     print(f"message received: {message}")
                     message = MessageFromClient.model_validate(message)
-                    message_copy = MessageFromClient.model_validate(message.__dict__)
 
                     if self.language is None or self.username is None:
                         self.language = message.language
@@ -37,23 +36,16 @@ class ChatServerProtocol(WebSocketServerProtocol):
                         print("linked user with username", self.username)
                         self.factory.sendCurrentUsers()
 
-                    if message_copy.language != "en":
-                        message_copy.language = "en"
+                    if message.language != "en":
+                        message.language = "en"
 
-                    message_copy = translate_text(message_copy)
+                    message = translate_text(message)
                     print(
-                        f"translated message for sentiment to: {message_copy.message}"
+                        f"translated message for sentiment to: {message.message}"
                     )
-                    message_copy = sentiment_analysis(message_copy)
-                    print(f"sentiment generated: {message_copy.sentiment}")
+                    message = sentiment_analysis(message)
+                    print(f"sentiment generated: {message.sentiment}")
 
-                    message = MessageToClient(
-                        username=message.username,
-                        message=message.message,
-                        language=message.language,
-                        timestamp=message.timestamp,
-                        sentiment=message_copy.sentiment,
-                    )
                     self.chatHistory.append(message)
                     print(f"Message '{message.message}' added to chat history")
 
@@ -139,10 +131,8 @@ class ChatServerFactory(WebSocketServerFactory):
     def broadcast(self, message, sender):
         print(sender)
         for client in self.clients:
-            if message.language != client.language:
-                message.language = client.language
-                message = translate_text(message)
-                print(f"Message translated for {client.username}")
+            message = translate_text(message)
+            print(f"Message translated for {client.username}")
             client.sendMessage(json.dumps(message.__dict__).encode("utf-8"))
 
 

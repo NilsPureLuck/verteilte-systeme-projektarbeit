@@ -5,92 +5,84 @@ import openai
 import os
 from dotenv import load_dotenv
 from fuzzywuzzy import fuzz
+from Backend.Main import MessageToClient
 
-from Message import MessageToClient
-
-#todo: api_key in eine .env Datei packen und sicherer setzen + in gitIgnore packen
-#todo: jede nachricht enthält eine eigene JSON? -> macht es Sinn, dass wir in der Antwort die letzten 2-3 Nachrichten mitgeben?
-#z.B dass wir einen besserern Kontext geben können? -> was wird die struktur der JSON sein
-#remember previous messages sent
-#code besser strukturieren
-
-
+# Set the OpenAI API key from the .env file for authentication.
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-
 def listenToMessages(chatHistory):
-    message = chatHistory[len(chatHistory)-1]
-
+    message = chatHistory[len(chatHistory) - 1]
     message_str = message.message
-    print("Message: "+message_str)  # Zeigt die Alexa-Nachricht an
-
-    # Berechnet die Ähnlichkeit zwischen der Nachricht und "alexa"
-    similarity = fuzz.partial_ratio(message_str, "alexa")
-
-    #levienshtein distance -> wie viele Buchstaben müssen wir ändern, um von einem Wort zum anderen zu kommen
-    if similarity > 70:
-        print("Bot soll antworten")
+    if is_message_addressing_bot(message_str):
+        print("Bot should answer")
         return create_chatbot(chatHistory)
     else:
-        print("Bot soll nicht antworten")
+        print("Bot should not answer")
         return None
 
+# Checks the similarity between the last message and the word "alexa" using fuzzy matching (Levenshtein distance).
+def is_message_addressing_bot(message_str):
+    keyword = "alexa"
+    threshold = 70
+    similarity = fuzz.partial_ratio(message_str.lower(), keyword.lower())
+    # If similarity is above 70, it's likely the user is addressing the bot.
+    return similarity > threshold
 
 def create_chatbot(chatHistory):
     messages = []
+    # Analyzes the overall sentiment of the chat history to adjust the bot's responses.
     sentiment = checkSentiment(chatHistory)
-    #0-1 : 1 ist ein kreativer
-    #sentiment=-1 -> ist sehr negativ gelaunt -> eher konsistenterer antworten
-    #sentiment=-0 -> ist neutral gelaunt -> eher normale antworten
-    #sentiment=1 -> ist sehr positiv gelaunt -> sehr kreative antworten
 
+    # Calculates the response temperature based on sentiment, influencing the randomness/"creativity" of responses.
     min_temp = 0.2
     max_temp = 0.8
-    # auszug aus der doku
-    # Higher values like 0.8 will make the output more random, while lower values like 0.2
-    # will make it more focused and deterministic.
     temperature = 0.5 * (sentiment + 1) * (max_temp - min_temp) + min_temp
 
-    print("temperature for bot is: " + str(temperature))
-
+    # Prepares the message history for the OpenAI completion call, formatting them appropriately.
     for message in chatHistory:
         messages.append({"role": "user", "content": f"{message.message}"})
 
-
+    # Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.
     messages.append({"role": "system",
-                    "content": "Du bist ein intelligenter Assistent in einem Chatraum."
+                     "content": "Du bist ein intelligenter Assistent in einem Chatraum."
                                 " Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten"
                                 " zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus"
                                 " dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers"
                                 " und die Nachricht selbst. Deine Antworten sollten sowohl den Kontext dieser "
                                 "Nachrichten berücksichtigen. Deine Stimmung wird algorithmisch auf einer Skala von -1 "
                                 "(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten"
-                                " widergespiegelt werden. Deine aktuelle Stimmung liegt bei: "+ str(sentiment)
+                                " widergespiegelt werden. Deine aktuelle Stimmung liegt bei: " + str(sentiment)
                      }
 
-    )
+                    )
+    # Generates a chat completion using the OpenAI API, with parameters adjusted for the current context.
     response = openai.chat.completions.create(
         model="gpt-4-0125-preview",
         messages=messages,
         temperature=temperature,
-        max_tokens=1000,
+        max_tokens=100,
         frequency_penalty=0,
         presence_penalty=0,
     )
-    #print(response)
+    # Extracts and prints the generated response from the OpenAI API.
     response_message = response.choices[0].message.content
     messages.append({"role": "assistant", "content": response_message})
     print("\n" + response_message + "\n")
 
+    # Captures the current time to timestamp the bot's response.
     date_time = datetime.now()
     str_date_time = date_time.strftime("%H:%M:%S")
-    return MessageToClient(username="Alexa", message=response_message, language="EN", timestamp=str_date_time, sentiment=sentiment)
+
+    # Returns a new message object with the bot's response and additional metadata.
+    return MessageToClient(username="Alexa", message=response_message, language="EN", timestamp=str_date_time,
+                           sentiment=sentiment)
+
 
 def checkSentiment(chatHistory):
+    # Calculates the average sentiment of the chat history to inform response generation.
     sentiment_value = 0
     for message in chatHistory:
         sentiment_value += message.sentiment
-
     sentiment_value = sentiment_value / len(chatHistory)
     return sentiment_value

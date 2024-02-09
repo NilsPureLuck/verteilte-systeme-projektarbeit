@@ -1,8 +1,7 @@
 import unittest
-
+import sys
 from Backend.Main import MessageFromClient, MessageToClient
 from Backend.Main.Translator import translate_text
-
 
 class TranslatorTest(unittest.TestCase):
     #Methode to test the translation process. Checks on the correct translation of the given message
