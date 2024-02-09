@@ -1,10 +1,10 @@
 import os
 import html
 from google.cloud import translate_v2 as translate
-
 from Backend.Main.Message import MessageFromClient, MessageToClient
 
-#Method to translate the Chatmessages
+
+# Method to translate the messages
 def translate_text(message: MessageFromClient | MessageToClient):
     credentials_path = "C:/Users/Matthias Wohlmacher/PycharmProjects/verteilte-systeme-projektarbeit-neu/Backend/Main/credentials.json"
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path

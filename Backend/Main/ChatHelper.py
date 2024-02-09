@@ -1,6 +1,4 @@
-import json
 from datetime import datetime
-
 import openai
 import os
 from dotenv import load_dotenv
@@ -10,6 +8,7 @@ from Backend.Main import MessageToClient
 # Set the OpenAI API key from the .env file for authentication.
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
 
 def listenToMessages(chatHistory):
     message = chatHistory[len(chatHistory) - 1]
@@ -21,13 +20,15 @@ def listenToMessages(chatHistory):
         print("Bot should not answer")
         return None
 
-# Checks the similarity between the last message and the word "alexa" using fuzzy matching (Levenshtein distance).
+
+# Checks the similarity between the last message and the word "botify" using fuzzy matching (Levenshtein distance).
 def is_message_addressing_bot(message_str):
-    keyword = "alexa"
+    keyword = "botify"
     threshold = 70
     similarity = fuzz.partial_ratio(message_str.lower(), keyword.lower())
     # If similarity is above 70, it's likely the user is addressing the bot.
     return similarity > threshold
+
 
 def create_chatbot(chatHistory):
     messages = []
@@ -45,7 +46,7 @@ def create_chatbot(chatHistory):
 
     # Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.
     messages.append({"role": "system",
-                     "content": "Du bist ein intelligenter Assistent in einem Chatraum."
+                     "content": "Du bist ein intelligenter Assistent in einem Chatraum und du heißt Botify."
                                 " Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten"
                                 " zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus"
                                 " dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers"
@@ -75,7 +76,7 @@ def create_chatbot(chatHistory):
     str_date_time = date_time.strftime("%H:%M:%S")
 
     # Returns a new message object with the bot's response and additional metadata.
-    return MessageToClient(username="Alexa", message=response_message, language="EN", timestamp=str_date_time,
+    return MessageToClient(username="Botify", message=response_message, language="EN", timestamp=str_date_time,
                            sentiment=sentiment)
 
 
