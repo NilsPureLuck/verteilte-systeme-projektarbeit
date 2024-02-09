@@ -1,7 +1,7 @@
 import json
 import requests
 from dotenv import load_dotenv
-from Message import MessageFromClient, MessageToClient
+from Backend.Main.Message import MessageFromClient, MessageToClient
 import os
 
 
