@@ -4,7 +4,6 @@ from Server import ChatServerProtocol, ChatServerFactory
 
 class MyTestCase(unittest.TestCase):
     def test_onConnect(self):
-        factory = ChatServerFactory()
         self.assertEqual(True, False)  # add assertion here
 
     def test_onOpen(self):

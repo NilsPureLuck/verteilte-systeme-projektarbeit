@@ -1,7 +1,14 @@
+"""
+Message Module for BaseModels
+-----------------------------
+"""
 from pydantic import BaseModel
 
 
 class MessageFromClient(BaseModel):
+    """
+    Basemodel for Messages from the Client
+    """
     username: str
     message: str
     language: str
@@ -9,6 +16,9 @@ class MessageFromClient(BaseModel):
 
 
 class MessageToClient(BaseModel):
+    """
+    Basemodel for Messages to the Client
+    """
     username: str
     message: str
     language: str

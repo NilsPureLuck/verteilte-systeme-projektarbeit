@@ -1,3 +1,7 @@
+"""
+Chat Helper Module
+------------------
+"""
 from datetime import datetime
 import openai
 import os
@@ -10,7 +14,12 @@ load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-def listenToMessages(chatHistory):
+def listenToMessages(chatHistory: list) -> MessageToClient | None:
+    """
+    This method listens to incoming messages and determines whether the chatbot should be called
+    :param chatHistory: List of last 5 messages in the chat
+    :return: message object or None: either return a message from the chatbot or None if the chatbot is not addressed
+    """
     message = chatHistory[len(chatHistory) - 1]
     message_str = message.message
     if is_message_addressing_bot(message_str):
@@ -22,7 +31,13 @@ def listenToMessages(chatHistory):
 
 
 # Checks the similarity between the last message and the word "botify" using fuzzy matching (Levenshtein distance).
-def is_message_addressing_bot(message_str):
+def is_message_addressing_bot(message_str: str) -> bool:
+    """
+    This method analyses if a message is addressing the chatbot. For this, it compares the similarity of the incoming
+    string with the keyword "botify"
+    :param message_str: Incoming message as a string
+    :return: Bool: True if the incoming message is addressing the chatbot, False otherwise
+    """
     keyword = "botify"
     threshold = 70
     similarity = fuzz.partial_ratio(message_str.lower(), keyword.lower())
@@ -30,7 +45,12 @@ def is_message_addressing_bot(message_str):
     return similarity > threshold
 
 
-def create_chatbot(chatHistory):
+def create_chatbot(chatHistory: list) -> MessageToClient:
+    """
+    This method creates a chatbot and forwards a list of the last 5 messages to it
+    :param chatHistory: List of last 5 messages in the chat
+    :return: message: Answer from the chatbot
+    """
     messages = []
     # Analyzes the overall sentiment of the chat history to adjust the bot's responses.
     sentiment = checkSentiment(chatHistory)
@@ -80,7 +100,12 @@ def create_chatbot(chatHistory):
                            sentiment=sentiment)
 
 
-def checkSentiment(chatHistory):
+def checkSentiment(chatHistory: list) -> float:
+    """
+    This method calculates the average sentiment of the last 5 messages in the chatHistory
+    :param chatHistory: List of last 5 messages in the chat
+    :return: sentiment_value: average sentiment of the last 5 messages
+    """
     # Calculates the average sentiment of the chat history to inform response generation.
     sentiment_value = 0
     for message in chatHistory:

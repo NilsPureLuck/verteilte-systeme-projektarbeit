@@ -1,3 +1,7 @@
+"""
+Server Module
+-------------
+"""
 import json
 import traceback
 from twisted.internet import reactor
@@ -10,17 +14,34 @@ from Sentiment import sentiment_analysis
 
 
 class ChatServerProtocol(WebSocketServerProtocol):
+    """
+    WebSocket Server
+    """
     chatHistory = []
 
     def onConnect(self, request):
+        """
+        This method connects a client to the server
+        :param request: incoming request from the client
+        """
         self.language = None
         self.username = None
         print(f"Client verbunden: {request.peer}")
 
     def onOpen(self):
+        """
+        This method registers a new client when the connection is openned
+        """
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
+        """
+        This method receives a message from a client, calls translation, sentiment analysis, chatbot and distributes it
+        among the chat participants
+        :param payload: incoming message from the client
+        :param isBinary: Boolean indicating whether a message is binary or not
+        :raise HTTPStatus: 400 Bad Request if the incoming message is malformed
+        """
         try:
             if not isBinary:
                 try:
@@ -86,11 +107,18 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
 
 class ChatServerFactory(WebSocketServerFactory):
+    """
+    Factory for WebSocket Servers
+    """
     def __init__(self, url):
         super().__init__(url)
         self.clients = []
 
     def getUsernameAndLang(self):
+        """
+        This methods compiles a list of all usernames and languages participating in the chat
+        :return: List of clients and their set language
+        """
         client_list = []
         for client in self.clients:
             if not (client.username is None or client.language is None):
@@ -100,6 +128,9 @@ class ChatServerFactory(WebSocketServerFactory):
         return client_list
 
     def sendCurrentUsers(self):
+        """
+        This method sends a list of all clients currently registered to the server
+        """
         number_of_clients = len(self.clients)
         client_list = self.getUsernameAndLang()
         print(client_list)
@@ -117,11 +148,19 @@ class ChatServerFactory(WebSocketServerFactory):
                 print(traceback.format_exc())
 
     def register(self, client):
+        """
+        This method adds a client to the list of chat participants
+        :param client: client to be registered
+        """
         if client not in self.clients:
             print(f"Client {client.peer} registriert.")
             self.clients.append(client)
 
     def unregister(self, client):
+        """
+        This method removes the client from the list of chat participants
+        :param client: client to be removed
+        """
         if client in self.clients:
             print(f"Client {client.peer} registriert.")
             self.clients.remove(client)
@@ -129,6 +168,11 @@ class ChatServerFactory(WebSocketServerFactory):
             self.sendCurrentUsers()
 
     def broadcast(self, message, sender):
+        """
+        This method broadcasts the message to all clients in the chat
+        :param message: The message to broadcast
+        :param sender: Sender client of the message
+        """
         print(sender)
         for client in self.clients:
             message = translate_text(message)
