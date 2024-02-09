@@ -1,9 +1,11 @@
+import json
 from datetime import datetime
+
 import openai
 import os
 from dotenv import load_dotenv
 from fuzzywuzzy import fuzz
-from Message import MessageToClient
+from Backend.Main import MessageToClient
 
 # Set the OpenAI API key from the .env file for authentication.
 load_dotenv()
