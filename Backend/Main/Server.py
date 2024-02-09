@@ -2,11 +2,11 @@ import json
 import traceback
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
-from Message import MessageFromClient
 from http import HTTPStatus
-from Backend.Main.Translator import translate_text
-from Backend.Main.ChatHelper import listenToMessages
-from Backend.Main.Sentiment import sentiment_analysis
+from Message import MessageFromClient
+from Translator import translate_text
+from ChatHelper import listenToMessages
+from Sentiment import sentiment_analysis
 
 
 class ChatServerProtocol(WebSocketServerProtocol):

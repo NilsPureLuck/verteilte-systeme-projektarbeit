@@ -3,7 +3,7 @@ import openai
 import os
 from dotenv import load_dotenv
 from fuzzywuzzy import fuzz
-from Backend.Main import MessageToClient
+from Message import MessageToClient
 
 # Set the OpenAI API key from the .env file for authentication.
 load_dotenv()
