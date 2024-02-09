@@ -1,8 +1,7 @@
 import unittest
-
+import sys
 from Backend.Main import MessageFromClient, MessageToClient
 from Backend.Main.Translator import translate_text
-
 
 class TranslatorTest(unittest.TestCase):
     def test_translate(self):
