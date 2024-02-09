@@ -4,7 +4,7 @@ from google.cloud import translate_v2 as translate
 
 from Message import MessageFromClient, MessageToClient
 
-
+#Method to translate the Chatmessages
 def translate_text(message: MessageFromClient | MessageToClient):
     credentials_path = "credentials.json"
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path

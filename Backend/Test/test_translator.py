@@ -5,6 +5,7 @@ from Backend.Main.Translator import translate_text
 
 
 class TranslatorTest(unittest.TestCase):
+    #Methode to test the translation process. Checks on the correct translation of the given message
     def test_translate(self):
         #MessageFromClient as Input
         message_given = MessageFromClient(username="Matthias", message="Hallo ich bin ein Bär",
