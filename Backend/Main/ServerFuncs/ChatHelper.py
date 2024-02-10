@@ -109,6 +109,7 @@ def create_chatbot(chatHistory: list) -> MessageToClient:
                                sentiment=sentiment)
     except Exception as e:
         print(traceback.format_exc())
+        print("An error occurred while creating the chatbot:", e)
         return MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
                                language="EN",
                                timestamp=datetime.now().strftime("%H:%M:%S"),
