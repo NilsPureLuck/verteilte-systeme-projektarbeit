@@ -1,14 +1,22 @@
-import json
+"""
+Sentiment Module
+----------------
+"""
 import requests
 from dotenv import load_dotenv
-from Message import MessageFromClient, MessageToClient
+from .Message import MessageFromClient, MessageToClient
 import os
 
 
 load_dotenv()
 
 
-def sentiment_analysis(message: MessageFromClient):
+def sentiment_analysis(message: MessageFromClient) -> MessageToClient:
+	"""
+	This method analyses the sentiment of a given message
+	:param message: incoming message without a sentiment
+	:return: message: analysed message with a sentiment
+	"""
 	url = os.environ.get("URL")
 	headers = {
 		"X-RapidAPI-Key": os.environ.get("XKEY"),

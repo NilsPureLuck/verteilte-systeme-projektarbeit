@@ -1,6 +1,6 @@
 import unittest
-from Message import MessageToClient
-from ChatHelper import listenToMessages, create_chatbot, checkSentiment, is_message_addressing_bot
+from ServerFuncs.Message import MessageToClient
+from ServerFuncs.ChatHelper import listenToMessages, create_chatbot, checkSentiment, is_message_addressing_bot
 
 
 class MyTestCase(unittest.TestCase):
