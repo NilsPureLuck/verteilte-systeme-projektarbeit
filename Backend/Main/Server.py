@@ -2,6 +2,7 @@
 Server Module
 -------------
 """
+
 import json
 import traceback
 from twisted.internet import reactor
@@ -17,6 +18,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
     """
     WebSocket Server
     """
+
     chatHistory = []
 
     def onConnect(self, request):
@@ -51,7 +53,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
                     message = MessageFromClient.model_validate(message)
 
                     if self.language is None or self.username is None:
-                        self.language = message.language
+                        self.language = message.language.lower()
                         self.username = message.username
                         print("set user language to", self.language)
                         print("linked user with username", self.username)
@@ -59,14 +61,15 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
                     if message.language != "en":
                         message.language = "en"
+                        
+                    message_copy = message.message
 
-                    message = translate_text(message)
-                    print(
-                        f"translated message for sentiment to: {message.message}"
-                    )
+                    message, detectedlang = translate_text(message)
+                    print(f"translated message for sentiment to: {message.message}")
                     message = sentiment_analysis(message)
                     print(f"sentiment generated: {message.sentiment}")
 
+                    
                     self.chatHistory.append(message)
                     print(f"Message '{message.message}' added to chat history")
 
@@ -76,6 +79,10 @@ class ChatServerProtocol(WebSocketServerProtocol):
                             f"old message '{message_old.message} removed from chat history"
                         )
 
+                    message.orgmessage = message_copy
+                    message.detectedlang = detectedlang
+                    
+                    print(f"Message with old message and detected Lang : {message}")
                     self.factory.broadcast(message, self)
                     print(f"Message '{message.message}' broadcasted")
 
@@ -102,7 +109,9 @@ class ChatServerProtocol(WebSocketServerProtocol):
             raise HTTPStatus(status=400, reason="wrong parameter in request")
 
     def onClose(self, wasClean, code, reason):
-        print(f"WebSocket-Verbindung geschlossen: {reason} {wasClean} {code}")
+        print(
+            f"WebSocket-Verbindung geschlossen: {reason}, was clean: {wasClean}, code: {code}"
+        )
         self.factory.unregister(self)
 
 
@@ -110,6 +119,7 @@ class ChatServerFactory(WebSocketServerFactory):
     """
     Factory for WebSocket Servers
     """
+
     def __init__(self, url):
         super().__init__(url)
         self.clients = []
@@ -168,17 +178,24 @@ class ChatServerFactory(WebSocketServerFactory):
             self.sendCurrentUsers()
 
     def broadcast(self, message, sender):
+        print(f"message for broadcast {message}")
         """
         This method broadcasts the message to all clients in the chat
         :param message: The message to broadcast
         :param sender: Sender client of the message
         """
-        print(sender)
+        
         for client in self.clients:
-            message.language = str(client.language)
-            message = translate_text(message)
-            print(f"Message translated for {client.username}")
-            client.sendMessage(json.dumps(message.__dict__).encode("utf-8"))
+            if client.language == message.detectedlang:
+                message.message = message.orgmessage
+                jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
+                client.sendMessage(jsonmassage.encode("utf-8"))    
+            else:
+                message.language = str(client.language)
+                message, _ = translate_text(message)
+                print(f"Message translated for {client.username} to {message}")
+                jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
+                client.sendMessage(jsonmassage.encode("utf-8"))    
 
 
 if __name__ == "__main__":

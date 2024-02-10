@@ -24,3 +24,5 @@ class MessageToClient(BaseModel):
     language: str
     timestamp: str
     sentiment: float
+    orgmessage: str | None = None
+    detectedlang: str | None = None

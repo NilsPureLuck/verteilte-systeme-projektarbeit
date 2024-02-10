@@ -106,6 +106,8 @@ function saveUserSettings() {
         dropdowns.forEach(function (dropdown){
             dropdown.classList.add('no-hover-dropdown');
         })
+
+        document.getElementById("chatTextInput").focus();
     }
 }
 
@@ -347,5 +349,6 @@ document.addEventListener("keydown", function(event) {
     if (event.key === "Enter" && document.activeElement === element) {
         event.preventDefault();
         saveUserSettings();
+        document.getElementById("chatTextInput").focus();
     }
 });

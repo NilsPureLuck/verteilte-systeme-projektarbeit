@@ -14,7 +14,7 @@ from .Message import MessageFromClient, MessageToClient
 def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromClient|MessageToClient:
     """
     This method translates an incoming message into the language specified in the message field message.language
-    :param message: incoming message in orignial language
+    :param message: incoming message in original language
     :return: message: translated message
     """
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
@@ -26,4 +26,4 @@ def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromC
     result = translate_client.translate(message_str, target_language=target)
     result["translatedText"] = html.unescape(result["translatedText"])
     message.message = result["translatedText"]
-    return message
+    return message, result["detectedSourceLanguage"]
