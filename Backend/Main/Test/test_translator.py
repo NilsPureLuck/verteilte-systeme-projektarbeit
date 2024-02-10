@@ -4,8 +4,14 @@ from ServerFuncs.Translator import translate_text
 
 
 class TestTranslator(unittest.TestCase):
+    """
+    Tests for the Translator module
+    """
     # Methode to test the translation process. Checks on the correct translation of the given message
     def test_translate(self):
+        """
+        This method tests the translate-method\n
+        """
         # MessageFromClient as Input
         message_given = MessageFromClient(username="Matthias", message="Hallo ich bin ein Bär",
                                           language="EN", timestamp="15:43:33")

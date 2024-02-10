@@ -1,7 +1,3 @@
-"""
-Server Module
--------------
-"""
 import json
 import traceback
 from twisted.internet import reactor
@@ -15,14 +11,14 @@ from ServerFuncs.Sentiment import sentiment_analysis
 
 class ChatServerProtocol(WebSocketServerProtocol):
     """
-    WebSocket Server
+    WebSocket Server\n
     """
     chatHistory = []
 
     def onConnect(self, request):
         """
-        This method connects a client to the server
-        :param request: incoming request from the client
+        This method connects a client to the server\n
+        :param request: incoming request from the client\n
         """
         self.language = None
         self.username = None
@@ -30,17 +26,17 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
     def onOpen(self):
         """
-        This method registers a new client when the connection is openned
+        This method registers a new client when the connection is openned\n
         """
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
         """
-        This method receives a message from a client, calls translation, sentiment analysis, chatbot and distributes it
-        among the chat participants
-        :param payload: incoming message from the client
-        :param isBinary: Boolean indicating whether a message is binary or not
-        :raise HTTPStatus: 400 Bad Request if the incoming message is malformed
+        This method receives a message from a client, calls translation, sentiment analysis,
+        chatbot and distributes it among the chat participants\n
+        :param payload: incoming message from the client\n
+        :param isBinary: Boolean indicating whether a message is binary or not\n
+        :raise HTTPStatus: 400 Bad Request if the incoming message is malformed\n
         """
         try:
             if not isBinary:
@@ -102,6 +98,12 @@ class ChatServerProtocol(WebSocketServerProtocol):
             raise HTTPStatus(status=400, reason="wrong parameter in request")
 
     def onClose(self, wasClean, code, reason):
+        """
+        This method is called when the websocket connection closes\n
+        :param wasClean: boolean whether the connection was closed cleanly\n
+        :param code: status code of the connection close\n
+        :param reason: cause for connection close\n
+        """
         print(f"WebSocket-Verbindung geschlossen: {reason} {wasClean} {code}")
         self.factory.unregister(self)
 
@@ -116,8 +118,8 @@ class ChatServerFactory(WebSocketServerFactory):
 
     def getUsernameAndLang(self):
         """
-        This methods compiles a list of all usernames and languages participating in the chat
-        :return: List of clients and their set language
+        This methods compiles a list of all usernames and languages participating in the chat\n
+        :return client_list: List of clients and their set language\n
         """
         client_list = []
         for client in self.clients:
@@ -129,7 +131,7 @@ class ChatServerFactory(WebSocketServerFactory):
 
     def sendCurrentUsers(self):
         """
-        This method sends a list of all clients currently registered to the server
+        This method sends a list of all clients currently registered to the server\n
         """
         number_of_clients = len(self.clients)
         client_list = self.getUsernameAndLang()
@@ -149,8 +151,8 @@ class ChatServerFactory(WebSocketServerFactory):
 
     def register(self, client):
         """
-        This method adds a client to the list of chat participants
-        :param client: client to be registered
+        This method adds a client to the list of chat participants\n
+        :param client: client to be registered\n
         """
         if client not in self.clients:
             print(f"Client {client.peer} registriert.")
@@ -158,8 +160,8 @@ class ChatServerFactory(WebSocketServerFactory):
 
     def unregister(self, client):
         """
-        This method removes the client from the list of chat participants
-        :param client: client to be removed
+        This method removes the client from the list of chat participants\n
+        :param client: client to be removed\n
         """
         if client in self.clients:
             print(f"Client {client.peer} registriert.")
@@ -169,9 +171,9 @@ class ChatServerFactory(WebSocketServerFactory):
 
     def broadcast(self, message, sender):
         """
-        This method broadcasts the message to all clients in the chat
-        :param message: The message to broadcast
-        :param sender: Sender client of the message
+        This method broadcasts the message to all clients in the chat\n
+        :param message: The message to broadcast\n
+        :param sender: Sender client of the message\n
         """
         print(sender)
         for client in self.clients:

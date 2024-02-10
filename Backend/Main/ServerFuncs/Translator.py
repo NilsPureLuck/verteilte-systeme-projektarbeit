@@ -1,7 +1,3 @@
-"""
-Translator Module
------------------
-"""
 import os
 import html
 import json
@@ -13,9 +9,9 @@ from .Message import MessageFromClient, MessageToClient
 # Method to translate the messages
 def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromClient|MessageToClient:
     """
-    This method translates an incoming message into the language specified in the message field message.language
-    :param message: incoming message in orignial language
-    :return: message: translated message
+    This method translates an incoming message into the language specified in the message field message.language\n
+    :param message: incoming message in orignial language\n
+    :return message: translated message\n
     """
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     translate_client = translate.Client()
