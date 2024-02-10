@@ -5,12 +5,14 @@ from .Message import MessageFromClient, MessageToClient
 import traceback
 
 
-# Method to translate the messages
-def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromClient|MessageToClient:
+def translate_text(message: MessageFromClient | MessageToClient, retry=False) -> (MessageFromClient | MessageToClient, str):
     """
-    This method translates an incoming message into the language specified in the message field message.language
-    :param message: incoming message in original language
-    :return: message: translated message
+    Translates an incoming message into the language specified in the message.language field.
+    If an exception occurs, it retries once more.
+
+    :param message: Incoming message in original language
+    :param retry: Indicates if this is a retry attempt
+    :return: Tuple of (translated message, detected source language or "unknown" on error)
     """
     try:
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../credentials.json"
@@ -19,6 +21,7 @@ def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromC
         target = message.language
         if isinstance(message_str, bytes):
             message_str = message_str.decode("utf-8")
+
         result = translate_client.translate(message_str, target_language=target)
         result["translatedText"] = html.unescape(result["translatedText"])
         message.message = result["translatedText"]
@@ -26,4 +29,9 @@ def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromC
     except Exception as e:
         print("An error occurred while translating the text:", e)
         print(traceback.format_exc())
-        return message, "unknown"
+        if not retry:
+            print("Retrying...")
+            return translate_text(message, retry=True)
+        else:
+            # Return the original message and "unknown" if the retry also fails
+            return message, "unknown"
