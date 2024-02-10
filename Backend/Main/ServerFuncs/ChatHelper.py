@@ -6,14 +6,15 @@ from fuzzywuzzy import fuzz
 from .Message import MessageToClient
 import traceback
 
-try:
-    load_dotenv()
-    openai.api_key = os.getenv('OPENAI_API_KEY')
-except Exception as e:
-    print(traceback.format_exc())
+def load_api_config():
+    try:
+        load_dotenv()
+        openai.api_key = os.getenv('OPENAI_API_KEY')
+    except Exception as e:
+        print(traceback.format_exc())
 
 
-def listenToMessages(chatHistory: list) -> MessageToClient | None:
+def listenToMessages(chatHistory: list) -> MessageToClient:
     """
     This method listens to incoming messages and determines whether the chatbot should be called\n
     :param chatHistory: List of last 5 messages in the chat\n
@@ -86,11 +87,13 @@ def generate_response(messages: list, sentiment: float) -> str:
     :return: Generated response
     """
     temperature = calculate_temperature(sentiment)
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Adjust the model as necessary
+    response = openai.chat.completions.create(
+        model="gpt-4-0125-preview",  # Adjust the model as necessary
         messages=messages,
         temperature=temperature,
-        max_tokens=100
+        max_tokens=100,
+        frequency_penalty=0,
+        presence_penalty=0
     )
     return response.choices[0].message.content
 
