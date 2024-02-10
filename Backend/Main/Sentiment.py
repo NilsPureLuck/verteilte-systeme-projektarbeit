@@ -4,7 +4,7 @@ Sentiment Module
 """
 import requests
 from dotenv import load_dotenv
-from Message import MessageFromClient, MessageToClient
+from .Message import MessageFromClient, MessageToClient
 import os
 
 

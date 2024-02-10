@@ -5,7 +5,7 @@ Translator Module
 import os
 import html
 from google.cloud import translate_v2 as translate
-from Message import MessageFromClient, MessageToClient
+from .Message import MessageFromClient, MessageToClient
 
 
 # Method to translate the messages
