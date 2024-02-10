@@ -20,9 +20,9 @@ function buttonSendAction() {
         //creating timestamp
         const now = new Date();
 
-        var hour = now.getHours().toString().padStart(2, '0');
-        var minute = now.getMinutes().toString().padStart(2, '0');
-        var second = now.getSeconds().toString().padStart(2, '0');
+        let hour = now.getHours().toString().padStart(2, '0');
+        let minute = now.getMinutes().toString().padStart(2, '0');
+        let second = now.getSeconds().toString().padStart(2, '0');
 
         let timestamp = `${hour}:${minute}:${second}`;
 
