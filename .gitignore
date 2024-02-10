@@ -2,9 +2,11 @@
 /Backend/Main/credentials.json
 /Backend/Main/.env
 venv
-verteile-systeme-projektarbeit.code-workspace
+Neu.code-workspace
 .env
 credentials.json
 .vscode
 verteile-systeme-projektarbeit.code-workspace
 **/__pycache__/
+**/htmlcov
+.coverage
