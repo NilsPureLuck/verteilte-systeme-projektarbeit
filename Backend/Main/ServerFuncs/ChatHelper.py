@@ -100,13 +100,9 @@ def create_chatbot(chatHistory: list) -> MessageToClient:
         messages.append({"role": "assistant", "content": response_message})
         print("\n" + response_message + "\n")
 
-        # Captures the current time to timestamp the bot's response.
-        date_time = datetime.now()
-        str_date_time = date_time.strftime("%H:%M:%S")
-
         # Returns a new message object with the bot's response and additional metadata.
-        return MessageToClient(username="Botify", message=response_message, language="EN", timestamp=str_date_time,
-                               sentiment=sentiment)
+        return MessageToClient(username="Botify", message=response_message, language="EN",
+                               timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
     except Exception as e:
         print(traceback.format_exc())
         print("An error occurred while creating the chatbot:", e)
