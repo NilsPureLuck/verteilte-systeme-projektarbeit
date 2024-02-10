@@ -19,6 +19,9 @@ def translate_text(message: MessageFromClient | MessageToClient, retry=False) ->
         translate_client = translate.Client()
         message_str = message.message
         target = message.language
+
+        #message.language funktioniert irgendwie nicht ganz
+
         print("message language:  "+message.language)
         if isinstance(message_str, bytes):
             message_str = message_str.decode("utf-8")
