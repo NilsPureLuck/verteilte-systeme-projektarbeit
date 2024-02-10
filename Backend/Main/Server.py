@@ -13,7 +13,6 @@ from ServerFuncs.ChatHelper import listenToMessages
 from ServerFuncs.Sentiment import sentiment_analysis
 
 
-
 class ChatServerProtocol(WebSocketServerProtocol):
     """
     WebSocket Server
