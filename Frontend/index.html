@@ -7,7 +7,7 @@
     <script src ="script.js"></script>
     <link rel="icon" href="img/Virtualmeet_Transparent.png" type="image/x-icon">
 </head>
-<body onload="establishConnection()">
+<body onload="establishConnection(); changeLanguageOnTheSite();">
 
 <h1>Virtual Meet</h1>
 
@@ -31,62 +31,41 @@
                     <a href="#" data-value="4"><img class="flaggenImage" src="img/Flag_of_Italy.png" alt="Flag_of_Italy"> Italiano </a>
                     <a href="#" data-value="5"><img class="flaggenImage" src="img/Flag_of_Spain.png" alt="Flag_of_Spain"> Español </a>
                 </div>
-
                 <input type="hidden" id="dropdownValue" name="dropdownValue">
-
             </div>
         </div>
 
         <label class="usernameLabelArea" id="userNameLabel">Username:</label>
-        <div class="nickNameInputArea"><input id="nicknameArea" placeholder="Enter a username..."> </div>
+        <div class="nickNameInputArea"><label for="nicknameArea"></label><input id="nicknameArea" placeholder="Enter a username..."> </div>
         <button type="button" id="userSettingSaveButton" class="usersettingsButton" onclick="saveUserSettings()">Save</button>
     </div>
 
     <div class="userListArea">
         <label id="userListLabel" style="text-decoration: underline">Current Users</label>
-        <ul id="unorderedUserList" readonly></ul>
+        <ul id="unorderedUserList" readonly>
+            <li>test: en</li>
+             <li>test: en</li>
+        </ul>
     </div>
 
     <div class="chatfenster">
         <label for="chatTextArea"></label>
-        <textarea readonly id="chatTextArea" placeholder="Please enter a username and select a language to enter the chatroom..."></textarea>
+        <textarea readonly id="chatTextArea" placeholder="Please enter a username, select a language and send a message to enter the chatroom..."></textarea>
     </div>
 
     <div class="guideArea">
-
-        <article style="font-size: 12px" id="guideArticle">
-            <u>Getting Started with Virtual Meet</u> <br>
-            Welcome to Virtual Meet! Here's a quick guide to get you started: <br>
-            <br>
-            <b>1. Select username and language </b><br>
-            Before you get started, choose a username and your preferred language. Don't forget to press "Save".<br>
-            <b>2. Sending a message</b><br>
-            To send a message, simply enter your text in the text field and click Send. Your message will then be sent to all other chat participants.<br>
-            <b>3. Chatbot participation in the conversation</b><br>
-            If you want the chatbot to join the conversation, simply mention its name in your message. Our chatbot is called “botify”. botify then automatically responds to your message.<br>
-            For example: “botify, what is the current mood in the chat?”<br>
-            <b>4. Active users</b><br>
-            On the left side of the screen you will find a list of all active users. In addition to the user name, the language set is also displayed.<br>
-            <b>5. Display the current mood in the chat: </b><br>
-            Behind each message you will see an indicator that shows the current mood in the chat. This indicator is calculated all by itself. So you don't have to do anything!<br>
-            <br>
-            That's it! You are now ready to use Virtual Meet and communicate with other users.<br>
-            Have fun! 😊<br>
-        </article>
-
+        <article style="font-size: 12px" id="guideArticle"></article>
     </div>
 
     <div class="chatinteraktion">
-
         <div id="chatInputArea">
             <label for="chatTextInput"></label><input id="chatTextInput" placeholder="Enter a message...">
         </div>
-
         <div class="sendButtonArea">
             <button id="sendButton" type="button" onclick="buttonSendAction()">Send</button>
         </div>
-
     </div>
 </div>
 </body>
-</html>
+
+<footer style="font-size: 12px" id="footerArea"></footer>
