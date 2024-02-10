@@ -49,7 +49,7 @@ function establishConnection() {
 
     socket.addEventListener("message", (event) => {
 
-        // parsing of the received json message
+        //Parsing of the received json message
         const receivedMessage = JSON.parse(event.data);
         console.log(receivedMessage);
 
@@ -95,7 +95,7 @@ function saveUserSettings() {
     const nicknameEingabe = document.getElementById("nicknameArea");
 
     if(nicknameEingabe.value === ''){
-        alert("Bitte keinen leeren Nickname angeben!");
+        alert("Please don`t leave a blank field!");
     }else{
       savedNickname = nicknameEingabe.value;
         nicknameEingabe.readOnly = true;
@@ -171,8 +171,8 @@ function changeLanguageOnTheSite(){
     switch (chosenlanguage){
         case "de":
             articleGuide.innerHTML =
-                "<u>Getting Started with Virtualmeet</u><br>" +
-                "Willkommen bei Virtualmeet! Hier ist eine schnelle Anleitung, um dir den Einstieg zu erleichtern:<br>" +
+                "<u>Getting Started with Virtual Meet</u><br>" +
+                "Willkommen bei Virtual Meet! Hier ist eine schnelle Anleitung, um dir den Einstieg zu erleichtern:<br>" +
                 "<br>" +
                 "<b>1. Nutzernamen und Sprache auswählen</b><br>" +
                 "Bevor du loslegst, wähle einen Nutzernamen und deine bevorzugte Sprache aus. Vergiss nicht auf „Speichern“ zu drücken<br>" +
@@ -186,7 +186,7 @@ function changeLanguageOnTheSite(){
                 "<b>5. Anzeige der aktuellen Stimmung im Chat:</b><br>" +
                 "Hinter jeder Nachricht siehst du einen Indikator, der die aktuelle Stimmung im Chat anzeigt. Dieser Indikator wird von ganz alleine berechnet. Du musst also nichts machen!<br>" +
                 "<br>" +
-                "Das war's! Du bist nun bereit, Virtualmeet zu nutzen und mit anderen Usern zu kommunizieren. <br>" +
+                "Das war's! Du bist nun bereit, Virtual Meet zu nutzen und mit anderen Usern zu kommunizieren. <br>" +
                 "Viel Spaß! 😊";
             chatMessageInput.placeholder = "Nachricht eingeben...";
             usernameInput.placeholder = "Benutzername eingeben..."
@@ -199,8 +199,8 @@ function changeLanguageOnTheSite(){
             break;
         case "en":
             articleGuide.innerHTML =
-                "<u>Getting Started with Virtualmeet</u><br>" +
-                "Welcome to Virtualmeet! Here's a quick guide to get you started:<br>" +
+                "<u>Getting Started with Virtual Meet</u><br>" +
+                "Welcome to Virtual Meet! Here's a quick guide to get you started:<br>" +
                 "<br>" +
                 "<b>1. Select username and language</b><br>" +
                 "Before you get started, choose a username and your preferred language. Don't forget to press \"Save\".<br>" +
@@ -214,7 +214,7 @@ function changeLanguageOnTheSite(){
                 "<b>5. Display the current mood in the chat:</b><br>" +
                 "Behind each message you will see an indicator that shows the current mood in the chat. This indicator is calculated all by itself. So you don't have to do anything!<br>" +
                 "<br>" +
-                "That's it! You are now ready to use Virtualmeet and communicate with other users.<br>" +
+                "That's it! You are now ready to use Virtual Meet and communicate with other users.<br>" +
                 "Have fun! 😊";
             chatMessageInput.placeholder = "Enter a message...";
             usernameInput.placeholder = "Enter a username..."
@@ -228,7 +228,7 @@ function changeLanguageOnTheSite(){
         case "fr":
             articleGuide.innerHTML =
                 "<u>Premiers pas avec Virtual Meet</u><br>" +
-                "Bienvenue sur Rencontre Virtualmeet ! Voici un guide rapide pour vous aider à démarrer :<br>" +
+                "Bienvenue sur Rencontre Virtual Meet ! Voici un guide rapide pour vous aider à démarrer :<br>" +
                 "\n" +
                 "<b>1. Sélectionnez le nom d'utilisateur et la langue</b><br>" +
                 "Avant de commencer, choisissez un nom d'utilisateur et votre langue préférée. N'oubliez pas d'appuyer sur \"Enregistrer\".<br>" +
@@ -255,8 +255,8 @@ function changeLanguageOnTheSite(){
             break;
         case "it":
             articleGuide.innerHTML =
-                "<u>Iniziare con Virtualmeet</u><br>" +
-                "Benvenuto su Virtualmeet! Ecco una guida rapida per iniziare:<br>" +
+                "<u>Iniziare con Virtual Meet</u><br>" +
+                "Benvenuto su Virtual Meet! Ecco una guida rapida per iniziare:<br>" +
                 "<br>" +
                 "<b>1. Seleziona nome utente e lingua</b><br>" +
                 "Prima di iniziare, scegli un nome utente e la tua lingua preferita. Non dimenticare di premere \"Salva\".<br>" +
@@ -270,7 +270,7 @@ function changeLanguageOnTheSite(){
                 "<b>5. Visualizza lo stato d'animo attuale nella chat:</b><br>" +
                 "Dietro ogni messaggio vedrai un indicatore che mostra lo stato d'animo attuale nella chat. Questo indicatore è calcolato da solo. Quindi non devi fare nulla!<br>" +
                 "<br>" +
-                "Questo è tutto! Ora sei pronto per utilizzare Virtualmeet e comunicare con altri utenti.<br>" +
+                "Questo è tutto! Ora sei pronto per utilizzare Virtual Meet e comunicare con altri utenti.<br>" +
                 "Divertiti! 😊";
             chatMessageInput.placeholder = "Inserisci il tuo messaggio...";
             usernameInput.placeholder = "Inserire username..."
@@ -283,8 +283,8 @@ function changeLanguageOnTheSite(){
             break;
         case "es":
             articleGuide.innerHTML =
-                "<u>Comenzando con Virtualmeet</u><br>" +
-                "¡Bienvenidos a VirtualMeet! Aquí tienes una guía rápida para empezar:<br>" +
+                "<u>Comenzando con Virtual Meet</u><br>" +
+                "¡Bienvenidos a Virtual Meet! Aquí tienes una guía rápida para empezar:<br>" +
                 "<br>" +
                 "<b>1. Seleccione nombre de usuario e idioma</b><br>" +
                 "Antes de comenzar, elija un nombre de usuario y su idioma preferido. No olvides presionar \"Guardar\".<br>" +
@@ -298,7 +298,7 @@ function changeLanguageOnTheSite(){
                 "<b>5. Muestra el estado de ánimo actual en el chat:</b><br>" +
                 "Detrás de cada mensaje verás un indicador que muestra el estado de ánimo actual en el chat. Este indicador se calcula por sí solo. ¡Así que no tienes que hacer nada!<br>" +
                 "<br>" +
-                "¡Eso es todo! Ahora está listo para utilizar Virtualmeet y comunicarse con otros usuarios.<br>" +
+                "¡Eso es todo! Ahora está listo para utilizar Virtual Meet y comunicarse con otros usuarios.<br>" +
                 "¡Divertirse! 😊";
             chatMessageInput.placeholder = "Ingrese su mensaje...";
             usernameInput.placeholder = "Introduzca su nombre de usuario..."
