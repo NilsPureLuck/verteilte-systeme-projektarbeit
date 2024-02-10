@@ -1,6 +1,6 @@
 .idea
-/Backend/Main/credentials.json
-/Backend/Main/.env
+/credentials.json
+/.env
 venv
 Neu.code-workspace
 .env

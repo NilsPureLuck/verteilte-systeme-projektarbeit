@@ -1,7 +1,3 @@
-"""
-Message Module for BaseModels
------------------------------
-"""
 from pydantic import BaseModel
 
 

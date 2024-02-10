@@ -1,11 +1,6 @@
 Main package
 ============
 
-.. toctree::
-   :maxdepth: 4
-
-   Main.ServerFuncs
-   Main.Test
 
 Main.Server module
 ------------------

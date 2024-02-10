@@ -4,7 +4,7 @@ from Server import ChatServerProtocol, ChatServerFactory
 
 class TestChatServerProtocol(unittest.TestCase):
     """
-    Tests for ChaServerProtocol of the Server module \n
+    Tests for ChatServerProtocol of the Server module \n
     """
     def test_onConnect(self):
         """
@@ -45,7 +45,7 @@ class TestChatServerProtocol(unittest.TestCase):
 
 class TestChatServerFactory(unittest.TestCase):
     """
-    Tests for ChaServerFactory of the Server module\n
+    Tests for ChatServerFactory of the Server module\n
     """
     def test_register(self):
         """

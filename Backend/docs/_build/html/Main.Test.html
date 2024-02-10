@@ -44,6 +44,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main.Test package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-Main.Test.test_chathelper">Main.Test.test_chathelper module</a><ul>
@@ -77,6 +78,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_server.TestChatServerProtocol.test_onMessage"><code class="docutils literal notranslate"><span class="pre">TestChatServerProtocol.test_onMessage()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_server.TestChatServerProtocol.test_onOpen"><code class="docutils literal notranslate"><span class="pre">TestChatServerProtocol.test_onOpen()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_server.TestChatServerProtocol.test_sendCurrentUsers"><code class="docutils literal notranslate"><span class="pre">TestChatServerProtocol.test_sendCurrentUsers()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#main-test-test-translator-module">Main.Test.test_translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Test.test_translator.TestTranslator"><code class="docutils literal notranslate"><span class="pre">TestTranslator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_translator.TestTranslator.test_translate"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_translate()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -167,7 +175,7 @@
 <dt class="sig sig-object py" id="Main.Test.test_server.TestChatServerFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_server.</span></span><span class="sig-name descname"><span class="pre">TestChatServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_server.html#TestChatServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_server.TestChatServerFactory" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
-<p>Tests for ChaServerFactory of the Server module</p>
+<p>Tests for ChatServerFactory of the Server module</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Main.Test.test_server.TestChatServerFactory.test_broadcast">
 <span class="sig-name descname"><span class="pre">test_broadcast</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_server.html#TestChatServerFactory.test_broadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_server.TestChatServerFactory.test_broadcast" title="Link to this definition"></a></dt>
@@ -192,7 +200,7 @@
 <dt class="sig sig-object py" id="Main.Test.test_server.TestChatServerProtocol">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_server.</span></span><span class="sig-name descname"><span class="pre">TestChatServerProtocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_server.html#TestChatServerProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_server.TestChatServerProtocol" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
-<p>Tests for ChaServerProtocol of the Server module</p>
+<p>Tests for ChatServerProtocol of the Server module</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Main.Test.test_server.TestChatServerProtocol.test_getUsernameAndLang">
 <span class="sig-name descname"><span class="pre">test_getUsernameAndLang</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_server.html#TestChatServerProtocol.test_getUsernameAndLang"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_server.TestChatServerProtocol.test_getUsernameAndLang" title="Link to this definition"></a></dt>
@@ -227,6 +235,22 @@
 <dt class="sig sig-object py" id="Main.Test.test_server.TestChatServerProtocol.test_sendCurrentUsers">
 <span class="sig-name descname"><span class="pre">test_sendCurrentUsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_server.html#TestChatServerProtocol.test_sendCurrentUsers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_server.TestChatServerProtocol.test_sendCurrentUsers" title="Link to this definition"></a></dt>
 <dd><p>This method tests the sendCurrentUsers-method</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="main-test-test-translator-module">
+<h2>Main.Test.test_translator module<a class="headerlink" href="#main-test-test-translator-module" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-Main.Test.test_translator">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_translator.</span></span><span class="sig-name descname"><span class="pre">TestTranslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Translator module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator.test_translate">
+<span class="sig-name descname"><span class="pre">test_translate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator.test_translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator.test_translate" title="Link to this definition"></a></dt>
+<dd><p>This method tests the translate-method</p>
 </dd></dl>
 
 </dd></dl>

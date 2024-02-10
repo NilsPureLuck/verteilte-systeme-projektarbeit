@@ -24,3 +24,11 @@ Main.Test.test\_server module
    :members:
    :undoc-members:
    :show-inheritance:
+
+Main.Test.test\_translator module
+-----------------------------
+
+.. automodule:: Main.Test.test_translator
+   :members:
+   :undoc-members:
+   :show-inheritance:
