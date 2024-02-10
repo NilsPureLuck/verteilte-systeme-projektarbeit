@@ -198,9 +198,21 @@ button:hover{
 .userListArea{
     grid-row: 2;
     grid-column: 1;
-    display: flex;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    grid-template-columns: 1fr;
     justify-content: center;
     width: 80%;
+}
+
+#userListLabel{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#unorderedUserList{
+    grid-column: 1;
+    grid-row: 2;
 }
 
 .userListArea li{
