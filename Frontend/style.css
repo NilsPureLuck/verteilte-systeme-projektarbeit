@@ -213,12 +213,8 @@ button:hover{
 #unorderedUserList{
     grid-column: 1;
     grid-row: 2;
-}
-
-.userListArea li{
     background-color: lightslategrey;
 }
-
 
 .chatfenster{
     grid-row: 2;

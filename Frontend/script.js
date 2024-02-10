@@ -4,7 +4,7 @@ let chosenlanguage = "en";
 let socket;
 
 /**
- * This method sends the text, which has been input, to the server along with the necassary
+ * This method sends the text, which has been input, to the server along with the necessary
  * information in the JSON format
  */
 function buttonSendAction() {
@@ -13,7 +13,7 @@ function buttonSendAction() {
     let inputText = inputWindow.value;
 
     if(inputText === '' || savedNickname ==='') {
-        alert("Bitte Nachricht eingeben!")
+        alert("Please enter a message!")
     }else {
         inputWindow.value = "";
 
@@ -53,7 +53,7 @@ function establishConnection() {
         const receivedMessage = JSON.parse(event.data);
         console.log(receivedMessage);
 
-        //überprüft die Anzahl der User und dann wird unterschieden zwischen einer Message und einer Message mit Useranzahl
+        //Checks the users that are connected to the chat and added to the current user list
         if(receivedMessage.numOfClients) {
             const currentUsersList = document.getElementById("currentUsers");
             currentUsersList.innerHTML = '';
@@ -66,8 +66,7 @@ function establishConnection() {
         }
         else {
 
-            //Nachricht and den Chat
-
+            //receiving the message and adding it to the chat window
             const chatTextArea = document.getElementById("chatTextArea");
             const atmosphere = receivedMessage.sentiment;
             let smiley = "\u{1F610}";
