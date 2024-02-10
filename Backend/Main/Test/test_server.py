@@ -1,5 +1,5 @@
 import unittest
-from ..Main.Server import ChatServerProtocol, ChatServerFactory
+from Server import ChatServerProtocol, ChatServerFactory
 
 
 class MyTestCase(unittest.TestCase):

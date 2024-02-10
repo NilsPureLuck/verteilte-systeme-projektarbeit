@@ -1,6 +1,6 @@
 import unittest
-from ..Main.Sentiment import sentiment_analysis
-from ..Main.Message import MessageFromClient, MessageToClient
+from ServerFuncs.Sentiment import sentiment_analysis
+from ServerFuncs.Message import MessageFromClient, MessageToClient
 
 
 class TestSentiment(unittest.TestCase):
