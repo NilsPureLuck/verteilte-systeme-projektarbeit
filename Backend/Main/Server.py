@@ -175,7 +175,7 @@ class ChatServerFactory(WebSocketServerFactory):
         """
         print(sender)
         for client in self.clients:
-            message.language = client.language
+            message.language = str(client.language)
             message = translate_text(message)
             print(f"Message translated for {client.username}")
             client.sendMessage(json.dumps(message.__dict__).encode("utf-8"))

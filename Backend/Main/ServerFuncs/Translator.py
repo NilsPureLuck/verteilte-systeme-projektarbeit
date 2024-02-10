@@ -4,6 +4,8 @@ Translator Module
 """
 import os
 import html
+import json
+from dotenv import load_dotenv
 from google.cloud import translate_v2 as translate
 from .Message import MessageFromClient, MessageToClient
 
@@ -15,9 +17,7 @@ def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromC
     :param message: incoming message in orignial language
     :return: message: translated message
     """
-    credentials_path = ("C:/Users/Matthias Wohlmacher/PycharmProjects"
-                        "/verteilte-systeme-projektarbeit-neu/Backend/Main/credentials.json")
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     translate_client = translate.Client()
     message_str = message.message
     target = message.language
