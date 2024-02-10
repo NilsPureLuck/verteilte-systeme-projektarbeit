@@ -2,7 +2,7 @@ import unittest
 from Server import ChatServerProtocol, ChatServerFactory
 
 
-class MyTestCase(unittest.TestCase):
+class TestChatServerProtocol(unittest.TestCase):
     def test_onConnect(self):
         self.assertEqual(True, False)  # add assertion here
 
@@ -21,6 +21,8 @@ class MyTestCase(unittest.TestCase):
     def test_sendCurrentUsers(self):
         self.assertEqual(True, False)  # add assertion here
 
+
+class TestChatServerFactory(unittest.TestCase):
     def test_register(self):
         self.assertEqual(True, False)  # add assertion here
 

@@ -3,7 +3,7 @@ from ServerFuncs.Message import MessageToClient
 from ServerFuncs.ChatHelper import listenToMessages, create_chatbot, checkSentiment, is_message_addressing_bot
 
 
-class MyTestCase(unittest.TestCase):
+class TestChatHelper(unittest.TestCase):
     def test_checkSentiment(self):
         message1 = MessageToClient(username="Testuser", message="Testmessage",
                                    language="en", timestamp="00:00:00", sentiment="-1")
