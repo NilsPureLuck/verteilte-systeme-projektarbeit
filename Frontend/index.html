@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Virtualmeet</title>
+    <title>Virtual Meet</title>
     <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Honk">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <script src ="script.js"></script>
-    <link rel="icon" href="img/Virtualmeet.png" type="image/x-icon">
+    <link rel="icon" href="img/Virtualmeet_Transparent.png" type="image/x-icon">
 </head>
 <body onload="establishConnection()">
 
-<h1>Virtualmeet</h1>
+<h1>Virtual Meet</h1>
 
 <div class="grid-block">
-    <div class="top-bar">
-    </div>
-
-    <div class="nickNameArea">
+    <div class="top-bar"></div>
+    <div class="usernameArea">
 
         <div class="languageArea">
 
-            <div class="languageLabelArea"><label class="languageLabel">Language:</label></div>
+            <div class="languageLabelArea"><label id ="languageLabel" class="languageLabel" style="text-decoration: underline">Language:</label></div>
 
             <div class="dropdown">
                 <button class="dropdownBtn">
-                    <img id="chosenLanguageFlag" src="img/Flag_of_Germany.png" alt="Flag_of_Germany" style="width:40px; height: auto">
+                    <img id="chosenLanguageFlag" src="img/Flag_of_England.png" alt="Flag_of_Germany" style="width:40px; height: auto;">
                 </button>
 
                 <div class="dropdown-content">
                     <a href="#" data-value="1"><img class="flaggenImage" src="img/Flag_of_Germany.png" alt="Flag_of_Germany"> Deutsch </a>
                     <a href="#" data-value="2"><img class="flaggenImage" src="img/Flag_of_England.png" alt="Flag_of_England"> English </a>
                     <a href="#" data-value="3"><img class="flaggenImage" src="img/Flag_of_France.png" alt="Flag_of_France"> Français </a>
-                    <a href="#" data-value="4"><img class="flaggenImage" src="img/Flag_of_Italy.png" alt="Flag_of_Italy"> Italia </a>
+                    <a href="#" data-value="4"><img class="flaggenImage" src="img/Flag_of_Italy.png" alt="Flag_of_Italy"> Italiano </a>
                     <a href="#" data-value="5"><img class="flaggenImage" src="img/Flag_of_Spain.png" alt="Flag_of_Spain"> Español </a>
                 </div>
 
@@ -39,40 +37,56 @@
             </div>
         </div>
 
-        <label class="usernameLabelArea">Username:</label>
-        <div class="nickNameInputArea"><input id="nicknameArea"> </div>
-        <button type="button" class="usersettingsButton" onclick="buttonNicknameSave()">Save</button>
+        <label class="usernameLabelArea" id="userNameLabel">Username:</label>
+        <div class="nickNameInputArea"><input id="nicknameArea" placeholder="Enter a username..."> </div>
+        <button type="button" id="userSettingSaveButton" class="usersettingsButton" onclick="saveUserSettings()">Save</button>
     </div>
 
-
-    <div class="leftOfChat">
-        <div>
-            <label>Current Users</label>
-            <ul readonly id="currentUsers"></ul>
-        </div>
+    <div class="userListArea">
+        <label id="userListLabel" style="text-decoration: underline">Current Users</label>
+        <ul readonly id="currentUsers"></ul>
     </div>
 
     <div class="chatfenster">
         <label for="chatTextArea"></label>
-        <textarea readonly id="chatTextArea"></textarea>
+        <textarea readonly id="chatTextArea" placeholder="Please enter a username and select a language to enter the chatroom..."></textarea>
     </div>
 
-    <div class="rightOfChat">
+    <div class="guideArea">
 
-       <img id="testId" src="img/Virtualmeet.png" alt="Flag_of_France"  style="height: 200px; width: auto" >
+        <article style="font-size: 12px" id="guideArticle">
+            <u>Getting Started with Virtual Meet</u> <br>
+            Welcome to Virtual Meet! Here's a quick guide to get you started: <br>
+            <br>
+            <b>1. Select username and language </b><br>
+            Before you get started, choose a username and your preferred language. Don't forget to press "Save".<br>
+            <b>2. Sending a message</b><br>
+            To send a message, simply enter your text in the text field and click Send. Your message will then be sent to all other chat participants.<br>
+            <b>3. Chatbot participation in the conversation</b><br>
+            If you want the chatbot to join the conversation, simply mention its name in your message. Our chatbot is called “Alexa”. Alexa then automatically responds to your message.<br>
+            For example: “Alexa, what is the current mood in the chat?”<br>
+            <b>4. Active users</b><br>
+            On the left side of the screen you will find a list of all active users. In addition to the user name, the language set is also displayed.<br>
+            <b>5. Display the current mood in the chat: </b><br>
+            Behind each message you will see an indicator that shows the current mood in the chat. This indicator is calculated all by itself. So you don't have to do anything!<br>
+            <br>
+            That's it! You are now ready to use Virtual Meet and communicate with other users.<br>
+            Have fun! 😊<br>
+        </article>
 
     </div>
 
-<div class="chatinteraktion">
+    <div class="chatinteraktion">
 
-    <div id="chatInputArea">
-        <label for="chatTextEingabe"></label><input id="chatTextEingabe">
-    </div>
-    <div class="sendButtonArea">
-        <button id="sendButton" type="button" onclick="buttonSendAction()">Send</button>
-    </div>
+        <div id="chatInputArea">
+            <label for="chatTextInput"></label><input id="chatTextInput" placeholder="Enter a message...">
+        </div>
 
-</div>
+        <div class="sendButtonArea">
+            <button id="sendButton" type="button" onclick="buttonSendAction()">Send</button>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
