@@ -10,3 +10,4 @@ credentials.json
 *.code-workspace
 htmlcov
 .coverage
+/Backend/docs
