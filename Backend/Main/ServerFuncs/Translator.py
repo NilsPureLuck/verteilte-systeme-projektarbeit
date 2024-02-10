@@ -1,7 +1,3 @@
-"""
-Translator Module
------------------
-"""
 import os
 import html
 import json

@@ -1,7 +1,3 @@
-"""
-Chat Helper Module
-------------------
-"""
 from datetime import datetime
 import openai
 import os
@@ -16,9 +12,9 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def listenToMessages(chatHistory: list) -> MessageToClient | None:
     """
-    This method listens to incoming messages and determines whether the chatbot should be called
-    :param chatHistory: List of last 5 messages in the chat
-    :return: message object or None: either return a message from the chatbot or None if the chatbot is not addressed
+    This method listens to incoming messages and determines whether the chatbot should be called\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :return message object or None: either return a message from the chatbot or None if the chatbot is not addressed\n
     """
     message = chatHistory[len(chatHistory) - 1]
     message_str = message.message
@@ -34,9 +30,9 @@ def listenToMessages(chatHistory: list) -> MessageToClient | None:
 def is_message_addressing_bot(message_str: str) -> bool:
     """
     This method analyses if a message is addressing the chatbot. For this, it compares the similarity of the incoming
-    string with the keyword "botify"
-    :param message_str: Incoming message as a string
-    :return: Bool: True if the incoming message is addressing the chatbot, False otherwise
+    string with the keyword "botify"\n
+    :param message_str: Incoming message as a string\n
+    :return Bool: True if the incoming message is addressing the chatbot, False otherwise\n
     """
     keyword = "botify"
     threshold = 70
@@ -47,9 +43,9 @@ def is_message_addressing_bot(message_str: str) -> bool:
 
 def create_chatbot(chatHistory: list) -> MessageToClient:
     """
-    This method creates a chatbot and forwards a list of the last 5 messages to it
-    :param chatHistory: List of last 5 messages in the chat
-    :return: message: Answer from the chatbot
+    This method creates a chatbot and forwards a list of the last 5 messages to it\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :return message: Answer from the chatbot\n
     """
     messages = []
     # Analyzes the overall sentiment of the chat history to adjust the bot's responses.
@@ -65,13 +61,15 @@ def create_chatbot(chatHistory: list) -> MessageToClient:
         messages.append({"role": "user", "content": f"{message.message}"})
 
     # Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.
+    # 100 Tokens ≈ 75 words according to openAPI documentation
     messages.append({"role": "system",
                      "content": "Du bist ein intelligenter Assistent in einem Chatraum und du heißt Botify."
                                 " Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten"
                                 " zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus"
                                 " dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers"
-                                " und die Nachricht selbst. Deine Antworten sollten sowohl den Kontext dieser "
-                                "Nachrichten berücksichtigen. Deine Stimmung wird algorithmisch auf einer Skala von -1 "
+                                " und die Nachricht selbst. Deine Antworten sollten den Kontext dieser "
+                                "Nachrichten berücksichtigen. Deine Antworten sollten maximal aus 70 Wörten bestehen."
+                                "Deine Stimmung wird algorithmisch auf einer Skala von -1 "
                                 "(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten"
                                 " widergespiegelt werden. Deine aktuelle Stimmung liegt bei: " + str(sentiment)
                      }
@@ -102,9 +100,9 @@ def create_chatbot(chatHistory: list) -> MessageToClient:
 
 def checkSentiment(chatHistory: list) -> float:
     """
-    This method calculates the average sentiment of the last 5 messages in the chatHistory
-    :param chatHistory: List of last 5 messages in the chat
-    :return: sentiment_value: average sentiment of the last 5 messages
+    This method calculates the average sentiment of the last 5 messages in the chatHistory\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :return sentiment_value: average sentiment of the last 5 messages\n
     """
     # Calculates the average sentiment of the chat history to inform response generation.
     sentiment_value = 0

@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 class MessageFromClient(BaseModel):
     """
-    Basemodel for Messages from the Client
+    Basemodel for Messages from the Client\n
     """
     username: str
     message: str
@@ -17,7 +17,7 @@ class MessageFromClient(BaseModel):
 
 class MessageToClient(BaseModel):
     """
-    Basemodel for Messages to the Client
+    Basemodel for Messages to the Client\n
     """
     username: str
     message: str

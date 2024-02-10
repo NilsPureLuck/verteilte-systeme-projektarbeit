@@ -4,7 +4,13 @@ from ServerFuncs.Message import MessageFromClient, MessageToClient
 
 
 class TestSentiment(unittest.TestCase):
+    """
+    Tests for the Sentiment module
+    """
     def test_sentiment_analysis(self):
+        """
+        This method tests the sentiment_analysis-method\n
+        """
         message_given = MessageFromClient(username="Matthias", message="I like that",
                                           language="EN", timestamp="15:43:33")
         message_expected = MessageToClient(username="Matthias", message="I like that",
