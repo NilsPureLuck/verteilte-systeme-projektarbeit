@@ -6,7 +6,6 @@ Neu.code-workspace
 .env
 credentials.json
 .vscode
-verteile-systeme-projektarbeit.code-workspace
 **/__pycache__/
 *.code-workspace
 htmlcov
