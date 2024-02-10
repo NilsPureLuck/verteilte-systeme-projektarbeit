@@ -4,7 +4,7 @@ let chosenlanguage = "en";
 let socket;
 
 /**
- * This method sends the text, which has been input, to the server along with the necassary
+ * This method sends the text, which has been input, to the server along with the necessary
  * information in the JSON format
  */
 function buttonSendAction() {
@@ -13,7 +13,7 @@ function buttonSendAction() {
     let inputText = inputWindow.value;
 
     if(inputText === '' || savedNickname ==='') {
-        alert("Bitte Nachricht eingeben!")
+        alert("Please enter a message!")
     }else {
         inputWindow.value = "";
 
@@ -51,7 +51,9 @@ function establishConnection() {
 
         // parsing of the received json message
         const receivedMessage = JSON.parse(event.data);
+        console.log(receivedMessage);
 
+        //Checks the users that are connected to the chat and added to the current user list
         if(receivedMessage.numOfClients) {
             const currentUsersList = document.getElementById("currentUsers");
             currentUsersList.innerHTML = '';
@@ -63,6 +65,8 @@ function establishConnection() {
             }
         }
         else {
+
+            //receiving the message and adding it to the chat window
             const chatTextArea = document.getElementById("chatTextArea");
             const atmosphere = receivedMessage.sentiment;
             let smiley = "\u{1F610}";
@@ -173,8 +177,8 @@ function changeLanguageOnTheSite(){
                 "<b>2. Senden einer Nachricht</b><br>" +
                 "Um eine Nachricht zu senden, gebe einfach deinen Text in das Textfeld ein und klicke auf „Senden“. Deine Nachricht wird dann an alle anderen Chatteilnehmer gesendet.<br>" +
                 "<b>3. Beteiligung des Chatbots an der Konversation</b><br>" +
-                "Wenn du möchtest, dass der Chatbot sich an der Konversation beteiligt, erwähne einfach seinen Namen in deiner Nachricht. Unser Chatbot heißt „Alexa“. Alexa reagiert anschließen automatisch auf deine Nachricht.<br>" +
-                "Zum Beispiel: „Alexa, wie ist aktuell die Stimmung im Chat?“<br>" +
+                "Wenn du möchtest, dass der Chatbot sich an der Konversation beteiligt, erwähne einfach seinen Namen in deiner Nachricht. Unser Chatbot heißt „botify“. botify reagiert anschließend automatisch auf deine Nachricht.<br>" +
+                "Zum Beispiel: „botify, wie ist aktuell die Stimmung im Chat?“<br>" +
                 "<b>4. Aktive Nutzer</b><br>" +
                 "Auf der linken Seite des Bildschirms findest du eine Liste aller aktiven User. Neben dem Nutzernamen wird auch die eingestellte Sprache angezeigt.<br>" +
                 "<b>5. Anzeige der aktuellen Stimmung im Chat:</b><br>" +
@@ -201,8 +205,8 @@ function changeLanguageOnTheSite(){
                 "<b>2. Sending a message</b><br>" +
                 "To send a message, simply enter your text in the text field and click Send. Your message will then be sent to all other chat participants.<br>" +
                 "<b>3. Chatbot participation in the conversation</b><br>" +
-                "If you want the chatbot to join the conversation, simply mention its name in your message. Our chatbot is called “Alexa”. Alexa then automatically responds to your message.<br>" +
-                "For example: “Alexa, what is the current mood in the chat?”<br>" +
+                "If you want the chatbot to join the conversation, simply mention its name in your message. Our chatbot is called “botify”. botify then automatically responds to your message.<br>" +
+                "For example: “botify, what is the current mood in the chat?”<br>" +
                 "<b>4. Active users</b><br>" +
                 "On the left side of the screen you will find a list of all active users. In addition to the user name, the language set is also displayed.<br>" +
                 "<b>5. Display the current mood in the chat:</b><br>" +
@@ -225,12 +229,12 @@ function changeLanguageOnTheSite(){
                 "Bienvenue sur Rencontre Virtualmeet ! Voici un guide rapide pour vous aider à démarrer :<br>" +
                 "\n" +
                 "<b>1. Sélectionnez le nom d'utilisateur et la langue</b><br>" +
-                "Avant de commencer, choisissez un nom d'utilisateur et votre langue préférée. N'oubliez pas d'appuyer sur \"Enregistrer\".\n" +
+                "Avant de commencer, choisissez un nom d'utilisateur et votre langue préférée. N'oubliez pas d'appuyer sur \"Enregistrer\".<br>" +
                 "<b>2. Envoi d'un message</b><br>" +
-                "Pour envoyer un message, saisissez simplement votre texte dans le champ de texte et cliquez sur Envoyer. Votre message sera ensuite envoyé à tous les autres participants au chat.\n" +
+                "Pour envoyer un message, saisissez simplement votre texte dans le champ de texte et cliquez sur Envoyer. Votre message sera ensuite envoyé à tous les autres participants au chat.<br>" +
                 "<b>3. Participation du chatbot à la conversation</b><br>" +
-                "Si vous souhaitez que le chatbot rejoigne la conversation, mentionnez simplement son nom dans votre message. Notre chatbot s'appelle « Alexa ». Alexa répond alors automatiquement à votre message.\n" +
-                "Par exemple : « Alexa, quelle est l'ambiance actuelle dans le chat ?<br>" +
+                "Si vous souhaitez que le chatbot rejoigne la conversation, mentionnez simplement son nom dans votre message. Notre chatbot s'appelle « botify ». botify répond alors automatiquement à votre message.<br>" +
+                "Par exemple : « botify, quelle est l'ambiance actuelle dans le chat ?<br>" +
                 "<b>4. Utilisateurs actifs</b><br>" +
                 "Sur le côté gauche de l'écran, vous trouverez une liste de tous les utilisateurs actifs. Outre le nom d'utilisateur, la langue définie est également affichée.<br>" +
                 "<b>5. Affichez l'ambiance actuelle dans le chat :</b><br>" +
@@ -257,8 +261,8 @@ function changeLanguageOnTheSite(){
                 "<b>2. Invio di un messaggio</b><br>" +
                 "Per inviare un messaggio, inserisci semplicemente il testo nel campo di testo e fai clic su Invia. Il tuo messaggio verrà quindi inviato a tutti gli altri partecipanti alla chat.<br>" +
                 "<b>3. Partecipazione del chatbot alla conversazione</b><br>" +
-                "Se vuoi che il chatbot si unisca alla conversazione, menziona semplicemente il suo nome nel tuo messaggio. Il nostro chatbot si chiama “Alexa”. Alexa risponde quindi automaticamente al tuo messaggio.<br>" +
-                "Ad esempio: \"Alexa, qual è l'umore attuale nella chat?\"<br>" +
+                "Se vuoi che il chatbot si unisca alla conversazione, menziona semplicemente il suo nome nel tuo messaggio. Il nostro chatbot si chiama “botify”. botify risponde quindi automaticamente al tuo messaggio.<br>" +
+                "Ad esempio: \"botify, qual è l'umore attuale nella chat?\"<br>" +
                 "<b>4. Utenti attivi </b><br>" +
                 "Sul lato sinistro dello schermo troverai un elenco di tutti gli utenti attivi. Oltre al nome utente viene visualizzata anche la lingua impostata.<br>" +
                 "<b>5. Visualizza lo stato d'animo attuale nella chat:</b><br>" +
@@ -285,8 +289,8 @@ function changeLanguageOnTheSite(){
                 "<b>2. Enviar un mensaje</b><br>" +
                 "Para enviar un mensaje, simplemente ingrese su texto en el campo de texto y haga clic en Enviar. Luego, su mensaje se enviará a todos los demás participantes del chat.<br>" +
                 "<b>3. Participación del chatbot en la conversación. </b><br>" +
-                "Si desea que el chatbot se una a la conversación, simplemente mencione su nombre en su mensaje. Nuestro chatbot se llama \"Alexa\". Luego, Alexa responde automáticamente a su mensaje.<br>" +
-                "Por ejemplo: \"Alexa, ¿cuál es el estado de ánimo actual en el chat?\"<br>" +
+                "Si desea que el chatbot se una a la conversación, simplemente mencione su nombre en su mensaje. Nuestro chatbot se llama \"botify\". Luego, botify responde automáticamente a su mensaje.<br>" +
+                "Por ejemplo: \"botify, ¿cuál es el estado de ánimo actual en el chat?\"<br>" +
                 "<b>4. Usuarios activos </b><br>" +
                 "En el lado izquierdo de la pantalla encontrarás una lista de todos los usuarios activos. Además del nombre de usuario, también se muestra el idioma configurado.<br>" +
                 "<b>5. Muestra el estado de ánimo actual en el chat:</b><br>" +
@@ -307,7 +311,7 @@ function changeLanguageOnTheSite(){
 }
 
 /**
- * Adds the ability to send messages with the "Enter" button
+ * Adds an EventListener that enables the function to send messages with the "Enter" button
  */
 document.addEventListener('keydown', function(event){
     let element = document.getElementById("chatTextInput");
@@ -336,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Adds an event listener that is responsible for saving the user settings IF the user is in the input field and presses "Enter"
+ * Adds an EventListener that is responsible for saving the user settings IF the user is in the input field and presses "Enter"
  */
 document.addEventListener("keydown", function(event) {
     let element = document.getElementById("nicknameArea");
