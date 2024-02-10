@@ -55,7 +55,7 @@ function establishConnection() {
 
         //Checks the users that are connected to the chat and added to the current user list
         if(receivedMessage.numOfClients) {
-            const currentUsersList = document.getElementById("currentUsers");
+            const currentUsersList = document.getElementById("unorderedUserList");
             currentUsersList.innerHTML = '';
 
             for (const user in receivedMessage.clientsOnline) {
