@@ -102,7 +102,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
             raise HTTPStatus(status=400, reason="wrong parameter in request")
 
     def onClose(self, wasClean, code, reason):
-        print(f"WebSocket-Verbindung geschlossen: {reason}")
+        print(f"WebSocket-Verbindung geschlossen: {reason} {wasClean} {code}")
         self.factory.unregister(self)
 
 
