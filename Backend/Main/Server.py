@@ -108,7 +108,6 @@ class ChatServerProtocol(WebSocketServerProtocol):
         except Exception:
             print(traceback.format_exc())
             logging.error(traceback.format_exc())
-            # raise Exception(status=400, reason="Message was send Binary")
 
     def onClose(self, wasClean, code, reason):
         """
@@ -192,36 +191,32 @@ class ChatServerFactory(WebSocketServerFactory):
         :param sender: Sender client of the message\n
         """
         for client in self.clients:
-            if not (client.username is None or client.language is None):
-                if client.language == message.detectedlang:
-                    message.message = str(message.orgmessage)
-                    jsonmassage = json.dumps(
-                        message.model_dump(exclude={"detectedlang", "orgmessage"}),
-                        ensure_ascii=True,
-                    )
-                    client.sendMessage(jsonmassage.encode("utf-8"))
-                    print(f"Send Message {jsonmassage} to {client.peer}")
-                    logging.info(f"Send Message {jsonmassage} to {client.peer}")
-                else:
-                    print(f"USERLANG: {client.language} {type(client.language)}")
-                    message.language = str(client.language)
-                    print(f"user alnguage : {message.language}")
-                    message, _ = translate_text(message)
-                    jsonmassage = json.dumps(
-                        message.model_dump(exclude={"detectedlang", "orgmessage"}),
-                        ensure_ascii=True,
-                    )
-                    client.sendMessage(jsonmassage.encode("utf-8"))
-                    print(f"Send Message {jsonmassage} to {client.peer}")
-                    logging.info(f"Send Message {jsonmassage} to {client.peer}")
-        
-
-async def startServer():
-    factory = ChatServerFactory("ws://localhost:9000")
-    factory.protocol = ChatServerProtocol
-    reactor.listenTCP(9000, factory)
-    print("WebSocket-Server gestartet auf Port 9000.")
-    reactor.run()
+            try:
+                if not (client.username is None or client.language is None):
+                    if client.language == message.detectedlang:
+                        message.message = str(message.orgmessage)
+                        jsonmassage = json.dumps(
+                            message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                            ensure_ascii=True,
+                        )
+                        client.sendMessage(jsonmassage.encode("utf-8"))
+                        print(f"Send Message {jsonmassage} to {client.peer}")
+                        logging.info(f"Send Message {jsonmassage} to {client.peer}")
+                    else:
+                        print(f"USERLANG: {client.language} {type(client.language)}")
+                        message.language = str(client.language)
+                        print(f"user alnguage : {message.language}")
+                        message, _ = translate_text(message)
+                        jsonmassage = json.dumps(
+                            message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                            ensure_ascii=True,
+                        )
+                        client.sendMessage(jsonmassage.encode("utf-8"))
+                        print(f"Send Message {jsonmassage} to {client.peer}")
+                        logging.info(f"Send Message {jsonmassage} to {client.peer}")
+                        
+            except Exception:
+                logging.error(traceback.format_exc())
 
 
 if __name__ == "__main__":
