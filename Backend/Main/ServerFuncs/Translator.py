@@ -10,7 +10,7 @@ def initialize_translate_client():
     Initializes the Google Translate client with the necessary credentials.\n
     :return Client: Client to translate incoming messages
     """
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../credentials.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     return translate.Client()
 
 
