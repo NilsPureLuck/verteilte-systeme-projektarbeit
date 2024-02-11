@@ -5,31 +5,48 @@ import os
 import traceback
 import datetime
 
-def sentiment_analysis(message: MessageFromClient) -> MessageToClient:
-	"""
-	This method analyses the sentiment of a given message\n
-	:param message: incoming message without a sentiment\n
-	:return message: analysed message with a sentiment\n
-	"""
 
-	try:
-		load_dotenv()
-	except Exception as e:
-		print(traceback.format_exc())
+def load_api_config():
+    load_dotenv()
+    return {
+        "url": os.environ.get("SENTIMENT_ANALYSIS_URL"),
+        "headers": {
+            "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY"),
+            "X-RapidAPI-Host": os.environ.get("RAPIDAPI_HOST")
+        }
+    }
 
-	try:
-		url = os.environ.get("URL")
-		headers = {
-			"X-RapidAPI-Key": os.environ.get("XKEY"),
-			"X-RapidAPI-Host": os.environ.get("XHOST")
-		}
-		querystring = {"text": message.message}
-		response = requests.get(url, headers=headers, params=querystring)
-		message = message.__dict__
-		message["sentiment"] = response.json()["score"]
-		return MessageToClient.model_validate(message)
-	except Exception as e:
-		print("An error occurred while performing sentiment analysis:", e)
-		print(traceback.format_exc())
-		return MessageToClient(username="Bot", message="I'm sorry, I couldn't analyse the sentiment of your message.",
-							   language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
+def get_sentiment_score(message_text: str, config: dict) -> float:
+    """
+    Queries the sentiment analysis API and returns the sentiment score.
+    :param message_text: The text of the message to analyze.
+    :param config: Configuration dictionary containing the API details.
+    :return: Sentiment score of the message.
+    """
+    response = requests.get(config["url"], headers=config["headers"], params={"text": message_text})
+    return response.json()["score"]
+
+def sentiment_analysis(message: MessageFromClient, retry=False) -> MessageToClient:
+    """
+    Analyzes the sentiment of a given message, with an optional retry mechanism.
+    :param message: Incoming message without a sentiment.
+    :param retry: Indicates if the function is being retried.
+    :return: Analyzed message with a sentiment.
+    """
+    try:
+        config = load_api_config()
+        sentiment_score = get_sentiment_score(message.message, config)
+        message_dict = message.__dict__
+        message_dict["sentiment"] = sentiment_score
+        return MessageToClient.model_validate(message_dict)
+    except Exception as e:
+        print("An error occurred while performing sentiment analysis:", e)
+        print(traceback.format_exc())
+        if not retry:
+            print("Retrying...")
+            return sentiment_analysis(message, retry=True)
+        else:
+            return MessageToClient(username="Botify",
+                                   message="I'm sorry, I couldn't analyse the sentiment of your message.",
+                                   language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
+

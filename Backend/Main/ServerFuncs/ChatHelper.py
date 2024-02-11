@@ -6,16 +6,15 @@ from fuzzywuzzy import fuzz
 from .Message import MessageToClient
 import traceback
 
+def load_api_config():
+    try:
+        load_dotenv()
+        openai.api_key = os.getenv('OPENAI_API_KEY')
+    except Exception as e:
+        print(traceback.format_exc())
 
-try:
-    # Set the OpenAI API key from the .env file for authentication.
-    load_dotenv()
-    openai.api_key = os.getenv('OPENAI_API_KEY')
-except Exception as e:
-    print(traceback.format_exc())
 
-
-def listenToMessages(chatHistory: list) -> MessageToClient | None:
+def listenToMessages(chatHistory: list) -> MessageToClient:
     """
     This method listens to incoming messages and determines whether the chatbot should be called\n
     :param chatHistory: List of last 5 messages in the chat\n
@@ -49,79 +48,92 @@ def is_message_addressing_bot(message_str: str) -> bool:
     # If similarity is above 70, it's likely the user is addressing the bot.
     return similarity > threshold
 
-
-def create_chatbot(chatHistory: list) -> MessageToClient:
+def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
     """
-    This method creates a chatbot and forwards a list of the last 5 messages to it\n
-    :param chatHistory: List of last 5 messages in the chat\n
-    :return message: Answer from the chatbot\n
+    Creates a chatbot response based on the sentiment of the chat history.
+    :param chatHistory: List of last 5 messages in the chat
+    :param retry: Indicates if this is a retry attempt
+    :return: The response message object
     """
     try:
-        messages = []
-        # Analyzes the overall sentiment of the chat history to adjust the bot's responses.
         sentiment = checkSentiment(chatHistory)
-
-        # Calculates the response temperature based on sentiment, influencing the randomness/"creativity" of responses.
-        min_temp = 0.2
-        max_temp = 0.8
-        temperature = 0.5 * (sentiment + 1) * (max_temp - min_temp) + min_temp
-
-        # Prepares the message history for the OpenAI completion call, formatting them appropriately.
-        for message in chatHistory:
-            messages.append({"role": "user", "content": f"{message.message}"})
-
-        # Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.
-        # 100 Tokens ≈ 75 words according to openAPI documentation
-        messages.append({"role": "system",
-                         "content": "Du bist ein intelligenter Assistent in einem Chatraum und du heißt Botify."
-                                    " Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten"
-                                    " zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus"
-                                    " dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers"
-                                    " und die Nachricht selbst. Deine Antworten sollten den Kontext dieser "
-                                    "Nachrichten berücksichtigen. Dein Antwort soll maximal aus 70 Wörten "
-                                    "bestehen und nicht mitten im Satz enden."
-                                    "Deine Stimmung wird algorithmisch auf einer Skala von -1 "
-                                    "(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten"
-                                    " widergespiegelt werden. Deine aktuelle Stimmung liegt bei: " + str(sentiment)
-                         })
-        
-        # Generates a chat completion using the OpenAI API, with parameters adjusted for the current context.
-        response = openai.chat.completions.create(
-            model="gpt-4-0125-preview",
-            messages=messages,
-            temperature=temperature,
-            max_tokens=100,
-            frequency_penalty=0,
-            presence_penalty=0,
-        )
-        # Extracts and prints the generated response from the OpenAI API.
-        response_message = response.choices[0].message.content
-        messages.append({"role": "assistant", "content": response_message})
-        print("\n" + response_message + "\n")
-
-        # Returns a new message object with the bot's response and additional metadata.
-        return MessageToClient(username="Botify", message=response_message, language="EN",
-                               timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
+        messages = prepare_messages(chatHistory, sentiment)
+        response_message = generate_response(messages, sentiment)
+        return build_message_object(response_message, sentiment)
     except Exception as e:
-        print(traceback.format_exc())
         print("An error occurred while creating the chatbot:", e)
-        return MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
-                               language="EN",
-                               timestamp=datetime.now().strftime("%H:%M:%S"),
-                               sentiment=0.0)
+        if not retry:
+            print("Retrying...")
+            return create_chatbot(chatHistory, retry=True)
+        else:
+            return handle_error_on_retry_failure(chatHistory)
+
+def prepare_messages(chatHistory: list, sentiment: float) -> list:
+    """
+    Prepares messages for OpenAI completion call.
+    :param chatHistory: List of last 5 messages in the chat
+    :param sentiment: Sentiment value of the chat history
+    :return: List of formatted messages
+    """
+    messages = [{"role": "user", "content": message.message} for message in chatHistory]
+    messages.append({"role": "system", "content": "Deine aktuelle Stimmung liegt bei: " + str(sentiment)})
+    return messages
+
+def generate_response(messages: list, sentiment: float) -> str:
+    """
+    Generates a response using the OpenAI API.
+    :param messages: List of messages
+    :param sentiment: Sentiment value
+    :return: Generated response
+    """
+    temperature = calculate_temperature(sentiment)
+    response = openai.chat.completions.create(
+        model="gpt-4-0125-preview",  # Adjust the model as necessary
+        messages=messages,
+        temperature=temperature,
+        max_tokens=100,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    return response.choices[0].message.content
+
+def calculate_temperature(sentiment: float) -> float:
+    """
+    Calculates response temperature based on sentiment.
+    :param sentiment: Sentiment value
+    :return: Calculated temperature
+    """
+    min_temp, max_temp = 0.2, 0.8
+    return 0.5 * (sentiment + 1) * (max_temp - min_temp) + min_temp
+def build_message_object(response: str, sentiment: float) -> MessageToClient:
+    """
+    Build MessageToClient object\n
+    :param response: Generated response\n
+    :param sentiment: Sentiment value\n
+    :return MessageToClient: Message object\n
+    """
+    return MessageToClient(username="botify", message=response, language="EN",
+    timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
+
+
+def handle_error_on_retry_failure(chatHistory: list) -> MessageToClient:
+    """
+    Handles errors after a retry failure while creating the chatbot.
+    :param chatHistory: List of last 5 messages in the chat
+    :return: Error message object
+    """
+    print("Failed to create chatbot response even after retry.")
+    return MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
+                           language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
 
 def checkSentiment(chatHistory: list) -> float:
     """
-    This method calculates the average sentiment of the last 5 messages in the chatHistory\n
-    :param chatHistory: List of last 5 messages in the chat\n
-    :return sentiment_value: average sentiment of the last 5 messages\n
+    Calculates the average sentiment of the last 5 messages in the chat history.
+    :param chatHistory: List of last 5 messages in the chat
+    :return: Average sentiment of the last 5 messages
     """
     try:
-        # Calculates the average sentiment of the chat history to inform response generation.
-        sentiment_value = 0
-        for message in chatHistory:
-            sentiment_value += message.sentiment
-        sentiment_value = sentiment_value / len(chatHistory)
+        sentiment_value = sum(message.sentiment for message in chatHistory) / len(chatHistory)
         return sentiment_value
     except Exception as e:
         print(traceback.format_exc())
