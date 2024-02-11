@@ -83,9 +83,8 @@ def create_chatbot(chatHistory: list) -> MessageToClient:
                                     "Deine Stimmung wird algorithmisch auf einer Skala von -1 "
                                     "(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten"
                                     " widergespiegelt werden. Deine aktuelle Stimmung liegt bei: " + str(sentiment)
-                         }
-
-                        )
+                         })
+        
         # Generates a chat completion using the OpenAI API, with parameters adjusted for the current context.
         response = openai.chat.completions.create(
             model="gpt-4-0125-preview",
