@@ -7,18 +7,13 @@
  Intelligenter Chatbot: Basierend auf OpenAI's Large Language Model, kann unser Bot Fragen beantworten, an Gesprächen teilnehmen und Informationen bereitstellen.
  
  Sentiment-Analyse: Erfasst die allgemeine Stimmung innerhalb des Chats und stellt diese den Benutzern dar.
-## Voraussetzungen: Bevor Sie beginnen, stellen Sie sicher, dass Sie die folgenden API-Schlüssel bereit haben:
 
-OpenAI-API-Dokumentation für den Chatbot (https://platform.openai.com/docs/api-reference)
-
-Google Cloud Translate API-Dokumentation für die Übersetzung (https://cloud.google.com/translate?hl=de)
-
-Twinword API-Key für die Sentiment-Backend (https://www.twinword.com/api/sentiment-analysis.php)
+## Voraussetzungen:
+Für die Durchführung auf einem lokalen Rechner benötigen Sie die Keys und Credentials für den Zugriff auf die APIs. Diese befinden sich in den Dateien .env und credentials.json
 
 ## Setup
 ### Konfiguration der Umgebungsvariablen:
-Packen Sie Ihre OpenAI-API und Twinword-API Keys in eine .env Datei im Hauptordner.
-Legen Sie die credentials.json Datei für Google Cloud Translation ebenfalls in den Hauptordner.
+Die .env und die credentials.json Dateien müssen im Rootverzeichnis abgelegt werden.
 
 ### Installation der Abhängigkeiten:
 Führen Sie im Hauptordner folgenden Befehl aus:
@@ -38,7 +33,7 @@ Starten Sie die Anwendung mit:
 
 ## Tests
 ### Coverage
-Die Ergebnisse der Testcoverage können unter https://virtualmeet.social/docs/coverage/html eingesehen werden. Für die Unittests wurden die Module test_chathelper, test_sentiment und test_translator erstellt. Für eine erneute Durchführung der Unittests mit Testcoverage sind folgende Schritte zu durchzuführen:
+Die Ergebnisse der Testcoverage können unter https://virtualmeet.social/docs/coverage eingesehen werden. Für die Unittests wurden die Module test_chathelper, test_sentiment und test_translator erstellt. Für eine erneute Durchführung der Unittests mit Testcoverage sind folgende Schritte zu durchzuführen:
 1. Installation der Module unittest und coverage mit den Befehlen
    ```pip install unittest``` und
    ```pip install coverage``
