@@ -36,7 +36,7 @@ Starten Sie die Anwendung mit:
 Die Ergebnisse der Testcoverage können unter https://virtualmeet.social/docs/coverage eingesehen werden. Für die Unittests wurden die Module test_chathelper, test_sentiment und test_translator erstellt. Für eine erneute Durchführung der Unittests mit Testcoverage sind folgende Schritte zu durchzuführen:
 1. Installation der Module unittest und coverage mit den Befehlen
    ```pip install unittest``` und
-   ```pip install coverage``
+   ```pip install coverage```
 2. In das Verzeichnis /Backend/Main wechseln
 3. Erst folgenden Befehl ausführen:
    ```python -m coverage run -m unittest```
