@@ -47,11 +47,10 @@ class ChatServerProtocol(WebSocketServerProtocol):
                     print(f"message received: {message}")
                     message = MessageFromClient.model_validate(message)
 
+                    # check if user.language or user.username is assigned for client, if not assign them and send current users
                     if self.language is None or self.username is None:
                         self.language = message.language.lower()
                         self.username = message.username
-                        #print("set user language to", self.language)
-                        #print("linked user with username", self.username)
                         self.factory.sendCurrentUsers()
 
                     if message.language != "en":
@@ -59,14 +58,11 @@ class ChatServerProtocol(WebSocketServerProtocol):
                         
                     message_copy = message.message
 
+                    # translate message to english and calculate the sentiment
                     message, detectedlang = translate_text(message)
-                    #print(f"translated message for sentiment to: {message.message}")
                     message = sentiment_analysis(message)
-                    #print(f"sentiment generated: {message.sentiment}")
-
                     
                     self.chatHistory.append(message)
-                    #print(f"Message '{message.message}' added to chat history")
 
                     while len(self.chatHistory) > 5:
                         message_old = self.chatHistory.pop(0)
@@ -76,32 +72,28 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
                     message.orgmessage = message_copy
                     message.detectedlang = detectedlang
-                    
-                    #print(f"Message with old message and detected Lang : {message}")
+        
                     self.factory.broadcast(message, self)
-                    #print(f"Message '{message.message}' broadcasted")
 
                     chat_response = listenToMessages(self.chatHistory)
-                    print(chat_response)
+
                     if chat_response is not None:
                         self.chatHistory.append(chat_response)
-                        #print(
-                        #    f"Message '{chat_response.message}' added to chat history"
-                        #)
+                        
                         self.factory.broadcast(chat_response, self)
                         print(f"Message '{chat_response.message}' broadcasted")
 
                         while len(self.chatHistory) > 5:
                             message_old = self.chatHistory.pop(0)
-                            #print(
-                            #    f"old message '{message_old.message} removed from chat history"
-                            #)
-                except:
+                            
+                except Exception:
                     print(traceback.format_exc())
-
+                    self.sendMessage("wrong request parameter send Request as Json with fields " + json.dumps({"username", "message", "language", "timestamp"}).encode("utf-8"))
+                    raise Exception(status=400, reason="wrong request parameter send Request as Json with fields " + json.dumps({"username", "message", "language", "timestamp"}))
+                    
         except Exception:
             print(traceback.format_exc())
-            raise HTTPStatus(status=400, reason="wrong parameter in request")
+            #raise Exception(status=400, reason="Message was send Binary")
 
     def onClose(self, wasClean, code, reason):
         """
@@ -185,19 +177,24 @@ class ChatServerFactory(WebSocketServerFactory):
         :param message: The message to broadcast\n
         :param sender: Sender client of the message\n
         """
-        
         for client in self.clients:
             if client.language == message.detectedlang:
                 message.message = message.orgmessage
                 jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
-                client.sendMessage(jsonmassage.encode("utf-8"))    
+                a = client.sendMessage(jsonmassage.encode("utf-8"))    
+                print(f"Sended Message {a}")
             else:
                 message.language = str(client.language)
                 message, _ = translate_text(message)
-                #print(f"Message translated for {client.username} to {message}")
                 jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
                 client.sendMessage(jsonmassage.encode("utf-8"))    
-
+                
+async def startServer():
+    factory = ChatServerFactory("ws://localhost:9000")
+    factory.protocol = ChatServerProtocol
+    reactor.listenTCP(9000, factory)
+    print("WebSocket-Server gestartet auf Port 9000.")
+    reactor.run()
 
 if __name__ == "__main__":
     factory = ChatServerFactory("ws://localhost:9000")

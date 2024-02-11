@@ -12,6 +12,7 @@ def translate_text(message: MessageFromClient | MessageToClient) -> MessageFromC
     :return: message: translated message
     """
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../credentials.json"
+    #os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     translate_client = translate.Client()
     message_str = message.message
     target = message.language
