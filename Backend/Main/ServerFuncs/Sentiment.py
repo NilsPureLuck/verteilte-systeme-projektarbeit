@@ -11,8 +11,8 @@ def load_api_config():
     return {
         "url": os.environ.get("SENTIMENT_ANALYSIS_URL"),
         "headers": {
-            "X-RapidAPI-Key": os.environ.get("TWINWORD_KEY"),
-            "X-RapidAPI-Host": os.environ.get("TWINWORD_HOST")
+            "X-RapidAPI-Key": os.environ.get("RAPIDAPI_KEY"),
+            "X-RapidAPI-Host": os.environ.get("RAPIDAPI_HOST")
         }
     }
 
