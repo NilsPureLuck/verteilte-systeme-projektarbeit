@@ -130,6 +130,7 @@ class ChatServerFactory(WebSocketServerFactory):
     def __init__(self, url):
         super().__init__(url)
         self.clients = []
+        self.maxConnections = 50
 
     def getUsernameAndLang(self):
         """
