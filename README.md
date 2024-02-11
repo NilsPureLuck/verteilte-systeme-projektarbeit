@@ -3,7 +3,9 @@
 
 ## Funktionen
  Polyglotter Chat: Ermöglicht Benutzern, in ihrer bevorzugten Sprache zu kommunizieren, während Nachrichten automatisch für alle übersetzt werden.
+ 
  Intelligenter Chatbot: Basierend auf OpenAI's Large Language Model, kann unser Bot Fragen beantworten, an Gesprächen teilnehmen und Informationen bereitstellen.
+ 
  Sentiment-Analyse: Erfasst die allgemeine Stimmung innerhalb des Chats und stellt diese den Benutzern dar.
 ## Voraussetzungen: Bevor Sie beginnen, stellen Sie sicher, dass Sie die folgenden API-Schlüssel bereit haben:
 
