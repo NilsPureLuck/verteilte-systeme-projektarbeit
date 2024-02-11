@@ -8,6 +8,9 @@ import traceback
 
 
 def load_api_config():
+    """
+    This method loads the api key for the REST call to the chatbot.\n
+    """
     try:
         load_dotenv()
         openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -17,9 +20,10 @@ def load_api_config():
 
 def listenToMessages(chatHistory: list) -> MessageToClient:
     """
-    This method listens to incoming messages and determines whether the chatbot should be called\n
+    This method listens to incoming messages and determines whether the chatbot should be called.\n
     :param chatHistory: List of last 5 messages in the chat\n
-    :return message object or None: either return a message from the chatbot or None if the chatbot is not addressed\n
+    :return MessageToClient or None: either returns a message from the chatbot or None if the chatbot is not addressed
+    or an Exception was thrown\n
     """
     try:
         message = chatHistory[len(chatHistory) - 1]
@@ -39,7 +43,7 @@ def listenToMessages(chatHistory: list) -> MessageToClient:
 def is_message_addressing_bot(message_str: str) -> bool:
     """
     This method analyses if a message is addressing the chatbot. For this, it compares the similarity of the incoming
-    string with the keyword "botify"\n
+    string with the keyword "botify".\n
     :param message_str: Incoming message as a string\n
     :return Bool: True if the incoming message is addressing the chatbot, False otherwise\n
     """
@@ -52,10 +56,10 @@ def is_message_addressing_bot(message_str: str) -> bool:
 
 def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
     """
-    Creates a chatbot response based on the sentiment of the chat history.
-    :param chatHistory: List of last 5 messages in the chat
-    :param retry: Indicates if this is a retry attempt
-    :return: The response message object
+    Creates a chatbot response based on the sentiment of the chat history.\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :param retry: Indicates if this is a retry attempt\n
+    :return MessageToClient: The response message object
     """
     try:
         sentiment = check_sentiment(chatHistory)
@@ -73,10 +77,10 @@ def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
 
 def prepare_messages(chatHistory: list, sentiment: float) -> list:
     """
-    Prepares messages for OpenAI completion call.
-    :param chatHistory: List of last 5 messages in the chat
-    :param sentiment: Sentiment value of the chat history
-    :return: List of formatted messages
+    Prepares messages for OpenAI completion call.\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :param sentiment: Sentiment value of the chat history\n
+    :return list: List of formatted messages
     """
     messages = [{"role": "user", "content": message.message} for message in chatHistory]
     messages.append({"role": "system", "content": "Deine aktuelle Stimmung liegt bei: " + str(sentiment)})
@@ -85,10 +89,10 @@ def prepare_messages(chatHistory: list, sentiment: float) -> list:
 
 def generate_response(messages: list, sentiment: float) -> str:
     """
-    Generates a response using the OpenAI API.
-    :param messages: List of messages
-    :param sentiment: Sentiment value
-    :return: Generated response
+    Generates a response using the OpenAI API.\n
+    :param messages: List of messages\n
+    :param sentiment: Sentiment value\n
+    :return str: Generated response
     """
     temperature = calculate_temperature(sentiment)
     response = openai.chat.completions.create(
@@ -104,9 +108,9 @@ def generate_response(messages: list, sentiment: float) -> str:
 
 def calculate_temperature(sentiment: float) -> float:
     """
-    Calculates response temperature based on sentiment.
-    :param sentiment: Sentiment value
-    :return: Calculated temperature
+    Calculates response temperature based on sentiment.\n
+    :param sentiment: Sentiment value\n
+    :return float: Calculated temperature
     """
     min_temp, max_temp = 0.2, 0.8
     return 0.5 * (sentiment + 1) * (max_temp - min_temp) + min_temp
@@ -117,7 +121,7 @@ def build_message_object(response: str, sentiment: float) -> MessageToClient:
     Build MessageToClient object\n
     :param response: Generated response\n
     :param sentiment: Sentiment value\n
-    :return MessageToClient: Message object\n
+    :return MessageToClient: Message object
     """
     return MessageToClient(username="Botify", message=response, language="EN",
                            timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
@@ -125,8 +129,8 @@ def build_message_object(response: str, sentiment: float) -> MessageToClient:
 
 def handle_error_on_retry_failure() -> MessageToClient:
     """
-    Handles errors after a retry failure while creating the chatbot.
-    :return: Error message object
+    Handles errors after a retry failure while creating the chatbot.\n
+    :return MessageToClient: Error message object
     """
     print("Failed to create chatbot response even after retry.")
     return MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
@@ -135,9 +139,9 @@ def handle_error_on_retry_failure() -> MessageToClient:
 
 def check_sentiment(chatHistory: list) -> float:
     """
-    Calculates the average sentiment of the last 5 messages in the chat history.
-    :param chatHistory: List of last 5 messages in the chat
-    :return: Average sentiment of the last 5 messages
+    Calculates the average sentiment of the last 5 messages in the chat history.\n
+    :param chatHistory: List of last 5 messages in the chat\n
+    :return float: Average sentiment of the last 5 messages
     """
     try:
         sentiment_value = sum(message.sentiment for message in chatHistory) / len(chatHistory)
