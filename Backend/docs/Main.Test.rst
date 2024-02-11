@@ -17,13 +17,6 @@ Main.Test.test\_sentiment module
    :undoc-members:
    :show-inheritance:
 
-Main.Test.test\_server module
------------------------------
-
-.. automodule:: Main.Test.test_server
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Main.Test.test\_translator module
 -----------------------------

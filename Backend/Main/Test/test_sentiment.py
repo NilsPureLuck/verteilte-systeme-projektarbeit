@@ -12,6 +12,9 @@ class TestSentiment(unittest.TestCase):
     """
 
     def test_load_api_config(self):
+        """
+        This method tests the load_api_config-method\n
+        """
         load_dotenv()
         config_expected = {
             "url": os.environ.get("SENTIMENT_ANALYSIS_URL"),
@@ -23,6 +26,9 @@ class TestSentiment(unittest.TestCase):
         self.assertEqual(load_api_config(), config_expected)
 
     def test_get_sentiment_score(self):
+        """
+        This method tests the get_sentiment_score-method\n
+        """
         load_dotenv()
         config = {
             "url": os.environ.get("SENTIMENT_ANALYSIS_URL"),
@@ -59,6 +65,3 @@ class TestSentiment(unittest.TestCase):
         message_expected.sentiment = 0
         self.assertEqual(sentiment_analysis(message_given), message_expected)
 
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main.ServerFuncs.ChatHelper &mdash; virtualmeet.social&#39;s Backend 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            virtualmeet.social's Backend
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.html">Main package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.Test.html">Main.Test package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">virtualmeet.social's Backend</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Main.ServerFuncs.ChatHelper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Main.ServerFuncs.ChatHelper</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="kn">import</span> <span class="n">fuzz</span>
+<span class="kn">from</span> <span class="nn">.Message</span> <span class="kn">import</span> <span class="n">MessageToClient</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+
+<div class="viewcode-block" id="load_api_config">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.load_api_config">[docs]</a>
+<span class="k">def</span> <span class="nf">load_api_config</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method loads the api key for the REST call to the chatbot.\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">load_dotenv</span><span class="p">()</span>
+        <span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="listenToMessages">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.listenToMessages">[docs]</a>
+<span class="k">def</span> <span class="nf">listenToMessages</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageToClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method listens to incoming messages and determines whether the chatbot should be called.\n</span>
+<span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
+<span class="sd">    :return MessageToClient or None: either returns a message from the chatbot or None if the chatbot is not addressed</span>
+<span class="sd">    or an Exception was thrown\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">chatHistory</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">message_str</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span>
+        <span class="k">if</span> <span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_str</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should answer&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">create_chatbot</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should not answer&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="c1"># Checks the similarity between the last message and the word &quot;botify&quot; using fuzzy matching (Levenshtein distance).</span>
+<div class="viewcode-block" id="is_message_addressing_bot">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.is_message_addressing_bot">[docs]</a>
+<span class="k">def</span> <span class="nf">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method analyses if a message is addressing the chatbot. For this, it compares the similarity of the incoming</span>
+<span class="sd">    string with the keyword &quot;botify&quot;.\n</span>
+<span class="sd">    :param message_str: Incoming message as a string\n</span>
+<span class="sd">    :return Bool: True if the incoming message is addressing the chatbot, False otherwise\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">keyword</span> <span class="o">=</span> <span class="s2">&quot;botify&quot;</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">70</span>
+    <span class="n">similarity</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">partial_ratio</span><span class="p">(</span><span class="n">message_str</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">keyword</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="c1"># If similarity is above 70, it&#39;s likely the user is addressing the bot.</span>
+    <span class="k">return</span> <span class="n">similarity</span> <span class="o">&gt;</span> <span class="n">threshold</span></div>
+
+
+
+<div class="viewcode-block" id="create_chatbot">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.create_chatbot">[docs]</a>
+<span class="k">def</span> <span class="nf">create_chatbot</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageToClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a chatbot response based on the sentiment of the chat history.\n</span>
+<span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
+<span class="sd">    :param retry: Indicates if this is a retry attempt\n</span>
+<span class="sd">    :return MessageToClient: The response message object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sentiment</span> <span class="o">=</span> <span class="n">check_sentiment</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="n">prepare_messages</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">)</span>
+        <span class="n">response_message</span> <span class="o">=</span> <span class="n">generate_response</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">build_message_object</span><span class="p">(</span><span class="n">response_message</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An error occurred while creating the chatbot:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">retry</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrying...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">create_chatbot</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">handle_error_on_retry_failure</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="prepare_messages">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.prepare_messages">[docs]</a>
+<span class="k">def</span> <span class="nf">prepare_messages</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepares messages for OpenAI completion call.\n</span>
+<span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
+<span class="sd">    :param sentiment: Sentiment value of the chat history\n</span>
+<span class="sd">    :return list: List of formatted messages</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span><span class="p">}</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">]</span>
+    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Deine aktuelle Stimmung liegt bei: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)})</span>
+    <span class="k">return</span> <span class="n">messages</span></div>
+
+
+
+<div class="viewcode-block" id="generate_response">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.generate_response">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_response</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a response using the OpenAI API.\n</span>
+<span class="sd">    :param messages: List of messages\n</span>
+<span class="sd">    :param sentiment: Sentiment value\n</span>
+<span class="sd">    :return str: Generated response</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">calculate_temperature</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4-0125-preview&quot;</span><span class="p">,</span>  <span class="c1"># Adjust the model as necessary</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">frequency_penalty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">presence_penalty</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_temperature">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.calculate_temperature">[docs]</a>
+<span class="k">def</span> <span class="nf">calculate_temperature</span><span class="p">(</span><span class="n">sentiment</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates response temperature based on sentiment.\n</span>
+<span class="sd">    :param sentiment: Sentiment value\n</span>
+<span class="sd">    :return float: Calculated temperature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sentiment</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_temp</span> <span class="o">-</span> <span class="n">min_temp</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_temp</span></div>
+
+
+
+<div class="viewcode-block" id="build_message_object">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.build_message_object">[docs]</a>
+<span class="k">def</span> <span class="nf">build_message_object</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageToClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build MessageToClient object\n</span>
+<span class="sd">    :param response: Generated response\n</span>
+<span class="sd">    :param sentiment: Sentiment value\n</span>
+<span class="sd">    :return MessageToClient: Message object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">response</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span>
+                           <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="n">sentiment</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="handle_error_on_retry_failure">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.handle_error_on_retry_failure">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_error_on_retry_failure</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">MessageToClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles errors after a retry failure while creating the chatbot.\n</span>
+<span class="sd">    :return MessageToClient: Error message object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to create chatbot response even after retry.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;I&#39;m sorry, I&#39;m not able to answer right now.&quot;</span><span class="p">,</span>
+                           <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="check_sentiment">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.ChatHelper.check_sentiment">[docs]</a>
+<span class="k">def</span> <span class="nf">check_sentiment</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the average sentiment of the last 5 messages in the chat history.\n</span>
+<span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
+<span class="sd">    :return float: Average sentiment of the last 5 messages</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sentiment_value</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">sentiment</span> <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sentiment_value</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span> <span class="mf">0.0</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Klinger, Tolga Yilmaz, Nils Rudnik, Timon Henke, Matthias Wohlmacher.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

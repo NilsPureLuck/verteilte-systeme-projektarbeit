@@ -133,7 +133,7 @@ class ChatServerFactory(WebSocketServerFactory):
     def getUsernameAndLang(self):
         """
         This methods compiles a list of all usernames and languages participating in the chat\n
-        :return client_list: List of clients and their set language\n
+        :return list: List of clients and their set language\n
         """
         client_list = []
         for client in self.clients:
