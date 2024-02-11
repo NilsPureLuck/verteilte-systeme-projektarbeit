@@ -22,6 +22,7 @@ Führen Sie im Hauptordner folgenden Befehl aus:
 ```pip install -r requirements.txt```
 
 ### Starten des Servers:
+Starten Sie die Anwendung mit:
 ```python Server.py```
 
 ## Schnellstartanleitung
@@ -32,4 +33,4 @@ Führen Sie im Hauptordner folgenden Befehl aus:
 4. Aktive Nutzer: Auf der linken Seite können Sie sehen, wer aktuell online ist und welche Sprache eingestellt wurde.
 5. Stimmungsanzeige: Jede Nachricht wird mit einem Indikator für die aktuelle Stimmung im Chat versehen, der automatisch berechnet wird.
 
-### Wir wünschen dir viel Spaß bei der Nutzung von Virtual Meet und freuen uns auf dein Feedback! 😊 
+### Wir wünschen Ihnen viel Spaß bei der Nutzung von Virtual Meet und freuen uns auf Ihr Feedback! 😊 
