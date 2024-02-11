@@ -70,17 +70,11 @@ function establishConnection() {
             const chatTextArea = document.getElementById("chatTextArea");
             const atmosphere = receivedMessage.sentiment;
             let smiley = "\u{1F610}";
-            if (atmosphere <= -0.6) {
-                smiley = "\u{1F62D}";
+            if (atmosphere < -0.3) {
+                smiley = "\u{1F622}";
             }
-            else if (atmosphere > -0.6 && atmosphere <= -0.2) {
-                smiley = "\u{1F625}";
-            }
-            else if (atmosphere >= 0.2 && atmosphere < 0.6) {
-                smiley = "\u{1F604}";
-            }
-            else if (atmosphere >= 0.6) {
-                smiley = "\u{1F60D}";
+            else if (atmosphere > 0.3) {
+                smiley = "\u{1F60A}";
             }
 
             const formatMessage = `(${receivedMessage.timestamp}) ${smiley}  ${receivedMessage.username}: ${receivedMessage.message} `;
