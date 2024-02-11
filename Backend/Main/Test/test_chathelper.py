@@ -1,6 +1,6 @@
 import unittest
-from ServerFuncs.Message import MessageToClient
 from ServerFuncs.ChatHelper import *
+from dotenv import load_dotenv
 
 
 class TestChatHelper(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestChatHelper(unittest.TestCase):
         This method tests the listenToMessages-method\n
         """
 
-        chatHistory_given =[]
+        chatHistory_given = []
         expected_return = None
 
         self.assertEqual(listenToMessages(chatHistory_given), expected_return)
@@ -32,7 +32,9 @@ class TestChatHelper(unittest.TestCase):
 
         self.assertEqual(listenToMessages(message_list).username, "Botify")
 
+        load_dotenv()
 
+        self.assertEqual(listenToMessages(message_list).username, "Botify")
 
     def test_is_message_addressing_bot(self):
         """
@@ -55,7 +57,7 @@ class TestChatHelper(unittest.TestCase):
                                    language="en", timestamp="00:00:00", sentiment="-1")
         message2 = MessageToClient(username="Testuser", message="Testmessage",
                                    language="en", timestamp="00:00:00", sentiment="-0.5")
-        message3 = MessageToClient(username="Testuser", message="botify, wieviel ist 2+2",
+        message3 = MessageToClient(username="Testuser", message="Botify, wieviel ist 2+2",
                                    language="en", timestamp="00:00:00", sentiment="-0.0")
         message_list = [message1, message2, message3]
 
@@ -89,7 +91,7 @@ class TestChatHelper(unittest.TestCase):
     def test_build_message_object(self):
         response_given = "Test"
         sentiment_given = 0.0
-        message_expected = MessageToClient(username="botify", message="Test", language="EN",
+        message_expected = MessageToClient(username="Botify", message="Test", language="EN",
                                            timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
         self.assertEqual(build_message_object(response_given, sentiment_given), message_expected)
 
@@ -103,7 +105,7 @@ class TestChatHelper(unittest.TestCase):
         This method tests the checkSentiment-method\n
         """
 
-        chatHistory_given =[]
+        chatHistory_given = []
         sentiment_expected = 0.0
         self.assertEqual(check_sentiment(chatHistory_given), sentiment_expected)
 
@@ -118,8 +120,3 @@ class TestChatHelper(unittest.TestCase):
         sentiment_expected = -0.5
 
         self.assertEqual(check_sentiment(message_list), sentiment_expected)
-
-
-
-if __name__ == '__main__':
-    unittest.main()

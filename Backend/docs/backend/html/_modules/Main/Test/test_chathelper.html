@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main.Test.test_chathelper &mdash; virtualmeet.social&#39;s Backend 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            virtualmeet.social's Backend
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.html">Main package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Main.Test.html">Main.Test package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">virtualmeet.social's Backend</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Main.Test.test_chathelper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Main.Test.test_chathelper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">..ServerFuncs.ChatHelper</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+
+
+<div class="viewcode-block" id="TestChatHelper">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper">[docs]</a>
+<span class="k">class</span> <span class="nc">TestChatHelper</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tests for the Chat Helper module</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestChatHelper.test_listenToMessages">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_listenToMessages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method tests the listenToMessages-method\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">chatHistory_given</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">expected_return</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">listenToMessages</span><span class="p">(</span><span class="n">chatHistory_given</span><span class="p">),</span> <span class="n">expected_return</span><span class="p">)</span>
+
+        <span class="n">message1</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="p">)</span>
+        <span class="n">message2</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.5&quot;</span><span class="p">)</span>
+        <span class="n">message3</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.0&quot;</span><span class="p">)</span>
+        <span class="n">message_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">message1</span><span class="p">,</span> <span class="n">message2</span><span class="p">,</span> <span class="n">message3</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">listenToMessages</span><span class="p">(</span><span class="n">message_list</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">message3</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;botify, wieviel ist 2+2&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">listenToMessages</span><span class="p">(</span><span class="n">message_list</span><span class="p">)</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s2">&quot;Botify&quot;</span><span class="p">)</span>
+
+        <span class="n">load_dotenv</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">listenToMessages</span><span class="p">(</span><span class="n">message_list</span><span class="p">)</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s2">&quot;Botify&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_is_message_addressing_bot">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_is_message_addressing_bot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method tests the is_message_addressing_bot-method\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message_given</span> <span class="o">=</span> <span class="s2">&quot;Testmessage&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_given</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">message_given</span> <span class="o">=</span> <span class="s2">&quot;botify, wieviel ist 2+2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_given</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">message_given</span> <span class="o">=</span> <span class="s2">&quot;Bitify, wieviel ist 2+2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_given</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_createChatBot">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_createChatBot">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_createChatBot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method tests the createChatBot-method\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message1</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="p">)</span>
+        <span class="n">message2</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.5&quot;</span><span class="p">)</span>
+        <span class="n">message3</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Botify, wieviel ist 2+2&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.0&quot;</span><span class="p">)</span>
+        <span class="n">message_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">message1</span><span class="p">,</span> <span class="n">message2</span><span class="p">,</span> <span class="n">message3</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">create_chatbot</span><span class="p">(</span><span class="n">message_list</span><span class="p">)</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s2">&quot;Botify&quot;</span><span class="p">)</span>
+
+        <span class="n">load_dotenv</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">create_chatbot</span><span class="p">(</span><span class="n">message_list</span><span class="p">)</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s2">&quot;Botify&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_prepare_messages">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_prepare_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message1</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="p">)</span>
+        <span class="n">message2</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.5&quot;</span><span class="p">)</span>
+        <span class="n">message3</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.0&quot;</span><span class="p">)</span>
+        <span class="n">sentiment_given</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span>
+
+        <span class="n">chatHistory_given</span> <span class="o">=</span> <span class="p">[</span><span class="n">message1</span><span class="p">,</span> <span class="n">message2</span><span class="p">,</span> <span class="n">message3</span><span class="p">]</span>
+        <span class="n">messages_expected</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Testmessage&#39;</span><span class="p">},</span>
+                             <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Testmessage&#39;</span><span class="p">},</span>
+                             <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Testmessage&#39;</span><span class="p">},</span>
+                             <span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="s1">&#39;Deine aktuelle Stimmung liegt bei: -0.5&#39;</span><span class="p">}]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">prepare_messages</span><span class="p">(</span><span class="n">chatHistory_given</span><span class="p">,</span> <span class="n">sentiment_given</span><span class="p">),</span> <span class="n">messages_expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_calculate_temperature">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_calculate_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sentiment_given</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="n">temperature_expected</span> <span class="o">=</span> <span class="mf">0.6500000000000001</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">calculate_temperature</span><span class="p">(</span><span class="n">sentiment_given</span><span class="p">),</span> <span class="n">temperature_expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_build_message_object">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_build_message_object">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_build_message_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response_given</span> <span class="o">=</span> <span class="s2">&quot;Test&quot;</span>
+        <span class="n">sentiment_given</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">message_expected</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span>
+                                           <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">build_message_object</span><span class="p">(</span><span class="n">response_given</span><span class="p">,</span> <span class="n">sentiment_given</span><span class="p">),</span> <span class="n">message_expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_handle_error_on_retry_failure">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_handle_error_on_retry_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message_expected</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;I&#39;m sorry, I&#39;m not able to answer right now.&quot;</span><span class="p">,</span>
+                                           <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">handle_error_on_retry_failure</span><span class="p">(),</span> <span class="n">message_expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestChatHelper.test_check_sentiment">
+<a class="viewcode-back" href="../../../index.html#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_check_sentiment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method tests the checkSentiment-method\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">chatHistory_given</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">sentiment_expected</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">check_sentiment</span><span class="p">(</span><span class="n">chatHistory_given</span><span class="p">),</span> <span class="n">sentiment_expected</span><span class="p">)</span>
+
+        <span class="n">message1</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="p">)</span>
+        <span class="n">message2</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.5&quot;</span><span class="p">)</span>
+        <span class="n">message3</span> <span class="o">=</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Testuser&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Testmessage&quot;</span><span class="p">,</span>
+                                   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="n">sentiment</span><span class="o">=</span><span class="s2">&quot;-0.0&quot;</span><span class="p">)</span>
+        <span class="n">message_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">message1</span><span class="p">,</span> <span class="n">message2</span><span class="p">,</span> <span class="n">message3</span><span class="p">]</span>
+
+        <span class="n">sentiment_expected</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">check_sentiment</span><span class="p">(</span><span class="n">message_list</span><span class="p">),</span> <span class="n">sentiment_expected</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Klinger, Tolga Yilmaz, Nils Rudnik, Timon Henke, Matthias Wohlmacher.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

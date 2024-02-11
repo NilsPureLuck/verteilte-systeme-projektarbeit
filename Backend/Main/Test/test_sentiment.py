@@ -1,7 +1,6 @@
 import os
 import unittest
 from dotenv import load_dotenv
-
 from ServerFuncs.Sentiment import sentiment_analysis, load_api_config, get_sentiment_score
 from ServerFuncs.Message import MessageFromClient, MessageToClient
 
@@ -58,7 +57,3 @@ class TestSentiment(unittest.TestCase):
         message_expected.message = "Ok"
         message_expected.sentiment = 0
         self.assertEqual(sentiment_analysis(message_given), message_expected)
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -48,7 +48,3 @@ class TestTranslator(unittest.TestCase):
         message_expected = MessageToClient(username="Matthias", message="Hallo ich bin ein Bär",
                                         language="", timestamp="15:43:33", sentiment=0.85434434)
         self.assertEqual(translate_text(message_given), (message_expected, 'unknown'))
-
-
-if __name__ == '__main__':
-    unittest.main()

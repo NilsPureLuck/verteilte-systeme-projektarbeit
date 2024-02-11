@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main.Server &mdash; virtualmeet.social&#39;s Backend 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            virtualmeet.social's Backend
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Main.html">Main package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Main.Test.html">Main.Test package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">virtualmeet.social's Backend</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Main.Server</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Main.Server</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">autobahn.twisted.websocket</span> <span class="kn">import</span> <span class="n">WebSocketServerFactory</span><span class="p">,</span> <span class="n">WebSocketServerProtocol</span>
+<span class="kn">from</span> <span class="nn">.ServerFuncs.Message</span> <span class="kn">import</span> <span class="n">MessageFromClient</span>
+<span class="kn">from</span> <span class="nn">.ServerFuncs.Translator</span> <span class="kn">import</span> <span class="n">translate_text</span>
+<span class="kn">from</span> <span class="nn">.ServerFuncs.ChatHelper</span> <span class="kn">import</span> <span class="n">listenToMessages</span>
+<span class="kn">from</span> <span class="nn">.ServerFuncs.Sentiment</span> <span class="kn">import</span> <span class="n">sentiment_analysis</span>
+
+
+<div class="viewcode-block" id="ChatServerProtocol">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerProtocol">[docs]</a>
+<span class="k">class</span> <span class="nc">ChatServerProtocol</span><span class="p">(</span><span class="n">WebSocketServerProtocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    WebSocket Server\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chatHistory</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="ChatServerProtocol.onConnect">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerProtocol.onConnect">[docs]</a>
+    <span class="k">def</span> <span class="nf">onConnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method connects a client to the server\n</span>
+<span class="sd">        :param request: incoming request from the client\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="ChatServerProtocol.onOpen">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerProtocol.onOpen">[docs]</a>
+    <span class="k">def</span> <span class="nf">onOpen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method registers a new client when the connection is openned\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client connected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChatServerProtocol.onMessage">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerProtocol.onMessage">[docs]</a>
+    <span class="k">def</span> <span class="nf">onMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">isBinary</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method receives a message from a client, calls translation, sentiment analysis,</span>
+<span class="sd">        chatbot and distributes it among the chat participants\n</span>
+<span class="sd">        :param payload: incoming message from the client\n</span>
+<span class="sd">        :param isBinary: Boolean indicating whether a message is binary or not\n</span>
+<span class="sd">        :raise HTTPStatus: 400 Bad Request if the incoming message is malformed\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">isBinary</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;message received: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;message received: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">MessageFromClient</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+                    <span class="c1"># check if user.language or user.username is assigned for client, if not assign them and send current users</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">language</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">username</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">sendCurrentUsers</span><span class="p">()</span>
+
+                    <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">language</span> <span class="o">!=</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span>
+                        <span class="n">message</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span>
+
+                    <span class="n">message_copy</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span>
+
+                    <span class="c1"># translate message to english and calculate the sentiment</span>
+                    <span class="n">message</span><span class="p">,</span> <span class="n">detectedlang</span> <span class="o">=</span> <span class="n">translate_text</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+                    <span class="n">message</span> <span class="o">=</span> <span class="n">sentiment_analysis</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+                    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+                        <span class="n">message_old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;old message &#39;</span><span class="si">{</span><span class="n">message_old</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"> removed from chat history&quot;</span>
+                        <span class="p">)</span>
+
+                    <span class="n">message</span><span class="o">.</span><span class="n">orgmessage</span> <span class="o">=</span> <span class="n">message_copy</span>
+                    <span class="n">message</span><span class="o">.</span><span class="n">detectedlang</span> <span class="o">=</span> <span class="n">detectedlang</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+                    <span class="n">chat_response</span> <span class="o">=</span> <span class="n">listenToMessages</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">chat_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chat_response</span><span class="p">)</span>
+
+                        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">chat_response</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message &#39;</span><span class="si">{</span><span class="n">chat_response</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&#39; broadcasted&quot;</span><span class="p">)</span>
+
+                        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+                            <span class="n">message_old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chatHistory</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span>
+                        <span class="s2">&quot;wrong request parameter send Request as Json with fields &quot;</span>
+                        <span class="o">+</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                            <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">}</span>
+                        <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;wrong request parameter send Request as Json with fields &quot;</span>
+                        <span class="o">+</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">}),</span>
+                    <span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="ChatServerProtocol.onClose">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerProtocol.onClose">[docs]</a>
+    <span class="k">def</span> <span class="nf">onClose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is called when the websocket connection closes\n</span>
+<span class="sd">        :param wasClean: boolean whether the connection was closed cleanly\n</span>
+<span class="sd">        :param code: status code of the connection close\n</span>
+<span class="sd">        :param reason: cause for connection close\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Client disconnected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">    Closing details: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">, was clean: </span><span class="si">{</span><span class="n">wasClean</span><span class="si">}</span><span class="s2">, code: </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ChatServerFactory">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory">[docs]</a>
+<span class="k">class</span> <span class="nc">ChatServerFactory</span><span class="p">(</span><span class="n">WebSocketServerFactory</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Factory for WebSocket Servers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxConnections</span> <span class="o">=</span> <span class="mi">50</span>
+
+<div class="viewcode-block" id="ChatServerFactory.getUsernameAndLang">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory.getUsernameAndLang">[docs]</a>
+    <span class="k">def</span> <span class="nf">getUsernameAndLang</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This methods compiles a list of all usernames and languages participating in the chat\n</span>
+<span class="sd">        :return client_list: List of clients and their set language\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">client_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">client</span><span class="o">.</span><span class="n">language</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">client_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">language</span><span class="p">}</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">client_list</span></div>
+
+
+<div class="viewcode-block" id="ChatServerFactory.sendCurrentUsers">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory.sendCurrentUsers">[docs]</a>
+    <span class="k">def</span> <span class="nf">sendCurrentUsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method sends a list of all clients currently registered to the server\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">number_of_clients</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">)</span>
+        <span class="n">client_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUsernameAndLang</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;clientsOnline&quot;</span><span class="p">:</span> <span class="n">client_list</span><span class="p">,</span><span class="s2">&quot;numOfClients&quot;</span><span class="p">:</span> <span class="n">number_of_clients</span><span class="p">})</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Active users message send: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">client</span><span class="o">.</span><span class="n">language</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">client</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="ChatServerFactory.register">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory.register">[docs]</a>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds a client to the list of chat participants\n</span>
+<span class="sd">        :param client: client to be registered\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">client</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client registered: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client registered: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChatServerFactory.unregister">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory.unregister">[docs]</a>
+    <span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes the client from the list of chat participants\n</span>
+<span class="sd">        :param client: client to be removed\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client unregister: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client unregisterd: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCurrentUsers</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ChatServerFactory.broadcast">
+<a class="viewcode-back" href="../../index.html#Main.Server.ChatServerFactory.broadcast">[docs]</a>
+    <span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">sender</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method broadcasts the message to all clients in the chat\n</span>
+<span class="sd">        :param message: The message to broadcast\n</span>
+<span class="sd">        :param sender: Sender client of the message\n</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;message for broadcast </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">client</span><span class="o">.</span><span class="n">language</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">language</span> <span class="o">==</span> <span class="n">message</span><span class="o">.</span><span class="n">detectedlang</span><span class="p">:</span>
+                        <span class="n">message</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">orgmessage</span><span class="p">)</span>
+                        <span class="n">jsonmassage</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                            <span class="n">message</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;detectedlang&quot;</span><span class="p">,</span> <span class="s2">&quot;orgmessage&quot;</span><span class="p">}),</span>
+                            <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">jsonmassage</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Send Message </span><span class="si">{</span><span class="n">jsonmassage</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Send Message </span><span class="si">{</span><span class="n">jsonmassage</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USERLANG: </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">language</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">language</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">message</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;user alnguage : </span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">language</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">message</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">translate_text</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                        <span class="n">jsonmassage</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                            <span class="n">message</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;detectedlang&quot;</span><span class="p">,</span> <span class="s2">&quot;orgmessage&quot;</span><span class="p">}),</span>
+                            <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">jsonmassage</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Send Message </span><span class="si">{</span><span class="n">jsonmassage</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Send Message </span><span class="si">{</span><span class="n">jsonmassage</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">client</span><span class="o">.</span><span class="n">peer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">log_dir</span> <span class="o">=</span> <span class="s2">&quot;./LogFiles&quot;</span>
+    <span class="n">log_filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="s2">&quot;logfile&quot;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;-%Y-%m-</span><span class="si">%d</span><span class="s2">-%H-%M&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span>
+    <span class="p">)</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">log_filename</span><span class="p">)</span>
+    <span class="c1"># create log file if not exsist</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
+
+    <span class="c1"># Konfiguration des Loggings</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">log_path</span><span class="p">,</span>
+        <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">ChatServerFactory</span><span class="p">(</span><span class="s2">&quot;ws://localhost:9000&quot;</span><span class="p">)</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">ChatServerProtocol</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WebSocket-Server gestartet auf Port 9000.&quot;</span><span class="p">)</span>
+    <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Klinger, Tolga Yilmaz, Nils Rudnik, Timon Henke, Matthias Wohlmacher.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

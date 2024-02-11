@@ -77,15 +77,39 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Main.html">Main package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Main.html#main-server-module">Main.Server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Main.html#module-Main.Server">Main.Server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.broadcast"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.broadcast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.getUsernameAndLang"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.getUsernameAndLang()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.register"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.register()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.sendCurrentUsers"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.sendCurrentUsers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.unregister"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.unregister()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.chatHistory"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.chatHistory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onClose"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onClose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onConnect"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onConnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onMessage"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onOpen"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onOpen()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Main.ServerFuncs.html">Main.ServerFuncs package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.ChatHelper">Main.ServerFuncs.ChatHelper module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.checkSentiment"><code class="docutils literal notranslate"><span class="pre">checkSentiment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.build_message_object"><code class="docutils literal notranslate"><span class="pre">build_message_object()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.calculate_temperature"><code class="docutils literal notranslate"><span class="pre">calculate_temperature()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.check_sentiment"><code class="docutils literal notranslate"><span class="pre">check_sentiment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.create_chatbot"><code class="docutils literal notranslate"><span class="pre">create_chatbot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.generate_response"><code class="docutils literal notranslate"><span class="pre">generate_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.handle_error_on_retry_failure"><code class="docutils literal notranslate"><span class="pre">handle_error_on_retry_failure()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.is_message_addressing_bot"><code class="docutils literal notranslate"><span class="pre">is_message_addressing_bot()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.listenToMessages"><code class="docutils literal notranslate"><span class="pre">listenToMessages()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.load_api_config"><code class="docutils literal notranslate"><span class="pre">load_api_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.prepare_messages"><code class="docutils literal notranslate"><span class="pre">prepare_messages()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Message">Main.ServerFuncs.Message module</a><ul>
@@ -115,20 +139,51 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Sentiment">Main.ServerFuncs.Sentiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.get_sentiment_score"><code class="docutils literal notranslate"><span class="pre">get_sentiment_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.load_api_config"><code class="docutils literal notranslate"><span class="pre">load_api_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.sentiment_analysis"><code class="docutils literal notranslate"><span class="pre">sentiment_analysis()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Translator">Main.ServerFuncs.Translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Translator.initialize_translate_client"><code class="docutils literal notranslate"><span class="pre">initialize_translate_client()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Translator.translate_text"><code class="docutils literal notranslate"><span class="pre">translate_text()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Main.Test.html">Main.Test package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-chathelper-module">Main.Test.test_chathelper module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-sentiment-module">Main.Test.test_sentiment module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#module-Main.Test.test_chathelper">Main.Test.test_chathelper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper"><code class="docutils literal notranslate"><span class="pre">TestChatHelper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_build_message_object"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_build_message_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_calculate_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_check_sentiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_createChatBot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_createChatBot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_handle_error_on_retry_failure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_is_message_addressing_bot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_listenToMessages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_prepare_messages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#module-Main.Test.test_sentiment">Main.Test.test_sentiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment"><code class="docutils literal notranslate"><span class="pre">TestSentiment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_get_sentiment_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_load_api_config"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_load_api_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_sentiment_analysis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-server-module">Main.Test.test_server module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-translator-module">Main.Test.test_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-translator-module">Main.Test.test_translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator"><code class="docutils literal notranslate"><span class="pre">TestTranslator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator.test_initialize_translate_client"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_initialize_translate_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator.test_translate"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_translate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

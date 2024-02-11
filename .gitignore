@@ -8,7 +8,6 @@ credentials.json
 .vscode
 **/__pycache__/
 *.code-workspace
-htmlcov
 .coverage
 LogFiles
 *.log

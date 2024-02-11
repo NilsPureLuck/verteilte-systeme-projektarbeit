@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main package &mdash; virtualmeet.social&#39;s Backend 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Main.ServerFuncs package" href="Main.ServerFuncs.html" />
+    <link rel="prev" title="Welcome to virtualmeet.social’s Backend’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            virtualmeet.social's Backend
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-Main.Server">Main.Server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Server.ChatServerFactory"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerFactory.broadcast"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.broadcast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerFactory.getUsernameAndLang"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.getUsernameAndLang()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerFactory.register"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.register()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerFactory.sendCurrentUsers"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.sendCurrentUsers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerFactory.unregister"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.unregister()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Server.ChatServerProtocol"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerProtocol.chatHistory"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.chatHistory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerProtocol.onClose"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onClose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerProtocol.onConnect"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onConnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerProtocol.onMessage"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Server.ChatServerProtocol.onOpen"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onOpen()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.Test.html">Main.Test package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">virtualmeet.social's Backend</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Main package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="main-package">
+<h1>Main package<a class="headerlink" href="#main-package" title="Link to this heading"></a></h1>
+<section id="module-Main.Server">
+<span id="main-server-module"></span><h2>Main.Server module<a class="headerlink" href="#module-Main.Server" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Server.</span></span><span class="sig-name descname"><span class="pre">ChatServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">WebSocketServerFactory</span></code></p>
+<p>Factory for WebSocket Servers</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.broadcast">
+<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.broadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.broadcast" title="Link to this definition"></a></dt>
+<dd><p>This method broadcasts the message to all clients in the chat</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – The message to broadcast</p></li>
+<li><p><strong>sender</strong> – Sender client of the message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.getUsernameAndLang">
+<span class="sig-name descname"><span class="pre">getUsernameAndLang</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.getUsernameAndLang"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.getUsernameAndLang" title="Link to this definition"></a></dt>
+<dd><p>This methods compiles a list of all usernames and languages participating in the chat</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return client_list<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of clients and their set language</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.register" title="Link to this definition"></a></dt>
+<dd><p>This method adds a client to the list of chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>client</strong> – client to be registered</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.sendCurrentUsers">
+<span class="sig-name descname"><span class="pre">sendCurrentUsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.sendCurrentUsers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.sendCurrentUsers" title="Link to this definition"></a></dt>
+<dd><p>This method sends a list of all clients currently registered to the server</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.unregister">
+<span class="sig-name descname"><span class="pre">unregister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.unregister"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.unregister" title="Link to this definition"></a></dt>
+<dd><p>This method removes the client from the list of chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>client</strong> – client to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Server.</span></span><span class="sig-name descname"><span class="pre">ChatServerProtocol</span></span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code></p>
+<p>WebSocket Server</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.chatHistory">
+<span class="sig-name descname"><span class="pre">chatHistory</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#Main.Server.ChatServerProtocol.chatHistory" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onClose">
+<span class="sig-name descname"><span class="pre">onClose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wasClean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onClose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onClose" title="Link to this definition"></a></dt>
+<dd><p>This method is called when the websocket connection closes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wasClean</strong> – boolean whether the connection was closed cleanly</p></li>
+<li><p><strong>code</strong> – status code of the connection close</p></li>
+<li><p><strong>reason</strong> – cause for connection close</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onConnect">
+<span class="sig-name descname"><span class="pre">onConnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onConnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onConnect" title="Link to this definition"></a></dt>
+<dd><p>This method connects a client to the server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – incoming request from the client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onMessage">
+<span class="sig-name descname"><span class="pre">onMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isBinary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onMessage" title="Link to this definition"></a></dt>
+<dd><p>This method receives a message from a client, calls translation, sentiment analysis,
+chatbot and distributes it among the chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>payload</strong> – incoming message from the client</p></li>
+<li><p><strong>isBinary</strong> – Boolean indicating whether a message is binary or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPStatus</strong> – 400 Bad Request if the incoming message is malformed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onOpen">
+<span class="sig-name descname"><span class="pre">onOpen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onOpen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onOpen" title="Link to this definition"></a></dt>
+<dd><p>This method registers a new client when the connection is openned</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to virtualmeet.social’s Backend’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Main.ServerFuncs.html" class="btn btn-neutral float-right" title="Main.ServerFuncs package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Klinger, Tolga Yilmaz, Nils Rudnik, Timon Henke, Matthias Wohlmacher.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
