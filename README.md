@@ -21,7 +21,7 @@ Legen Sie die credentials.json Datei für Google Cloud Translation ebenfalls in 
 Führen Sie im Hauptordner folgenden Befehl aus:
 ```pip install -r requirements.txt```
 
-Starten des Servers:
+### Starten des Servers:
 ```python Server.py```
 
 ## Schnellstartanleitung
