@@ -19,6 +19,7 @@ def load_api_config():
         }
     }
 
+
 def get_sentiment_score(message_text: str, config: dict) -> float:
     """
     Queries the sentiment analysis API and returns the sentiment score.\n
@@ -28,6 +29,7 @@ def get_sentiment_score(message_text: str, config: dict) -> float:
     """
     response = requests.get(config["url"], headers=config["headers"], params={"text": message_text})
     return response.json()["score"]
+
 
 def sentiment_analysis(message: MessageFromClient, retry=False) -> MessageToClient:
     """
@@ -49,7 +51,6 @@ def sentiment_analysis(message: MessageFromClient, retry=False) -> MessageToClie
             print("Retrying...")
             return sentiment_analysis(message, retry=True)
         else:
-            return MessageToClient(username="Botify",
-                                   message="I'm sorry, I couldn't analyse the sentiment of your message.",
-                                   language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
-
+            message_dict = message.__dict__
+            message_dict["sentiment"] = 0.0
+            return MessageToClient.model_validate(message_dict)
