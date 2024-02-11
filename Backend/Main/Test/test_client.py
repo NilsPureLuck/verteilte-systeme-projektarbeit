@@ -2,7 +2,8 @@ from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
 import json
 
-class MyClientProtocol(WebSocketClientProtocol):
+class CLientProtocol(WebSocketClientProtocol):
+    
 
     def onConnect(self, response):
         print("Connected to Server: {0}".format(response.peer))
@@ -38,17 +39,16 @@ class MyClientProtocol(WebSocketClientProtocol):
             
         except:
             print("Error")
-
-async def startClient():
-    factory = WebSocketClientFactory("ws://localhost")
-    factory.protocol = MyClientProtocol
-
-    reactor.connectTCP("localhost" , 9000, factory)
-    reactor.run()
+            
+    def connect(self, addr):
+        factory = WebSocketClientFactory(addr)
+        factory.protocol = CLientProtocol
+        reactor.connectTCP("localhost" , 9000, factory)
+        reactor.run()
             
 if __name__ == '__main__':
     factory = WebSocketClientFactory("ws://localhost")
-    factory.protocol = MyClientProtocol
+    factory.protocol = CLientProtocol
 
     reactor.connectTCP("localhost" , 9000, factory)
     reactor.run()
