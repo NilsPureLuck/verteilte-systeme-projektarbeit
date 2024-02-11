@@ -8,7 +8,7 @@ def initialize_translate_client():
     """
     Initializes the Google Translate client with the necessary credentials.
     """
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../credentials.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     return translate.Client()
 
 def translate_text(message: MessageFromClient | MessageToClient, retry=False) -> (MessageFromClient | MessageToClient, str):
@@ -24,6 +24,7 @@ def translate_text(message: MessageFromClient | MessageToClient, retry=False) ->
         translate_client = initialize_translate_client()
         message_str = message.message
         target = message.language
+        print(type(target))
 
         if isinstance(message_str, bytes):
             message_str = message_str.decode("utf-8")

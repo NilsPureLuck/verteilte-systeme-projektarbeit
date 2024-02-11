@@ -32,6 +32,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
         This method registers a new client when the connection is openned\n
         """
         self.factory.register(self)
+        logging.info(f"Client connected: {self.peer}")
 
     def onMessage(self, payload, isBinary):
         """
@@ -63,6 +64,8 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
                     # translate message to english and calculate the sentiment
                     message, detectedlang = translate_text(message)
+                    print("Message with error")
+                    print(message, detectedlang)
                     message = sentiment_analysis(message)
 
                     self.chatHistory.append(message)
@@ -115,7 +118,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
         :param code: status code of the connection close\n
         :param reason: cause for connection close\n
         """
-        message = f"WebSocket connection to {self.peer} closed: {reason}, was clean: {wasClean}, code: {code}"
+        message = f"Client disconnected: {self.peer}    Closing details: {reason}, was clean: {wasClean}, code: {code}"
         print(message)
         logging.info(message)
         self.factory.unregister(self)
@@ -149,17 +152,12 @@ class ChatServerFactory(WebSocketServerFactory):
         """
         number_of_clients = len(self.clients)
         client_list = self.getUsernameAndLang()
-        print(client_list)
+        message = json.dumps({"clientsOnline": client_list,"numOfClients": number_of_clients})
+        logging.info(f"Active users message send: {message}")
+        
         for client in self.clients:
             try:
                 if not (client.username is None or client.language is None):
-                    message = json.dumps(
-                        {
-                            "clientsOnline": client_list,
-                            "numOfClients": number_of_clients,
-                        }
-                    )
-                    logging.info(f"message send: {message}")
                     client.sendMessage(message.encode("utf-8"))
             except:
                 logging.error(traceback.format_exc())
@@ -171,8 +169,9 @@ class ChatServerFactory(WebSocketServerFactory):
         :param client: client to be registered\n
         """
         if client not in self.clients:
-            print(f"Client {client.peer} connected.")
+            print(f"Client registered: {client.peer}")
             self.clients.append(client)
+            logging.info(f"Client registered: {client.peer}")
 
     def unregister(self, client):
         """
@@ -180,8 +179,9 @@ class ChatServerFactory(WebSocketServerFactory):
         :param client: client to be removed\n
         """
         if client in self.clients:
-            print(f"Client {client.peer} disconnected.")
+            print(f"Client unregister: {client.peer}")
             self.clients.remove(client)
+            logging.info(f"Client unregister: {client.peer}")
         if len(self.clients) > 0:
             self.sendCurrentUsers()
 
@@ -193,24 +193,29 @@ class ChatServerFactory(WebSocketServerFactory):
         :param sender: Sender client of the message\n
         """
         for client in self.clients:
-            if client.language == message.detectedlang:
-                message.message = message.orgmessage
-                jsonmassage = json.dumps(
-                    message.model_dump(exclude={"detectedlang", "orgmessage"}),
-                    ensure_ascii=True,
-                )
-                a = client.sendMessage(jsonmassage.encode("utf-8"))
-                print(f"Sended Message {a}")
-            else:
-                message.language = str(client.language)
-                message, _ = translate_text(message)
-                jsonmassage = json.dumps(
-                    message.model_dump(exclude={"detectedlang", "orgmessage"}),
-                    ensure_ascii=True,
-                )
-                client.sendMessage(jsonmassage.encode("utf-8"))
+            if not (client.username is None or client.language is None):
+                if client.language == message.detectedlang:
+                    message.message = str(message.orgmessage)
+                    jsonmassage = json.dumps(
+                        message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                        ensure_ascii=True,
+                    )
+                    client.sendMessage(jsonmassage.encode("utf-8"))
+                    print(f"Send Message {jsonmassage} to {client.peer}")
+                    logging.info(f"Send Message {jsonmassage} to {client.peer}")
+                else:
+                    print(f"USERLANG: {client.language} {type(client.language)}")
+                    message.language = str(client.language)
+                    print(f"user alnguage : {message.language}")
+                    message, _ = translate_text(message)
+                    jsonmassage = json.dumps(
+                        message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                        ensure_ascii=True,
+                    )
+                    client.sendMessage(jsonmassage.encode("utf-8"))
+                    print(f"Send Message {jsonmassage} to {client.peer}")
+                    logging.info(f"Send Message {jsonmassage} to {client.peer}")
         
-
 
 async def startServer():
     factory = ChatServerFactory("ws://localhost:9000")
