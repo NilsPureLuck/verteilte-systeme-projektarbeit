@@ -47,10 +47,37 @@
 <li class="toctree-l1"><a class="reference internal" href="Main.html">Main package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Main.ServerFuncs.html">Main.ServerFuncs package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main.Test package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#main-test-test-chathelper-module">Main.Test.test_chathelper module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main-test-test-sentiment-module">Main.Test.test_sentiment module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main-test-test-server-module">Main.Test.test_server module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#main-test-test-translator-module">Main.Test.test_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Main.Test.test_chathelper">Main.Test.test_chathelper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper"><code class="docutils literal notranslate"><span class="pre">TestChatHelper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_build_message_object"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_build_message_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_calculate_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_check_sentiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_createChatBot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_createChatBot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_handle_error_on_retry_failure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_is_message_addressing_bot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_listenToMessages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_prepare_messages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-Main.Test.test_sentiment">Main.Test.test_sentiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Test.test_sentiment.TestSentiment"><code class="docutils literal notranslate"><span class="pre">TestSentiment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_get_sentiment_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_sentiment.TestSentiment.test_load_api_config"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_load_api_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_sentiment_analysis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#main-test-test-translator-module">Main.Test.test_translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Main.Test.test_translator.TestTranslator"><code class="docutils literal notranslate"><span class="pre">TestTranslator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_translator.TestTranslator.test_initialize_translate_client"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_initialize_translate_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Main.Test.test_translator.TestTranslator.test_translate"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_translate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -81,17 +108,113 @@
              
   <section id="main-test-package">
 <h1>Main.Test package<a class="headerlink" href="#main-test-package" title="Link to this heading"></a></h1>
-<section id="main-test-test-chathelper-module">
-<h2>Main.Test.test_chathelper module<a class="headerlink" href="#main-test-test-chathelper-module" title="Link to this heading"></a></h2>
+<section id="module-Main.Test.test_chathelper">
+<span id="main-test-test-chathelper-module"></span><h2>Main.Test.test_chathelper module<a class="headerlink" href="#module-Main.Test.test_chathelper" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_chathelper.</span></span><span class="sig-name descname"><span class="pre">TestChatHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Chat Helper module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_build_message_object">
+<span class="sig-name descname"><span class="pre">test_build_message_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_build_message_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_build_message_object" title="Link to this definition"></a></dt>
+<dd><p>This method tests the build_message_object-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature">
+<span class="sig-name descname"><span class="pre">test_calculate_temperature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_calculate_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature" title="Link to this definition"></a></dt>
+<dd><p>This method tests the calculate_temperature-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_check_sentiment">
+<span class="sig-name descname"><span class="pre">test_check_sentiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_check_sentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment" title="Link to this definition"></a></dt>
+<dd><p>This method tests the check_sentiment-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_createChatBot">
+<span class="sig-name descname"><span class="pre">test_createChatBot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_createChatBot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_createChatBot" title="Link to this definition"></a></dt>
+<dd><p>This method tests the createChatBot-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure">
+<span class="sig-name descname"><span class="pre">test_handle_error_on_retry_failure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_handle_error_on_retry_failure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure" title="Link to this definition"></a></dt>
+<dd><p>This method tests the handle_error_on_retry_failure-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot">
+<span class="sig-name descname"><span class="pre">test_is_message_addressing_bot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_is_message_addressing_bot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot" title="Link to this definition"></a></dt>
+<dd><p>This method tests the is_message_addressing_bot-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_listenToMessages">
+<span class="sig-name descname"><span class="pre">test_listenToMessages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_listenToMessages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages" title="Link to this definition"></a></dt>
+<dd><p>This method tests the listenToMessages-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_prepare_messages">
+<span class="sig-name descname"><span class="pre">test_prepare_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_prepare_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages" title="Link to this definition"></a></dt>
+<dd><p>This method tests the prepare_messages-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="main-test-test-sentiment-module">
-<h2>Main.Test.test_sentiment module<a class="headerlink" href="#main-test-test-sentiment-module" title="Link to this heading"></a></h2>
-</section>
-<section id="main-test-test-server-module">
-<h2>Main.Test.test_server module<a class="headerlink" href="#main-test-test-server-module" title="Link to this heading"></a></h2>
+<section id="module-Main.Test.test_sentiment">
+<span id="main-test-test-sentiment-module"></span><h2>Main.Test.test_sentiment module<a class="headerlink" href="#module-Main.Test.test_sentiment" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_sentiment.</span></span><span class="sig-name descname"><span class="pre">TestSentiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Sentiment module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score">
+<span class="sig-name descname"><span class="pre">test_get_sentiment_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_get_sentiment_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score" title="Link to this definition"></a></dt>
+<dd><p>This method tests the get_sentiment_score-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_load_api_config">
+<span class="sig-name descname"><span class="pre">test_load_api_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_load_api_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_load_api_config" title="Link to this definition"></a></dt>
+<dd><p>This method tests the load_api_config-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis">
+<span class="sig-name descname"><span class="pre">test_sentiment_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_sentiment_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis" title="Link to this definition"></a></dt>
+<dd><p>This method tests the sentiment_analysis-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="main-test-test-translator-module">
 <h2>Main.Test.test_translator module<a class="headerlink" href="#main-test-test-translator-module" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-Main.Test.test_translator">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_translator.</span></span><span class="sig-name descname"><span class="pre">TestTranslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Translator module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator.test_initialize_translate_client">
+<span class="sig-name descname"><span class="pre">test_initialize_translate_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator.test_initialize_translate_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator.test_initialize_translate_client" title="Link to this definition"></a></dt>
+<dd><p>This method tests the initialize_translate_client-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator.test_translate">
+<span class="sig-name descname"><span class="pre">test_translate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator.test_translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator.test_translate" title="Link to this definition"></a></dt>
+<dd><p>This method tests the translate-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

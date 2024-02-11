@@ -7,6 +7,9 @@ from datetime import datetime
 
 
 def load_api_config():
+    """
+    This method loads the api key for the REST call to the sentiment analysis.\n
+    """
     load_dotenv()
     return {
         "url": os.environ.get("SENTIMENT_ANALYSIS_URL"),
@@ -18,20 +21,20 @@ def load_api_config():
 
 def get_sentiment_score(message_text: str, config: dict) -> float:
     """
-    Queries the sentiment analysis API and returns the sentiment score.
-    :param message_text: The text of the message to analyze.
-    :param config: Configuration dictionary containing the API details.
-    :return: Sentiment score of the message.
+    Queries the sentiment analysis API and returns the sentiment score.\n
+    :param message_text: The text of the message to analyze.\n
+    :param config: Configuration dictionary containing the API details.\n
+    :return float: Sentiment score of the message.
     """
     response = requests.get(config["url"], headers=config["headers"], params={"text": message_text})
     return response.json()["score"]
 
 def sentiment_analysis(message: MessageFromClient, retry=False) -> MessageToClient:
     """
-    Analyzes the sentiment of a given message, with an optional retry mechanism.
-    :param message: Incoming message without a sentiment.
-    :param retry: Indicates if the function is being retried.
-    :return: Analyzed message with a sentiment.
+    Analyzes the sentiment of a given message, with an optional retry mechanism.\n
+    :param message: Incoming message without a sentiment.\n
+    :param retry: Indicates if the function is being retried.\n
+    :return MessageToClient: Analyzed message with a sentiment.\n
     """
     try:
         config = load_api_config()

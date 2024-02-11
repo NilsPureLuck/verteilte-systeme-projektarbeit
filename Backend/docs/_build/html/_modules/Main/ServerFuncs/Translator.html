@@ -74,35 +74,52 @@
   <h1>Source code for Main.ServerFuncs.Translator</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">html</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">google.cloud</span> <span class="kn">import</span> <span class="n">translate_v2</span> <span class="k">as</span> <span class="n">translate</span>
 <span class="kn">from</span> <span class="nn">.Message</span> <span class="kn">import</span> <span class="n">MessageFromClient</span><span class="p">,</span> <span class="n">MessageToClient</span>
-<span class="kn">import</span> <span class="nn">traceback</span>
 
 
-<span class="c1"># Method to translate the messages</span>
+<div class="viewcode-block" id="initialize_translate_client">
+<a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.Translator.initialize_translate_client">[docs]</a>
+<span class="k">def</span> <span class="nf">initialize_translate_client</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes the Google Translate client with the necessary credentials.\n</span>
+<span class="sd">    :return Client: Client to translate incoming messages</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;../../credentials.json&quot;</span>
+    <span class="k">return</span> <span class="n">translate</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span></div>
+
+
+
 <div class="viewcode-block" id="translate_text">
 <a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.Translator.translate_text">[docs]</a>
-<span class="k">def</span> <span class="nf">translate_text</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">MessageFromClient</span> <span class="o">|</span> <span class="n">MessageToClient</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">MessageFromClient</span><span class="o">|</span><span class="n">MessageToClient</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">translate_text</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">MessageFromClient</span> <span class="o">|</span> <span class="n">MessageToClient</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">MessageFromClient</span> <span class="o">|</span> <span class="n">MessageToClient</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This method translates an incoming message into the language specified in the message field message.language</span>
-<span class="sd">    :param message: incoming message in original language\n</span>
-<span class="sd">    :return: message: translated message\n</span>
+<span class="sd">    Translates an incoming message into the language specified in the message.language field.</span>
+<span class="sd">    If an exception occurs, it retries once more.\n</span>
+
+<span class="sd">    :param message: Incoming message in original language\n</span>
+<span class="sd">    :param retry: Indicates if this is a retry attempt\n</span>
+<span class="sd">    :return MessageFromClient | MessageToClient, str: Tuple of (translated message, detected source</span>
+<span class="sd">    language or &quot;unknown&quot; on error)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;GOOGLE_APPLICATION_CREDENTIALS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;../../credentials.json&quot;</span>
-        <span class="n">translate_client</span> <span class="o">=</span> <span class="n">translate</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+        <span class="n">translate_client</span> <span class="o">=</span> <span class="n">initialize_translate_client</span><span class="p">()</span>
         <span class="n">message_str</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span>
         <span class="n">target</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">language</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message_str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
-            <span class="n">message_str</span> <span class="o">=</span> <span class="n">message_str</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
         <span class="n">result</span> <span class="o">=</span> <span class="n">translate_client</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">message_str</span><span class="p">,</span> <span class="n">target_language</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;translatedText&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">unescape</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;translatedText&quot;</span><span class="p">])</span>
         <span class="n">message</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;translatedText&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">message</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;detectedSourceLanguage&quot;</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An error occurred while translating the text:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">retry</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrying...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">translate_text</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">message</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;unknown&quot;</span><span class="p">)</span></div>
 
 </pre></div>
 

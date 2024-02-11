@@ -13,7 +13,7 @@ class TestChatHelper(unittest.TestCase):
         This method tests the listenToMessages-method\n
         """
 
-        chatHistory_given =[]
+        chatHistory_given = []
         expected_return = None
 
         self.assertEqual(listenToMessages(chatHistory_given), expected_return)
@@ -31,8 +31,6 @@ class TestChatHelper(unittest.TestCase):
         message3.message = "botify, wieviel ist 2+2"
 
         self.assertEqual(listenToMessages(message_list).username, "Botify")
-
-
 
     def test_is_message_addressing_bot(self):
         """
@@ -66,6 +64,9 @@ class TestChatHelper(unittest.TestCase):
         self.assertEqual(create_chatbot(message_list).username, "Botify")
 
     def test_prepare_messages(self):
+        """
+        This method tests the prepare_messages-method\n
+        """
         message1 = MessageToClient(username="Testuser", message="Testmessage",
                                    language="en", timestamp="00:00:00", sentiment="-1")
         message2 = MessageToClient(username="Testuser", message="Testmessage",
@@ -82,28 +83,37 @@ class TestChatHelper(unittest.TestCase):
         self.assertEqual(prepare_messages(chatHistory_given, sentiment_given), messages_expected)
 
     def test_calculate_temperature(self):
+        """
+        This method tests the calculate_temperature-method\n
+        """
         sentiment_given = 0.5
         temperature_expected = 0.6500000000000001
         self.assertEqual(calculate_temperature(sentiment_given), temperature_expected)
 
     def test_build_message_object(self):
+        """
+        This method tests the build_message_object-method\n
+        """
         response_given = "Test"
         sentiment_given = 0.0
-        message_expected = MessageToClient(username="botify", message="Test", language="EN",
+        message_expected = MessageToClient(username="Botify", message="Test", language="EN",
                                            timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
         self.assertEqual(build_message_object(response_given, sentiment_given), message_expected)
 
     def test_handle_error_on_retry_failure(self):
+        """
+        This method tests the handle_error_on_retry_failure-method\n
+        """
         message_expected = MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
                                            language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
         self.assertEqual(handle_error_on_retry_failure(), message_expected)
 
     def test_check_sentiment(self):
         """
-        This method tests the checkSentiment-method\n
+        This method tests the check_sentiment-method\n
         """
 
-        chatHistory_given =[]
+        chatHistory_given = []
         sentiment_expected = 0.0
         self.assertEqual(check_sentiment(chatHistory_given), sentiment_expected)
 
@@ -118,8 +128,3 @@ class TestChatHelper(unittest.TestCase):
         sentiment_expected = -0.5
 
         self.assertEqual(check_sentiment(message_list), sentiment_expected)
-
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -81,15 +81,39 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Main.html">Main package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Main.html#main-server-module">Main.Server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Main.html#module-Main.Server">Main.Server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.broadcast"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.broadcast()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.getUsernameAndLang"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.getUsernameAndLang()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.register"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.register()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.sendCurrentUsers"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.sendCurrentUsers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerFactory.unregister"><code class="docutils literal notranslate"><span class="pre">ChatServerFactory.unregister()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.chatHistory"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.chatHistory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onClose"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onClose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onConnect"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onConnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onMessage"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onMessage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.html#Main.Server.ChatServerProtocol.onOpen"><code class="docutils literal notranslate"><span class="pre">ChatServerProtocol.onOpen()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Main.ServerFuncs.html">Main.ServerFuncs package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.ChatHelper">Main.ServerFuncs.ChatHelper module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.checkSentiment"><code class="docutils literal notranslate"><span class="pre">checkSentiment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.build_message_object"><code class="docutils literal notranslate"><span class="pre">build_message_object()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.calculate_temperature"><code class="docutils literal notranslate"><span class="pre">calculate_temperature()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.check_sentiment"><code class="docutils literal notranslate"><span class="pre">check_sentiment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.create_chatbot"><code class="docutils literal notranslate"><span class="pre">create_chatbot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.generate_response"><code class="docutils literal notranslate"><span class="pre">generate_response()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.handle_error_on_retry_failure"><code class="docutils literal notranslate"><span class="pre">handle_error_on_retry_failure()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.is_message_addressing_bot"><code class="docutils literal notranslate"><span class="pre">is_message_addressing_bot()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.listenToMessages"><code class="docutils literal notranslate"><span class="pre">listenToMessages()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.load_api_config"><code class="docutils literal notranslate"><span class="pre">load_api_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.ChatHelper.prepare_messages"><code class="docutils literal notranslate"><span class="pre">prepare_messages()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Message">Main.ServerFuncs.Message module</a><ul>
@@ -119,20 +143,50 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Sentiment">Main.ServerFuncs.Sentiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.get_sentiment_score"><code class="docutils literal notranslate"><span class="pre">get_sentiment_score()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.load_api_config"><code class="docutils literal notranslate"><span class="pre">load_api_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Sentiment.sentiment_analysis"><code class="docutils literal notranslate"><span class="pre">sentiment_analysis()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Main.ServerFuncs.html#module-Main.ServerFuncs.Translator">Main.ServerFuncs.Translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Translator.initialize_translate_client"><code class="docutils literal notranslate"><span class="pre">initialize_translate_client()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="Main.ServerFuncs.html#Main.ServerFuncs.Translator.translate_text"><code class="docutils literal notranslate"><span class="pre">translate_text()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Main.Test.html">Main.Test package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-chathelper-module">Main.Test.test_chathelper module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-sentiment-module">Main.Test.test_sentiment module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-server-module">Main.Test.test_server module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-translator-module">Main.Test.test_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#module-Main.Test.test_chathelper">Main.Test.test_chathelper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper"><code class="docutils literal notranslate"><span class="pre">TestChatHelper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_build_message_object"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_build_message_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_calculate_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_check_sentiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_createChatBot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_createChatBot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_handle_error_on_retry_failure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_is_message_addressing_bot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_listenToMessages()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages"><code class="docutils literal notranslate"><span class="pre">TestChatHelper.test_prepare_messages()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#module-Main.Test.test_sentiment">Main.Test.test_sentiment module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment"><code class="docutils literal notranslate"><span class="pre">TestSentiment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_get_sentiment_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_load_api_config"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_load_api_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis"><code class="docutils literal notranslate"><span class="pre">TestSentiment.test_sentiment_analysis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Main.Test.html#main-test-test-translator-module">Main.Test.test_translator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator"><code class="docutils literal notranslate"><span class="pre">TestTranslator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator.test_initialize_translate_client"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_initialize_translate_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Main.Test.html#Main.Test.test_translator.TestTranslator.test_translate"><code class="docutils literal notranslate"><span class="pre">TestTranslator.test_translate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -140,8 +194,130 @@
 </section>
 <section id="main-package">
 <h1>Main package<a class="headerlink" href="#main-package" title="Link to this heading"></a></h1>
-<section id="main-server-module">
-<h2>Main.Server module<a class="headerlink" href="#main-server-module" title="Link to this heading"></a></h2>
+<section id="module-Main.Server">
+<span id="main-server-module"></span><h2>Main.Server module<a class="headerlink" href="#module-Main.Server" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Server.</span></span><span class="sig-name descname"><span class="pre">ChatServerFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">WebSocketServerFactory</span></code></p>
+<p>Factory for WebSocket Servers</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.broadcast">
+<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.broadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.broadcast" title="Link to this definition"></a></dt>
+<dd><p>This method broadcasts the message to all clients in the chat</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – The message to broadcast</p></li>
+<li><p><strong>sender</strong> – Sender client of the message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.getUsernameAndLang">
+<span class="sig-name descname"><span class="pre">getUsernameAndLang</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.getUsernameAndLang"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.getUsernameAndLang" title="Link to this definition"></a></dt>
+<dd><p>This methods compiles a list of all usernames and languages participating in the chat</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return list<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of clients and their set language</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.register" title="Link to this definition"></a></dt>
+<dd><p>This method adds a client to the list of chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>client</strong> – client to be registered</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.sendCurrentUsers">
+<span class="sig-name descname"><span class="pre">sendCurrentUsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.sendCurrentUsers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.sendCurrentUsers" title="Link to this definition"></a></dt>
+<dd><p>This method sends a list of all clients currently registered to the server</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerFactory.unregister">
+<span class="sig-name descname"><span class="pre">unregister</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerFactory.unregister"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerFactory.unregister" title="Link to this definition"></a></dt>
+<dd><p>This method removes the client from the list of chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>client</strong> – client to be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Server.</span></span><span class="sig-name descname"><span class="pre">ChatServerProtocol</span></span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code></p>
+<p>WebSocket Server</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.chatHistory">
+<span class="sig-name descname"><span class="pre">chatHistory</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#Main.Server.ChatServerProtocol.chatHistory" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onClose">
+<span class="sig-name descname"><span class="pre">onClose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wasClean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onClose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onClose" title="Link to this definition"></a></dt>
+<dd><p>This method is called when the websocket connection closes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wasClean</strong> – boolean whether the connection was closed cleanly</p></li>
+<li><p><strong>code</strong> – status code of the connection close</p></li>
+<li><p><strong>reason</strong> – cause for connection close</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onConnect">
+<span class="sig-name descname"><span class="pre">onConnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onConnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onConnect" title="Link to this definition"></a></dt>
+<dd><p>This method connects a client to the server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – incoming request from the client</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onMessage">
+<span class="sig-name descname"><span class="pre">onMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isBinary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onMessage" title="Link to this definition"></a></dt>
+<dd><p>This method receives a message from a client, calls translation, sentiment analysis,
+chatbot and distributes it among the chat participants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>payload</strong> – incoming message from the client</p></li>
+<li><p><strong>isBinary</strong> – Boolean indicating whether a message is binary or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPStatus</strong> – 400 Bad Request if the incoming message is malformed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Server.ChatServerProtocol.onOpen">
+<span class="sig-name descname"><span class="pre">onOpen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Server.html#ChatServerProtocol.onOpen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Server.ChatServerProtocol.onOpen" title="Link to this definition"></a></dt>
+<dd><p>This method registers a new client when the connection is openned</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 <section id="main-serverfuncs-package">
@@ -149,29 +325,91 @@
 <section id="module-Main.ServerFuncs.ChatHelper">
 <span id="main-serverfuncs-chathelper-module"></span><h2>Main.ServerFuncs.ChatHelper module<a class="headerlink" href="#module-Main.ServerFuncs.ChatHelper" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.checkSentiment">
-<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">checkSentiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#checkSentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.checkSentiment" title="Link to this definition"></a></dt>
-<dd><p>This method calculates the average sentiment of the last 5 messages in the chatHistory</p>
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.build_message_object">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">build_message_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sentiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#build_message_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.build_message_object" title="Link to this definition"></a></dt>
+<dd><p>Build MessageToClient object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>response</strong> – Generated response</p></li>
+<li><p><strong>sentiment</strong> – Sentiment value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return MessageToClient<span class="colon">:</span></dt>
+<dd class="field-even"><p>Message object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.calculate_temperature">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">calculate_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#calculate_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.calculate_temperature" title="Link to this definition"></a></dt>
+<dd><p>Calculates response temperature based on sentiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sentiment</strong> – Sentiment value</p>
+</dd>
+<dt class="field-even">Return float<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated temperature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.check_sentiment">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">check_sentiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#check_sentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.check_sentiment" title="Link to this definition"></a></dt>
+<dd><p>Calculates the average sentiment of the last 5 messages in the chat history.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>chatHistory</strong> – List of last 5 messages in the chat</p>
 </dd>
-<dt class="field-even">Return sentiment_value<span class="colon">:</span></dt>
-<dd class="field-even"><p>average sentiment of the last 5 messages</p>
+<dt class="field-even">Return float<span class="colon">:</span></dt>
+<dd class="field-even"><p>Average sentiment of the last 5 messages</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.create_chatbot">
-<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">create_chatbot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#create_chatbot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.create_chatbot" title="Link to this definition"></a></dt>
-<dd><p>This method creates a chatbot and forwards a list of the last 5 messages to it</p>
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">create_chatbot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#create_chatbot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.create_chatbot" title="Link to this definition"></a></dt>
+<dd><p>Creates a chatbot response based on the sentiment of the chat history.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>chatHistory</strong> – List of last 5 messages in the chat</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chatHistory</strong> – List of last 5 messages in the chat</p></li>
+<li><p><strong>retry</strong> – Indicates if this is a retry attempt</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return message<span class="colon">:</span></dt>
-<dd class="field-even"><p>Answer from the chatbot</p>
+<dt class="field-even">Return MessageToClient<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response message object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.generate_response">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">generate_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sentiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#generate_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.generate_response" title="Link to this definition"></a></dt>
+<dd><p>Generates a response using the OpenAI API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>messages</strong> – List of messages</p></li>
+<li><p><strong>sentiment</strong> – Sentiment value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return str<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.handle_error_on_retry_failure">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">handle_error_on_retry_failure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#handle_error_on_retry_failure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.handle_error_on_retry_failure" title="Link to this definition"></a></dt>
+<dd><p>Handles errors after a retry failure while creating the chatbot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return MessageToClient<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Error message object</p>
 </dd>
 </dl>
 </dd></dl>
@@ -180,7 +418,7 @@
 <dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.is_message_addressing_bot">
 <span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">is_message_addressing_bot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#is_message_addressing_bot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.is_message_addressing_bot" title="Link to this definition"></a></dt>
 <dd><p>This method analyses if a message is addressing the chatbot. For this, it compares the similarity of the incoming
-string with the keyword “botify”</p>
+string with the keyword “botify”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>message_str</strong> – Incoming message as a string</p>
@@ -193,14 +431,38 @@ string with the keyword “botify”</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.listenToMessages">
-<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">listenToMessages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#listenToMessages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.listenToMessages" title="Link to this definition"></a></dt>
-<dd><p>This method listens to incoming messages and determines whether the chatbot should be called</p>
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">listenToMessages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#listenToMessages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.listenToMessages" title="Link to this definition"></a></dt>
+<dd><p>This method listens to incoming messages and determines whether the chatbot should be called.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>chatHistory</strong> – List of last 5 messages in the chat</p>
 </dd>
-<dt class="field-even">Return message object or None<span class="colon">:</span></dt>
-<dd class="field-even"><p>either return a message from the chatbot or None if the chatbot is not addressed</p>
+<dt class="field-even">Return MessageToClient or None<span class="colon">:</span></dt>
+<dd class="field-even"><p>either returns a message from the chatbot or None if the chatbot is not addressed</p>
+</dd>
+</dl>
+<p>or an Exception was thrown</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.load_api_config">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">load_api_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#load_api_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.load_api_config" title="Link to this definition"></a></dt>
+<dd><p>This method loads the api key for the REST call to the chatbot.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.ChatHelper.prepare_messages">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.ChatHelper.</span></span><span class="sig-name descname"><span class="pre">prepare_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chatHistory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sentiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/ChatHelper.html#prepare_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.ChatHelper.prepare_messages" title="Link to this definition"></a></dt>
+<dd><p>Prepares messages for OpenAI completion call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chatHistory</strong> – List of last 5 messages in the chat</p></li>
+<li><p><strong>sentiment</strong> – Sentiment value of the chat history</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of formatted messages</p>
 </dd>
 </dl>
 </dd></dl>
@@ -321,15 +583,41 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
 <section id="module-Main.ServerFuncs.Sentiment">
 <span id="main-serverfuncs-sentiment-module"></span><h2>Main.ServerFuncs.Sentiment module<a class="headerlink" href="#module-Main.ServerFuncs.Sentiment" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="Main.ServerFuncs.Sentiment.sentiment_analysis">
-<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Sentiment.</span></span><span class="sig-name descname"><span class="pre">sentiment_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageFromClient" title="Main.ServerFuncs.Message.MessageFromClient"><span class="pre">MessageFromClient</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/Sentiment.html#sentiment_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Sentiment.sentiment_analysis" title="Link to this definition"></a></dt>
-<dd><p>This method analyses the sentiment of a given message</p>
+<dt class="sig sig-object py" id="Main.ServerFuncs.Sentiment.get_sentiment_score">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Sentiment.</span></span><span class="sig-name descname"><span class="pre">get_sentiment_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/Sentiment.html#get_sentiment_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Sentiment.get_sentiment_score" title="Link to this definition"></a></dt>
+<dd><p>Queries the sentiment analysis API and returns the sentiment score.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> – incoming message without a sentiment</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_text</strong> – The text of the message to analyze.</p></li>
+<li><p><strong>config</strong> – Configuration dictionary containing the API details.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return message<span class="colon">:</span></dt>
-<dd class="field-even"><p>analysed message with a sentiment</p>
+<dt class="field-even">Return float<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sentiment score of the message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.Sentiment.load_api_config">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Sentiment.</span></span><span class="sig-name descname"><span class="pre">load_api_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/ServerFuncs/Sentiment.html#load_api_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Sentiment.load_api_config" title="Link to this definition"></a></dt>
+<dd><p>This method loads the api key for the REST call to the sentiment analysis.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.Sentiment.sentiment_analysis">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Sentiment.</span></span><span class="sig-name descname"><span class="pre">sentiment_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageFromClient" title="Main.ServerFuncs.Message.MessageFromClient"><span class="pre">MessageFromClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/Sentiment.html#sentiment_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Sentiment.sentiment_analysis" title="Link to this definition"></a></dt>
+<dd><p>Analyzes the sentiment of a given message, with an optional retry mechanism.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – Incoming message without a sentiment.</p></li>
+<li><p><strong>retry</strong> – Indicates if the function is being retried.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return MessageToClient<span class="colon">:</span></dt>
+<dd class="field-even"><p>Analyzed message with a sentiment.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,32 +626,146 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
 <section id="module-Main.ServerFuncs.Translator">
 <span id="main-serverfuncs-translator-module"></span><h2>Main.ServerFuncs.Translator module<a class="headerlink" href="#module-Main.ServerFuncs.Translator" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="Main.ServerFuncs.Translator.translate_text">
-<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Translator.</span></span><span class="sig-name descname"><span class="pre">translate_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message:</span> <span class="pre">~Main.ServerFuncs.Message.MessageFromClient</span> <span class="pre">|</span> <span class="pre">~Main.ServerFuncs.Message.MessageToClient)</span> <span class="pre">-&gt;</span> <span class="pre">(Main.ServerFuncs.Message.MessageFromClient</span> <span class="pre">|</span> <span class="pre">Main.ServerFuncs.Message.MessageToClient</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/ServerFuncs/Translator.html#translate_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Translator.translate_text" title="Link to this definition"></a></dt>
-<dd><p>This method translates an incoming message into the language specified in the message field message.language
-:param message: incoming message in original language</p>
+<dt class="sig sig-object py" id="Main.ServerFuncs.Translator.initialize_translate_client">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Translator.</span></span><span class="sig-name descname"><span class="pre">initialize_translate_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/ServerFuncs/Translator.html#initialize_translate_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Translator.initialize_translate_client" title="Link to this definition"></a></dt>
+<dd><p>Initializes the Google Translate client with the necessary credentials.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>message: translated message</p>
+<dt class="field-odd">Return Client<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Client to translate incoming messages</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Main.ServerFuncs.Translator.translate_text">
+<span class="sig-prename descclassname"><span class="pre">Main.ServerFuncs.Translator.</span></span><span class="sig-name descname"><span class="pre">translate_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Main.ServerFuncs.Message.MessageFromClient" title="Main.ServerFuncs.Message.MessageFromClient"><span class="pre">MessageFromClient</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#Main.ServerFuncs.Message.MessageFromClient" title="Main.ServerFuncs.Message.MessageFromClient"><span class="pre">MessageFromClient</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#Main.ServerFuncs.Message.MessageToClient" title="Main.ServerFuncs.Message.MessageToClient"><span class="pre">MessageToClient</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Main/ServerFuncs/Translator.html#translate_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.ServerFuncs.Translator.translate_text" title="Link to this definition"></a></dt>
+<dd><p>Translates an incoming message into the language specified in the message.language field.
+If an exception occurs, it retries once more.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – Incoming message in original language</p></li>
+<li><p><strong>retry</strong> – Indicates if this is a retry attempt</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return MessageFromClient | MessageToClient, str<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (translated message, detected source</p>
+</dd>
+</dl>
+<p>language or “unknown” on error)</p>
 </dd></dl>
 
 </section>
 </section>
 <section id="main-test-package">
 <h1>Main.Test package<a class="headerlink" href="#main-test-package" title="Link to this heading"></a></h1>
-<section id="main-test-test-chathelper-module">
-<h2>Main.Test.test_chathelper module<a class="headerlink" href="#main-test-test-chathelper-module" title="Link to this heading"></a></h2>
+<section id="module-Main.Test.test_chathelper">
+<span id="main-test-test-chathelper-module"></span><h2>Main.Test.test_chathelper module<a class="headerlink" href="#module-Main.Test.test_chathelper" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_chathelper.</span></span><span class="sig-name descname"><span class="pre">TestChatHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Chat Helper module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_build_message_object">
+<span class="sig-name descname"><span class="pre">test_build_message_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_build_message_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_build_message_object" title="Link to this definition"></a></dt>
+<dd><p>This method tests the build_message_object-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature">
+<span class="sig-name descname"><span class="pre">test_calculate_temperature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_calculate_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_calculate_temperature" title="Link to this definition"></a></dt>
+<dd><p>This method tests the calculate_temperature-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_check_sentiment">
+<span class="sig-name descname"><span class="pre">test_check_sentiment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_check_sentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_check_sentiment" title="Link to this definition"></a></dt>
+<dd><p>This method tests the check_sentiment-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_createChatBot">
+<span class="sig-name descname"><span class="pre">test_createChatBot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_createChatBot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_createChatBot" title="Link to this definition"></a></dt>
+<dd><p>This method tests the createChatBot-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure">
+<span class="sig-name descname"><span class="pre">test_handle_error_on_retry_failure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_handle_error_on_retry_failure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_handle_error_on_retry_failure" title="Link to this definition"></a></dt>
+<dd><p>This method tests the handle_error_on_retry_failure-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot">
+<span class="sig-name descname"><span class="pre">test_is_message_addressing_bot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_is_message_addressing_bot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_is_message_addressing_bot" title="Link to this definition"></a></dt>
+<dd><p>This method tests the is_message_addressing_bot-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_listenToMessages">
+<span class="sig-name descname"><span class="pre">test_listenToMessages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_listenToMessages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_listenToMessages" title="Link to this definition"></a></dt>
+<dd><p>This method tests the listenToMessages-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_chathelper.TestChatHelper.test_prepare_messages">
+<span class="sig-name descname"><span class="pre">test_prepare_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_chathelper.html#TestChatHelper.test_prepare_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_chathelper.TestChatHelper.test_prepare_messages" title="Link to this definition"></a></dt>
+<dd><p>This method tests the prepare_messages-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="main-test-test-sentiment-module">
-<h2>Main.Test.test_sentiment module<a class="headerlink" href="#main-test-test-sentiment-module" title="Link to this heading"></a></h2>
-</section>
-<section id="main-test-test-server-module">
-<h2>Main.Test.test_server module<a class="headerlink" href="#main-test-test-server-module" title="Link to this heading"></a></h2>
+<section id="module-Main.Test.test_sentiment">
+<span id="main-test-test-sentiment-module"></span><h2>Main.Test.test_sentiment module<a class="headerlink" href="#module-Main.Test.test_sentiment" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_sentiment.</span></span><span class="sig-name descname"><span class="pre">TestSentiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Sentiment module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score">
+<span class="sig-name descname"><span class="pre">test_get_sentiment_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_get_sentiment_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_get_sentiment_score" title="Link to this definition"></a></dt>
+<dd><p>This method tests the get_sentiment_score-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_load_api_config">
+<span class="sig-name descname"><span class="pre">test_load_api_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_load_api_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_load_api_config" title="Link to this definition"></a></dt>
+<dd><p>This method tests the load_api_config-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis">
+<span class="sig-name descname"><span class="pre">test_sentiment_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_sentiment.html#TestSentiment.test_sentiment_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_sentiment.TestSentiment.test_sentiment_analysis" title="Link to this definition"></a></dt>
+<dd><p>This method tests the sentiment_analysis-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="main-test-test-translator-module">
 <h2>Main.Test.test_translator module<a class="headerlink" href="#main-test-test-translator-module" title="Link to this heading"></a></h2>
+<dl class="py class" id="module-Main.Test.test_translator">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Main.Test.test_translator.</span></span><span class="sig-name descname"><span class="pre">TestTranslator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<p>Tests for the Translator module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator.test_initialize_translate_client">
+<span class="sig-name descname"><span class="pre">test_initialize_translate_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator.test_initialize_translate_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator.test_initialize_translate_client" title="Link to this definition"></a></dt>
+<dd><p>This method tests the initialize_translate_client-method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Main.Test.test_translator.TestTranslator.test_translate">
+<span class="sig-name descname"><span class="pre">test_translate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Main/Test/test_translator.html#TestTranslator.test_translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Main.Test.test_translator.TestTranslator.test_translate" title="Link to this definition"></a></dt>
+<dd><p>This method tests the translate-method</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 <section id="indices-and-tables">
