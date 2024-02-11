@@ -7,7 +7,7 @@
  Sentiment-Analyse: Erfasst die allgemeine Stimmung innerhalb des Chats und stellt diese den Benutzern dar.
 ## Voraussetzungen: Bevor Sie beginnen, stellen Sie sicher, dass Sie die folgenden API-Schlüssel bereit haben:
 
-OpenAI-API-Key für den Chatbot (https://platform.openai.com/api-keys)
+OpenAI-API-Key für den Chatbot (https://platform.openai.com/docs/api-reference)
 
 Google Cloud Translate API-Key für die Übersetzung (https://cloud.google.com/translate?hl=de)
 
