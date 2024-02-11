@@ -1,5 +1,8 @@
 import json
 import traceback
+import logging
+import os
+from datetime import datetime
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
 from http import HTTPStatus
@@ -23,7 +26,6 @@ class ChatServerProtocol(WebSocketServerProtocol):
         """
         self.language = None
         self.username = None
-        print(f"Client verbunden: {request.peer}")
 
     def onOpen(self):
         """
@@ -45,28 +47,25 @@ class ChatServerProtocol(WebSocketServerProtocol):
                     message = payload.decode("utf8")
                     message = json.loads(message)
                     print(f"message received: {message}")
+                    logging.info(f"message received: {message}")
                     message = MessageFromClient.model_validate(message)
 
+                    # check if user.language or user.username is assigned for client, if not assign them and send current users
                     if self.language is None or self.username is None:
                         self.language = message.language.lower()
                         self.username = message.username
-                        #print("set user language to", self.language)
-                        #print("linked user with username", self.username)
                         self.factory.sendCurrentUsers()
 
                     if message.language != "en":
                         message.language = "en"
-                        
+
                     message_copy = message.message
 
+                    # translate message to english and calculate the sentiment
                     message, detectedlang = translate_text(message)
-                    #print(f"translated message for sentiment to: {message.message}")
                     message = sentiment_analysis(message)
-                    #print(f"sentiment generated: {message.sentiment}")
 
-                    
                     self.chatHistory.append(message)
-                    #print(f"Message '{message.message}' added to chat history")
 
                     while len(self.chatHistory) > 5:
                         message_old = self.chatHistory.pop(0)
@@ -76,32 +75,38 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
                     message.orgmessage = message_copy
                     message.detectedlang = detectedlang
-                    
-                    #print(f"Message with old message and detected Lang : {message}")
+
                     self.factory.broadcast(message, self)
-                    #print(f"Message '{message.message}' broadcasted")
 
                     chat_response = listenToMessages(self.chatHistory)
-                    print(chat_response)
+
                     if chat_response is not None:
                         self.chatHistory.append(chat_response)
-                        #print(
-                        #    f"Message '{chat_response.message}' added to chat history"
-                        #)
+
                         self.factory.broadcast(chat_response, self)
                         print(f"Message '{chat_response.message}' broadcasted")
 
                         while len(self.chatHistory) > 5:
                             message_old = self.chatHistory.pop(0)
-                            #print(
-                            #    f"old message '{message_old.message} removed from chat history"
-                            #)
-                except:
+
+                except Exception:
                     print(traceback.format_exc())
+                    self.sendMessage(
+                        "wrong request parameter send Request as Json with fields "
+                        + json.dumps(
+                            {"username", "message", "language", "timestamp"}
+                        ).encode("utf-8")
+                    )
+                    raise Exception(
+                        status=400,
+                        reason="wrong request parameter send Request as Json with fields "
+                        + json.dumps({"username", "message", "language", "timestamp"}),
+                    )
 
         except Exception:
             print(traceback.format_exc())
-            raise HTTPStatus(status=400, reason="wrong parameter in request")
+            logging.error(traceback.format_exc())
+            # raise Exception(status=400, reason="Message was send Binary")
 
     def onClose(self, wasClean, code, reason):
         """
@@ -110,9 +115,9 @@ class ChatServerProtocol(WebSocketServerProtocol):
         :param code: status code of the connection close\n
         :param reason: cause for connection close\n
         """
-        print(
-            f"WebSocket-Verbindung geschlossen: {reason}, was clean: {wasClean}, code: {code}"
-        )
+        message = f"WebSocket connection to {self.peer} closed: {reason}, was clean: {wasClean}, code: {code}"
+        print(message)
+        logging.info(message)
         self.factory.unregister(self)
 
 
@@ -154,8 +159,10 @@ class ChatServerFactory(WebSocketServerFactory):
                             "numOfClients": number_of_clients,
                         }
                     )
+                    logging.info(f"message send: {message}")
                     client.sendMessage(message.encode("utf-8"))
             except:
+                logging.error(traceback.format_exc())
                 print(traceback.format_exc())
 
     def register(self, client):
@@ -164,7 +171,7 @@ class ChatServerFactory(WebSocketServerFactory):
         :param client: client to be registered\n
         """
         if client not in self.clients:
-            print(f"Client {client.peer} registriert.")
+            print(f"Client {client.peer} connected.")
             self.clients.append(client)
 
     def unregister(self, client):
@@ -173,9 +180,9 @@ class ChatServerFactory(WebSocketServerFactory):
         :param client: client to be removed\n
         """
         if client in self.clients:
-            print(f"Client {client.peer} registriert.")
+            print(f"Client {client.peer} disconnected.")
             self.clients.remove(client)
-        if len(self.clients):
+        if len(self.clients) > 0:
             self.sendCurrentUsers()
 
     def broadcast(self, message, sender):
@@ -185,21 +192,51 @@ class ChatServerFactory(WebSocketServerFactory):
         :param message: The message to broadcast\n
         :param sender: Sender client of the message\n
         """
-        
         for client in self.clients:
             if client.language == message.detectedlang:
                 message.message = message.orgmessage
-                jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
-                client.sendMessage(jsonmassage.encode("utf-8"))    
+                jsonmassage = json.dumps(
+                    message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                    ensure_ascii=True,
+                )
+                a = client.sendMessage(jsonmassage.encode("utf-8"))
+                print(f"Sended Message {a}")
             else:
                 message.language = str(client.language)
                 message, _ = translate_text(message)
-                #print(f"Message translated for {client.username} to {message}")
-                jsonmassage = json.dumps(message.model_dump(exclude={"detectedlang", "orgmessage"}), ensure_ascii=True)
-                client.sendMessage(jsonmassage.encode("utf-8"))    
+                jsonmassage = json.dumps(
+                    message.model_dump(exclude={"detectedlang", "orgmessage"}),
+                    ensure_ascii=True,
+                )
+                client.sendMessage(jsonmassage.encode("utf-8"))
+        
+
+
+async def startServer():
+    factory = ChatServerFactory("ws://localhost:9000")
+    factory.protocol = ChatServerProtocol
+    reactor.listenTCP(9000, factory)
+    print("WebSocket-Server gestartet auf Port 9000.")
+    reactor.run()
 
 
 if __name__ == "__main__":
+    log_dir = "./LogFiles"
+    log_filename = str(
+        "logfile" + datetime.today().strftime("-%Y-%m-%d-%H-%M") + ".log"
+    )
+    log_path = os.path.join(log_dir, log_filename)
+    # create log file if not exsist
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    # Konfiguration des Loggings
+    logging.basicConfig(
+        filename=log_path,
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
     factory = ChatServerFactory("ws://localhost:9000")
     factory.protocol = ChatServerProtocol
     reactor.listenTCP(9000, factory)
