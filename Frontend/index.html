@@ -12,7 +12,7 @@
 <h1>Virtual Meet</h1>
 
 <div class="grid-block">
-    <div class="top-bar"></div>
+
     <div class="usernameArea">
 
         <div class="languageArea">
@@ -31,23 +31,25 @@
                     <a href="#" data-value="4"><img class="flaggenImage" src="img/Flag_of_Italy.png" alt="Flag_of_Italy"> Italiano </a>
                     <a href="#" data-value="5"><img class="flaggenImage" src="img/Flag_of_Spain.png" alt="Flag_of_Spain"> Español </a>
                 </div>
+
                 <input type="hidden" id="dropdownValue" name="dropdownValue">
             </div>
         </div>
 
         <label class="usernameLabelArea" id="userNameLabel">Username:</label>
-        <div class="nickNameInputArea"><label for="nicknameArea"></label><input id="nicknameArea" placeholder="Enter a username..."> </div>
+        <div class="nickNameInputArea"><label for="nicknameArea"></label><input id="nicknameArea"> </div>
         <button type="button" id="userSettingSaveButton" class="usersettingsButton" onclick="saveUserSettings()">Save</button>
+
     </div>
 
     <div class="userListArea">
-        <label id="userListLabel" style="text-decoration: underline">Current Users</label>
-        <ul id="unorderedUserList" readonly></ul>
+        <label id = "userListLabel"> Current Users</label>
+        <ul id="unorderedUserList"></ul>
     </div>
 
     <div class="chatfenster">
         <label for="chatTextArea"></label>
-        <textarea readonly id="chatTextArea" placeholder="Please enter a username, select a language and send a message to enter the chatroom..."></textarea>
+        <textarea readonly id="chatTextArea"></textarea>
     </div>
 
     <div class="guideArea">
@@ -56,7 +58,7 @@
 
     <div class="chatinteraktion">
         <div id="chatInputArea">
-            <label for="chatTextInput"></label><input id="chatTextInput" placeholder="Enter a message...">
+            <label for="chatTextInput"></label><input id="chatTextInput">
         </div>
         <div class="sendButtonArea">
             <button id="sendButton" type="button" onclick="buttonSendAction()">Send</button>
@@ -64,5 +66,4 @@
     </div>
 </div>
 </body>
-
 <footer style="font-size: 12px" id="footerArea"></footer>
