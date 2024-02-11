@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from .Message import MessageFromClient, MessageToClient
 import os
 import traceback
-import datetime
+from datetime import datetime
 
 
 def load_api_config():
