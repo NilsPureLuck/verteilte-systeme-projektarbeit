@@ -64,8 +64,7 @@ class ChatServerProtocol(WebSocketServerProtocol):
 
                     # translate message to english and calculate the sentiment
                     message, detectedlang = translate_text(message)
-                    print("Message with error")
-                    print(message, detectedlang)
+
                     message = sentiment_analysis(message)
 
                     self.chatHistory.append(message)

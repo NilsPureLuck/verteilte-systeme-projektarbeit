@@ -2,7 +2,7 @@ import os
 import html
 from google.cloud import translate_v2 as translate
 from .Message import MessageFromClient, MessageToClient
-import traceback
+from typing import Tuple
 
 def initialize_translate_client():
     """
@@ -11,7 +11,7 @@ def initialize_translate_client():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "./credentials.json"
     return translate.Client()
 
-def translate_text(message: MessageFromClient | MessageToClient, retry=False) -> (MessageFromClient | MessageToClient, str):
+def translate_text(message: MessageFromClient | MessageToClient, retry=False) -> Tuple[MessageFromClient | MessageToClient, str]:
     """
     Translates an incoming message into the language specified in the message.language field.
     If an exception occurs, it retries once more.
@@ -32,11 +32,11 @@ def translate_text(message: MessageFromClient | MessageToClient, retry=False) ->
         result = translate_client.translate(message_str, target_language=target)
         result["translatedText"] = html.unescape(result["translatedText"])
         message.message = result["translatedText"]
-        return message, result.get("detectedSourceLanguage", "unknown")
+        return message, result["detectedSourceLanguage"]
     except Exception as e:
         print("An error occurred while translating the text:", e)
         if not retry:
             print("Retrying...")
             return translate_text(message, retry=True)
         else:
-            return message, "unknown"
+            return message, str("unknown")
