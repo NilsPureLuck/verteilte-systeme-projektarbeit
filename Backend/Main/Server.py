@@ -180,7 +180,7 @@ class ChatServerFactory(WebSocketServerFactory):
         if client in self.clients:
             print(f"Client unregister: {client.peer}")
             self.clients.remove(client)
-            logging.info(f"Client unregister: {client.peer}")
+            logging.info(f"Client unregisterd: {client.peer}")
         if len(self.clients) > 0:
             self.sendCurrentUsers()
 
