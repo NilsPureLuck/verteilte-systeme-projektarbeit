@@ -20,9 +20,9 @@ function buttonSendAction() {
         //creating timestamp
         const now = new Date();
 
-        var hour = now.getHours().toString().padStart(2, '0');
-        var minute = now.getMinutes().toString().padStart(2, '0');
-        var second = now.getSeconds().toString().padStart(2, '0');
+        let hour = now.getHours().toString().padStart(2, '0');
+        let minute = now.getMinutes().toString().padStart(2, '0');
+        let second = now.getSeconds().toString().padStart(2, '0');
 
         let timestamp = `${hour}:${minute}:${second}`;
 
@@ -155,6 +155,7 @@ function scrollToBottom() {
 
 /**
  * This method changes the language of every html element to the chosen language
+ * It is also called once during the loading process of the page to minimize the content of the html file
  */
 function changeLanguageOnTheSite(){
 
@@ -167,6 +168,7 @@ function changeLanguageOnTheSite(){
     let languageLabel = document.getElementById("languageLabel");
     let userListLabel = document.getElementById("userListLabel");
     let chatWindow = document.getElementById("chatTextArea");
+    let footerElement = document.getElementById("footerArea");
 
     switch (chosenlanguage){
         case "de":
@@ -190,12 +192,21 @@ function changeLanguageOnTheSite(){
                 "Viel Spaß! 😊";
             chatMessageInput.placeholder = "Nachricht eingeben...";
             usernameInput.placeholder = "Benutzername eingeben..."
-            chatWindow.placeholder = "Bitte einen Benutzernamen angeben und eine Sprache auswählen um den Chatraum zu betreten...";
+            chatWindow.placeholder = "Bitte geben Sie einen Benutzernamen ein, wählen Sie eine Sprache und senden Sie eine Nachricht, um den Chatroom zu betreten...";
             saveButton.textContent = "Sichern";
             sendButton.textContent = "Senden";
             userNameLabel.textContent = "Benutzername";
             languageLabel.textContent = "Sprache"
             userListLabel.textContent = "Aktive Benutzer";
+            footerElement.innerHTML =
+                "        <u>Nutzungsbedingungen </u><br>\n" +
+                "        Durch die Nutzung dieses Chat-Tools stimmen Sie zu, dass Sie die folgenden Nutzungsbedingungen gelesen, verstanden und akzeptiert haben. Bitte lesen Sie sie sorgfältig durch:<br>\n" +
+                "        Allgemeine Nutzung: Dieses Tool dient der Kommunikation und dem Informationsaustausch. Jede Nutzung zu illegalen Zwecken ist strengstens untersagt.<br>\n" +
+                "        Haftungsausschluss: Die Betreiber des Chat-Tools übernehmen keine Haftung für Schäden, die durch die Nutzung dieses Tools entstehen. Die Nutzer kommunizieren auf eigene Gefahr.<br>\n" +
+                "        Inhaltsverantwortung: Die Nutzer sind für die von ihnen geteilten Inhalte selbst verantwortlich. Illegale, schädliche oder rechtswidrige Inhalte sind verboten.<br>\n" +
+                "        Datenschutz: Die Nutzer erkennen an, dass die Privatsphäre in einem Online-Chat nur bedingt geschützt werden kann. Persönliche Informationen sollten mit Vorsicht behandelt werden.<br>\n" +
+                "        Änderungen der Nutzungsbedingungen: Die Betreiber behalten sich das Recht vor, diese Nutzungsbedingungen jederzeit ohne Vorankündigung zu ändern. Die fortgesetzte Nutzung des Tools nach solchen Änderungen gilt als Zustimmung zu den neuen Bedingungen.<br>\n" +
+                "        Indem Sie dieses Tool nutzen, erklären Sie sich mit diesen Bedingungen einverstanden.<br>";
             break;
         case "en":
             articleGuide.innerHTML =
@@ -218,18 +229,27 @@ function changeLanguageOnTheSite(){
                 "Have fun! 😊";
             chatMessageInput.placeholder = "Enter a message...";
             usernameInput.placeholder = "Enter a username..."
-            chatWindow.placeholder = "Please enter a username and select a language to enter the chatroom...";
+            chatWindow.placeholder = "Please enter a username, select a language and send a message to enter the chatroom...";
             saveButton.textContent = "Save";
             sendButton.textContent = "Send";
             userNameLabel.textContent = "Username";
             languageLabel.textContent = "Language"
             userListLabel.textContent = "Current Users";
+            footerElement.innerHTML =
+                "<u>Terms of Use</u><br>" +
+                "By using this chat tool, you agree that you have read, understood, and accepted the following terms of use. Please read them carefully:<br>" +
+                "General Use: This tool is for communication and information exchange purposes. Any use for illegal purposes is strictly prohibited.<br>" +
+                "Disclaimer: The operators of the chat tool do not assume any liability for damages arising from the use of this tool. Users communicate at their own risk.<br>" +
+                "Content Responsibility: Users are responsible for the content they share. Illegal, harmful, or unlawful content is prohibited.<br>" +
+                "Privacy: Users acknowledge that privacy in an online chat can only be protected to a limited extent. Personal information should be handled with care.<br>" +
+                "Changes to the Terms of Use: The operators reserve the right to change these terms of use at any time without notice. Continued use of the tool after such changes constitutes acceptance of the new terms.<br>" +
+                "By using this tool, you agree to these terms.";
             break;
         case "fr":
             articleGuide.innerHTML =
                 "<u>Premiers pas avec Virtual Meet</u><br>" +
                 "Bienvenue sur Rencontre Virtual Meet ! Voici un guide rapide pour vous aider à démarrer :<br>" +
-                "\n" +
+                "<br>" +
                 "<b>1. Sélectionnez le nom d'utilisateur et la langue</b><br>" +
                 "Avant de commencer, choisissez un nom d'utilisateur et votre langue préférée. N'oubliez pas d'appuyer sur \"Enregistrer\".<br>" +
                 "<b>2. Envoi d'un message</b><br>" +
@@ -247,11 +267,20 @@ function changeLanguageOnTheSite(){
             chatMessageInput.placeholder = "Entrez votre message...";
             usernameInput.placeholder = "Saisissez votre nom d'utilisateur..."
             chatWindow.placeholder = "Veuillez saisir un nom d'utilisateur et sélectionner une langue pour accéder au salon de discussion...";
-            saveButton.textContent = "sauver";
+            saveButton.textContent = "Sauver";
             sendButton.textContent = "Envoyer";
             userNameLabel.textContent = "Nom d'utilisateur";
             languageLabel.textContent = "Langue"
             userListLabel.textContent = "Utilisateurs actuels";
+            footerElement.innerHTML =
+                "<u>Conditions d'Utilisation</u><br>" +
+                "En utilisant cet outil de chat, vous acceptez d'avoir lu, compris et accepté les conditions d'utilisation suivantes. Veuillez les lire attentivement :<br>" +
+                "Utilisation Générale : Cet outil est destiné à la communication et à l'échange d'informations. Toute utilisation à des fins illégales est strictement interdite.<br>" +
+                "Avertissement : Les opérateurs de l'outil de chat n'assument aucune responsabilité pour les dommages résultant de l'utilisation de cet outil. Les utilisateurs communiquent à leurs propres risques.<br>" +
+                "Responsabilité du Contenu : Les utilisateurs sont responsables du contenu qu'ils partagent. Les contenus illégaux, nuisibles ou illicites sont interdits.<br>" +
+                "Protection de la Vie Privée : Les utilisateurs reconnaissent que la vie privée dans un chat en ligne ne peut être protégée que de manière limitée. Les informations personnelles doivent être traitées avec prudence.<br>" +
+                "Modifications des Conditions d'Utilisation : Les opérateurs se réservent le droit de modifier ces conditions d'utilisation à tout moment sans préavis. L'utilisation continue de l'outil après de telles modifications constitue une acceptation des nouvelles conditions.<br>" +
+                "En utilisant cet outil, vous acceptez ces conditions.";
             break;
         case "it":
             articleGuide.innerHTML =
@@ -274,12 +303,21 @@ function changeLanguageOnTheSite(){
                 "Divertiti! 😊";
             chatMessageInput.placeholder = "Inserisci il tuo messaggio...";
             usernameInput.placeholder = "Inserire username..."
-            chatWindow.placeholder = "Inserisci un nome utente e seleziona una lingua per accedere alla chat room...";
+            chatWindow.placeholder = "Inserisci un nome utente, seleziona una lingua e invia un messaggio per entrare nella chatroom...";
             saveButton.textContent = "Salva";
             sendButton.textContent = "Inviare";
             userNameLabel.textContent = "Nome utente";
             languageLabel.textContent = "Lingua"
             userListLabel.textContent = "Utenti attivi";
+            footerElement.innerHTML =
+                "<u>Termini di Utilizzo</u><br>" +
+                "Utilizzando questo strumento di chat, accetti di aver letto, compreso e accettato i seguenti termini di utilizzo. Si prega di leggerli attentamente:<br>" +
+                "Uso Generale: Questo strumento è destinato alla comunicazione e allo scambio di informazioni. Qualsiasi uso per scopi illegali è severamente proibito.<br>" +
+                "Esclusione di Responsabilità: Gli operatori dello strumento di chat non assumono alcuna responsabilità per danni derivanti dall'uso di questo strumento. Gli utenti comunicano a proprio rischio.<br>" +
+                "Responsabilità dei Contenuti: Gli utenti sono responsabili per i contenuti che condividono. Contenuti illegali, dannosi o illeciti sono proibiti.<br>" +
+                "Privacy: Gli utenti riconoscono che la privacy in una chat online può essere protetta solo in modo limitato. Le informazioni personali dovrebbero essere trattate con cautela.<br>" +
+                "Modifiche ai Termini di Utilizzo: Gli operatori si riservano il diritto di modificare questi termini di utilizzo in qualsiasi momento senza preavviso. L'uso continuato dello strumento dopo tali modifiche costituisce accettazione dei nuovi termini.<br>" +
+                "Utilizzando questo strumento, accetti questi termini.";
             break;
         case "es":
             articleGuide.innerHTML =
@@ -302,16 +340,24 @@ function changeLanguageOnTheSite(){
                 "¡Divertirse! 😊";
             chatMessageInput.placeholder = "Ingrese su mensaje...";
             usernameInput.placeholder = "Introduzca su nombre de usuario..."
-            chatWindow.placeholder = "Por favor ingrese un nombre de usuario y seleccione un idioma para ingresar a la sala de chat...";
+            chatWindow.placeholder = "Por favor ingrese un nombre de usuario, seleccione un idioma y envíe un mensaje para ingresar a la sala de chat...";
             saveButton.textContent = "Ahorrar";
             sendButton.textContent = "Enviar";
             userNameLabel.textContent = "Usuario";
             languageLabel.textContent = "Idioma"
             userListLabel.textContent = "Usuarios activos";
+            footerElement.innerHTML =
+                "<u>Términos de Uso</u><br>" +
+                "Al utilizar esta herramienta de chat, usted acepta que ha leído, entendido y aceptado los siguientes términos de uso. Por favor, léalos cuidadosamente:<br>" +
+                "Uso General: Esta herramienta es para fines de comunicación e intercambio de información. Cualquier uso con fines ilegales está estrictamente prohibido.<br>" +
+                "Descargo de Responsabilidad: Los operadores de la herramienta de chat no asumen ninguna responsabilidad por los daños resultantes del uso de esta herramienta. Los usuarios se comunican bajo su propio riesgo.<br>" +
+                "Responsabilidad del Contenido: Los usuarios son responsables del contenido que comparten. Está prohibido el contenido ilegal, dañino o ilícito.<br>" +
+                "Privacidad: Los usuarios reconocen que la privacidad en un chat en línea solo puede protegerse de manera limitada. La información personal debe manejarse con cuidado.<br>" +
+                "Cambios en los Términos de Uso: Los operadores se reservan el derecho de cambiar estos términos de uso en cualquier momento sin previo aviso. El uso continuado de la herramienta después de tales cambios constituye la aceptación de los nuevos términos.<br>" +
+                "Al utilizar esta herramienta, usted acepta estos términos.";
             break;
     }
 }
-
 /**
  * Adds an EventListener that enables the function to send messages with the "Enter" button
  */
