@@ -11,7 +11,6 @@ class TestChatServerProtocol(unittest.TestCase):
     """
     
     def test_server(self):
-        
         factoryClient = WebSocketClientFactory("ws://localhost")
         factoryClient.protocol = CLientProtocol
         test_client = factoryClient.buildProtocol("localhost:9000")

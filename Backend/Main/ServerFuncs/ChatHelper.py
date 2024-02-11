@@ -6,6 +6,7 @@ from fuzzywuzzy import fuzz
 from .Message import MessageToClient
 import traceback
 
+
 def load_api_config():
     try:
         load_dotenv()
@@ -48,6 +49,7 @@ def is_message_addressing_bot(message_str: str) -> bool:
     # If similarity is above 70, it's likely the user is addressing the bot.
     return similarity > threshold
 
+
 def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
     """
     Creates a chatbot response based on the sentiment of the chat history.
@@ -56,7 +58,7 @@ def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
     :return: The response message object
     """
     try:
-        sentiment = checkSentiment(chatHistory)
+        sentiment = check_sentiment(chatHistory)
         messages = prepare_messages(chatHistory, sentiment)
         response_message = generate_response(messages, sentiment)
         return build_message_object(response_message, sentiment)
@@ -66,7 +68,8 @@ def create_chatbot(chatHistory: list, retry=False) -> MessageToClient:
             print("Retrying...")
             return create_chatbot(chatHistory, retry=True)
         else:
-            return handle_error_on_retry_failure(chatHistory)
+            return handle_error_on_retry_failure()
+
 
 def prepare_messages(chatHistory: list, sentiment: float) -> list:
     """
@@ -78,6 +81,7 @@ def prepare_messages(chatHistory: list, sentiment: float) -> list:
     messages = [{"role": "user", "content": message.message} for message in chatHistory]
     messages.append({"role": "system", "content": "Deine aktuelle Stimmung liegt bei: " + str(sentiment)})
     return messages
+
 
 def generate_response(messages: list, sentiment: float) -> str:
     """
@@ -97,6 +101,7 @@ def generate_response(messages: list, sentiment: float) -> str:
     )
     return response.choices[0].message.content
 
+
 def calculate_temperature(sentiment: float) -> float:
     """
     Calculates response temperature based on sentiment.
@@ -105,6 +110,8 @@ def calculate_temperature(sentiment: float) -> float:
     """
     min_temp, max_temp = 0.2, 0.8
     return 0.5 * (sentiment + 1) * (max_temp - min_temp) + min_temp
+
+
 def build_message_object(response: str, sentiment: float) -> MessageToClient:
     """
     Build MessageToClient object\n
@@ -112,21 +119,21 @@ def build_message_object(response: str, sentiment: float) -> MessageToClient:
     :param sentiment: Sentiment value\n
     :return MessageToClient: Message object\n
     """
-    return MessageToClient(username="botify", message=response, language="EN",
-    timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
+    return MessageToClient(username="Botify", message=response, language="EN",
+                           timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=sentiment)
 
 
-def handle_error_on_retry_failure(chatHistory: list) -> MessageToClient:
+def handle_error_on_retry_failure() -> MessageToClient:
     """
     Handles errors after a retry failure while creating the chatbot.
-    :param chatHistory: List of last 5 messages in the chat
     :return: Error message object
     """
     print("Failed to create chatbot response even after retry.")
     return MessageToClient(username="Botify", message="I'm sorry, I'm not able to answer right now.",
                            language="EN", timestamp=datetime.now().strftime("%H:%M:%S"), sentiment=0.0)
 
-def checkSentiment(chatHistory: list) -> float:
+
+def check_sentiment(chatHistory: list) -> float:
     """
     Calculates the average sentiment of the last 5 messages in the chat history.
     :param chatHistory: List of last 5 messages in the chat

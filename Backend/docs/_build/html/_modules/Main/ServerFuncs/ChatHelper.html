@@ -78,10 +78,15 @@
 <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="kn">import</span> <span class="n">fuzz</span>
 <span class="kn">from</span> <span class="nn">.Message</span> <span class="kn">import</span> <span class="n">MessageToClient</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 
-<span class="c1"># Set the OpenAI API key from the .env file for authentication.</span>
-<span class="n">load_dotenv</span><span class="p">()</span>
-<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Set the OpenAI API key from the .env file for authentication.</span>
+    <span class="n">load_dotenv</span><span class="p">()</span>
+    <span class="n">openai</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 
 
 <div class="viewcode-block" id="listenToMessages">
@@ -92,13 +97,17 @@
 <span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
 <span class="sd">    :return message object or None: either return a message from the chatbot or None if the chatbot is not addressed\n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">chatHistory</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">message_str</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span>
-    <span class="k">if</span> <span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_str</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should answer&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">create_chatbot</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should not answer&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">chatHistory</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">message_str</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span>
+        <span class="k">if</span> <span class="n">is_message_addressing_bot</span><span class="p">(</span><span class="n">message_str</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should answer&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">create_chatbot</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bot should not answer&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -129,56 +138,59 @@
 <span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
 <span class="sd">    :return message: Answer from the chatbot\n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c1"># Analyzes the overall sentiment of the chat history to adjust the bot&#39;s responses.</span>
-    <span class="n">sentiment</span> <span class="o">=</span> <span class="n">checkSentiment</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Analyzes the overall sentiment of the chat history to adjust the bot&#39;s responses.</span>
+        <span class="n">sentiment</span> <span class="o">=</span> <span class="n">checkSentiment</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
 
-    <span class="c1"># Calculates the response temperature based on sentiment, influencing the randomness/&quot;creativity&quot; of responses.</span>
-    <span class="n">min_temp</span> <span class="o">=</span> <span class="mf">0.2</span>
-    <span class="n">max_temp</span> <span class="o">=</span> <span class="mf">0.8</span>
-    <span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sentiment</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_temp</span> <span class="o">-</span> <span class="n">min_temp</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_temp</span>
+        <span class="c1"># Calculates the response temperature based on sentiment, influencing the randomness/&quot;creativity&quot; of responses.</span>
+        <span class="n">min_temp</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="n">max_temp</span> <span class="o">=</span> <span class="mf">0.8</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sentiment</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_temp</span> <span class="o">-</span> <span class="n">min_temp</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_temp</span>
 
-    <span class="c1"># Prepares the message history for the OpenAI completion call, formatting them appropriately.</span>
-    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">:</span>
-        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
+        <span class="c1"># Prepares the message history for the OpenAI completion call, formatting them appropriately.</span>
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">:</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
 
-    <span class="c1"># Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.</span>
-    <span class="c1"># 100 Tokens ≈ 75 words according to openAPI documentation</span>
-    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Du bist ein intelligenter Assistent in einem Chatraum und du heißt Botify.&quot;</span>
-                                <span class="s2">&quot; Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten&quot;</span>
-                                <span class="s2">&quot; zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus&quot;</span>
-                                <span class="s2">&quot; dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers&quot;</span>
-                                <span class="s2">&quot; und die Nachricht selbst. Deine Antworten sollten den Kontext dieser &quot;</span>
-                                <span class="s2">&quot;Nachrichten berücksichtigen. Deine Antworten sollten maximal aus 70 Wörten bestehen.&quot;</span>
-                                <span class="s2">&quot;Deine Stimmung wird algorithmisch auf einer Skala von -1 &quot;</span>
-                                <span class="s2">&quot;(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten&quot;</span>
-                                <span class="s2">&quot; widergespiegelt werden. Deine aktuelle Stimmung liegt bei: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
-                     <span class="p">}</span>
+        <span class="c1"># Adds a system message to guide the behavior of the OpenAI-API, providing context for its responses.</span>
+        <span class="c1"># 100 Tokens ≈ 75 words according to openAPI documentation</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;Du bist ein intelligenter Assistent in einem Chatraum und du heißt Botify.&quot;</span>
+                                    <span class="s2">&quot; Deine Aufgabe ist es, mit relevanten und hilfreichen Antworten&quot;</span>
+                                    <span class="s2">&quot; zu reagieren. Zusätzlich hast du Zugriff auf die letzten bis zu 5 Nachrichten aus&quot;</span>
+                                    <span class="s2">&quot; dem Chatverlauf. Diese Nachrichten enthalten jeweils den Nickname des Teilnehmers&quot;</span>
+                                    <span class="s2">&quot; und die Nachricht selbst. Deine Antworten sollten den Kontext dieser &quot;</span>
+                                    <span class="s2">&quot;Nachrichten berücksichtigen. Dein Antwort soll maximal aus 70 Wörten &quot;</span>
+                                    <span class="s2">&quot;bestehen und nicht mitten im Satz enden.&quot;</span>
+                                    <span class="s2">&quot;Deine Stimmung wird algorithmisch auf einer Skala von -1 &quot;</span>
+                                    <span class="s2">&quot;(sehr negativ) bis 1 (sehr positiv) erfasst und soll in deinen Antworten&quot;</span>
+                                    <span class="s2">&quot; widergespiegelt werden. Deine aktuelle Stimmung liegt bei: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sentiment</span><span class="p">)</span>
+                         <span class="p">})</span>
+        
+        <span class="c1"># Generates a chat completion using the OpenAI API, with parameters adjusted for the current context.</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4-0125-preview&quot;</span><span class="p">,</span>
+            <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">frequency_penalty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">presence_penalty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># Extracts and prints the generated response from the OpenAI API.</span>
+        <span class="n">response_message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">response_message</span><span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">response_message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                    <span class="p">)</span>
-    <span class="c1"># Generates a chat completion using the OpenAI API, with parameters adjusted for the current context.</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4-0125-preview&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
-        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">frequency_penalty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">presence_penalty</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="c1"># Extracts and prints the generated response from the OpenAI API.</span>
-    <span class="n">response_message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">response_message</span><span class="p">})</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">response_message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Captures the current time to timestamp the bot&#39;s response.</span>
-    <span class="n">date_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-    <span class="n">str_date_time</span> <span class="o">=</span> <span class="n">date_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Returns a new message object with the bot&#39;s response and additional metadata.</span>
-    <span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">response_message</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">str_date_time</span><span class="p">,</span>
-                           <span class="n">sentiment</span><span class="o">=</span><span class="n">sentiment</span><span class="p">)</span></div>
-
+        <span class="c1"># Returns a new message object with the bot&#39;s response and additional metadata.</span>
+        <span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">response_message</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span>
+                               <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="n">sentiment</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An error occurred while creating the chatbot:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Botify&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;I&#39;m sorry, I&#39;m not able to answer right now.&quot;</span><span class="p">,</span>
+                               <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span>
+                               <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span>
+                               <span class="n">sentiment</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="checkSentiment">
@@ -189,12 +201,16 @@
 <span class="sd">    :param chatHistory: List of last 5 messages in the chat\n</span>
 <span class="sd">    :return sentiment_value: average sentiment of the last 5 messages\n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Calculates the average sentiment of the chat history to inform response generation.</span>
-    <span class="n">sentiment_value</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">:</span>
-        <span class="n">sentiment_value</span> <span class="o">+=</span> <span class="n">message</span><span class="o">.</span><span class="n">sentiment</span>
-    <span class="n">sentiment_value</span> <span class="o">=</span> <span class="n">sentiment_value</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">sentiment_value</span></div>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Calculates the average sentiment of the chat history to inform response generation.</span>
+        <span class="n">sentiment_value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">chatHistory</span><span class="p">:</span>
+            <span class="n">sentiment_value</span> <span class="o">+=</span> <span class="n">message</span><span class="o">.</span><span class="n">sentiment</span>
+        <span class="n">sentiment_value</span> <span class="o">=</span> <span class="n">sentiment_value</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">chatHistory</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sentiment_value</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">return</span> <span class="mf">0.0</span></div>
 
 </pre></div>
 

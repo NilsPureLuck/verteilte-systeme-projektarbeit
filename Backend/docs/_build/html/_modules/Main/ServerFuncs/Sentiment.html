@@ -76,10 +76,8 @@
 <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
 <span class="kn">from</span> <span class="nn">.Message</span> <span class="kn">import</span> <span class="n">MessageFromClient</span><span class="p">,</span> <span class="n">MessageToClient</span>
 <span class="kn">import</span> <span class="nn">os</span>
-
-
-<span class="n">load_dotenv</span><span class="p">()</span>
-
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 
 <div class="viewcode-block" id="sentiment_analysis">
 <a class="viewcode-back" href="../../../index.html#Main.ServerFuncs.Sentiment.sentiment_analysis">[docs]</a>
@@ -89,16 +87,28 @@
 <span class="sd">	:param message: incoming message without a sentiment\n</span>
 <span class="sd">	:return message: analysed message with a sentiment\n</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">)</span>
-	<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-		<span class="s2">&quot;X-RapidAPI-Key&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;XKEY&quot;</span><span class="p">),</span>
-		<span class="s2">&quot;X-RapidAPI-Host&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;XHOST&quot;</span><span class="p">)</span>
-	<span class="p">}</span>
-	<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span><span class="p">}</span>
-	<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
-	<span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="vm">__dict__</span>
-	<span class="n">message</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
-	<span class="k">return</span> <span class="n">MessageToClient</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+	<span class="k">try</span><span class="p">:</span>
+		<span class="n">load_dotenv</span><span class="p">()</span>
+	<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+
+	<span class="k">try</span><span class="p">:</span>
+		<span class="n">url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;URL&quot;</span><span class="p">)</span>
+		<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s2">&quot;X-RapidAPI-Key&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;XKEY&quot;</span><span class="p">),</span>
+			<span class="s2">&quot;X-RapidAPI-Host&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;XHOST&quot;</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">message</span><span class="p">}</span>
+		<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
+		<span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="vm">__dict__</span>
+		<span class="n">message</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">MessageToClient</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+	<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;An error occurred while performing sentiment analysis:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+		<span class="k">return</span> <span class="n">MessageToClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;Bot&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;I&#39;m sorry, I couldn&#39;t analyse the sentiment of your message.&quot;</span><span class="p">,</span>
+							   <span class="n">language</span><span class="o">=</span><span class="s2">&quot;EN&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">),</span> <span class="n">sentiment</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span></div>
 
 </pre></div>
 

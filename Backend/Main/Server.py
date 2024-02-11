@@ -5,7 +5,6 @@ import os
 from datetime import datetime
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
-from http import HTTPStatus
 from ServerFuncs.Message import MessageFromClient
 from ServerFuncs.Translator import translate_text
 from ServerFuncs.ChatHelper import listenToMessages
@@ -16,7 +15,6 @@ class ChatServerProtocol(WebSocketServerProtocol):
     """
     WebSocket Server\n
     """
-
     chatHistory = []
 
     def onConnect(self, request):
@@ -185,12 +183,12 @@ class ChatServerFactory(WebSocketServerFactory):
             self.sendCurrentUsers()
 
     def broadcast(self, message, sender):
-        print(f"message for broadcast {message}")
         """
         This method broadcasts the message to all clients in the chat\n
         :param message: The message to broadcast\n
         :param sender: Sender client of the message\n
         """
+        print(f"message for broadcast {message}")
         for client in self.clients:
             try:
                 if not (client.username is None or client.language is None):
@@ -215,7 +213,7 @@ class ChatServerFactory(WebSocketServerFactory):
                         client.sendMessage(jsonmassage.encode("utf-8"))
                         print(f"Send Message {jsonmassage} to {client.peer}")
                         logging.info(f"Send Message {jsonmassage} to {client.peer}")
-                        
+
             except Exception:
                 logging.error(traceback.format_exc())
 
