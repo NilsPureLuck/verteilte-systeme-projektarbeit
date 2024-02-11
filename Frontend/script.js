@@ -12,7 +12,7 @@ function buttonSendAction() {
     const inputWindow = document.getElementById("chatTextInput");
     let inputText = inputWindow.value;
 
-    if(inputText === '' || savedNickname ==='') {
+    if(inputText === '') {
         alert("Please enter a message!")
     }else {
         inputWindow.value = "";
@@ -95,7 +95,7 @@ function saveUserSettings() {
     const nicknameEingabe = document.getElementById("nicknameArea");
 
     if(nicknameEingabe.value === ''){
-        alert("Please don`t leave a blank field!");
+        alert("Please fill in a username.");
     }else{
       savedNickname = nicknameEingabe.value;
         nicknameEingabe.readOnly = true;
